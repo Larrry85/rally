@@ -161,7 +161,7 @@ document.getElementById('addSessionButton').addEventListener('click', () => {
         </div>
     `;
 
-    // Re-add the event listener for the remove button
+    // Re-add remove button
     driversList.querySelector('.removeDriverButton').addEventListener('click', () => {
         driversList.removeChild(driversList.querySelector('.driver-entry'));
     });
