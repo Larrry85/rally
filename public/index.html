@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist Interface</title>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Receptionist Interface</h1>
+        
+        <div id="login" class="form-container">
+            <h2>Login</h2>
+            <input type="password" id="accessKey" placeholder="Enter Access Key">
+            <button id="loginButton">Login</button>
+        </div>
+
+        <div id="app" class="form-container" style="display: none;">
+            <h3>Add Race Session</h3>
+            <input type="text" id="sessionName" placeholder="New Session Name" required>
+
+            <div id="driversList">
+                <h4>Drivers</h4>
+                <div class="driver-entry">
+                    <input type="text" class="driverName" placeholder="Driver Name" required>
+                    <button class="removeDriverButton">Remove</button>
+                </div>
+            </div>
+            <button id="addDriverFieldButton">Add Another Driver</button>
+            <button id="addSessionButton">Add Race Session with Drivers</button>
+
+            <h3>Race Sessions</h3>
+            <div id="sessions"></div>
+        </div>
+    </div>
+
+    <script src="reception.js"></script>
+</body>
+</html>
