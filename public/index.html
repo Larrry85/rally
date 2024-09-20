@@ -3,39 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Front desk</title>
-    <link rel="stylesheet" href="css/front-desk.css"/>
-    <script src="/socket.io/socket.io.js"></script>
+    <title>Welcome</title>
+    <link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
     <div class="container">
-        <h1>Front desk</h1>
+        <h1>Welcome to Race Management System</h1>
+        <h2>Select an Interface</h2>
         
-        <div id="login" class="form-container">
-            <h2>Login</h2>
-            <input type="password" id="accessKey" placeholder="Enter Access Key">
-            <button id="loginButton">Login</button>
-        </div>
-
-        <div id="app" class="form-container" style="display: none;">
-            <h3>Add Race Session</h3>
-            <input type="text" id="sessionName" placeholder="New Session Name" required>
-
-            <div id="driversList">
-                <h4>Drivers</h4>
-                <div class="driver-entry">
-                    <input type="text" class="driverName" placeholder="Driver Name" required>
-                    <button class="removeDriverButton">Remove</button>
-                </div>
-            </div>
-            <button id="addDriverFieldButton">Add Another Driver</button>
-            <button id="addSessionButton">Add Race Session with Drivers</button>
-
-            <h3>Race Sessions</h3>
-            <div id="sessions"></div>
+        <div class="button-container">
+            <a href="/front-desk" class="big-button">Front Desk</a>
+            <a href="/race-control" class="big-button">Race Control</a>
+            <a href="/lap-line-tracker" class="big-button">Lap-line Tracker</a>
+            <a href="/leaderboard" class="big-button">Leaderboard </a>
+            <a href="/next-race" class="big-button">Next Race</a>
+            <a href="/race-countdown" class="big-button">Race Countdown</a>
+            <a href="/race-flags" class="big-button">Race Flag</a>
         </div>
     </div>
-
-    <script src="js/front-desk.js"></script>
 </body>
 </html>

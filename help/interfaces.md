@@ -1,3 +1,5 @@
+
+
 # Front Desk
 ### user
 - Receptionist
@@ -47,6 +49,9 @@
 - The buttons must not function after the race is ended. They should disappear or be visually disabled.
 
 # Leader Board
+
+### The public displays are 40-75 inch smart displays (monitors with web browsers) which are positioned in guest and race driver areas. Each public display interface must feature a button to launch full-screen mode.
+
 ### user
 - Guest
 ### input
@@ -61,18 +66,27 @@
 
 
 # Next Race
+
+### The public displays are 40-75 inch smart displays (monitors with web browsers) which are positioned in guest and race driver areas. Each public display interface must feature a button to launch full-screen mode.
+
 ### user
 - Race Driver
 ### input
 - Race drivers must be able to see a list of drivers for the next race session, as well as what cars they are assigned to drive.
 
 # Race Countdown
+
+### The public displays are 40-75 inch smart displays (monitors with web browsers) which are positioned in guest and race driver areas. Each public display interface must feature a button to launch full-screen mode.
+
 ### user
 - Race Driver
 ### input
 
 
 # Race Flag
+
+### The public displays are 40-75 inch smart displays (monitors with web browsers) which are positioned in guest and race driver areas. Each public display interface must feature a button to launch full-screen mode.
+
 ### user
 - Race Driver
 ### input

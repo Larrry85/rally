@@ -14,6 +14,15 @@ if (!RECEPTIONIST_KEY) {
 
 app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + 'public/index.html');
+});
+
+// Define routes for each interface
+app.get('/front-desk', (req, res) => {
+    res.sendFile(__dirname + '/public/front-desk.html'); // Front desk interface
+});
+
 const server = http.createServer(app);
 const io = socketIo(server);
 
