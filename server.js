@@ -19,13 +19,8 @@ const io = socketIo(server);
 
 // In-memory storage for race sessions and drivers
 let raceSessions = [];
-let drivers = [];
 
-// Helper function to assign cars to drivers
-const assignCarToDriver = (driver) => {
-    // Implement logic to assign cars, e.g., randomly assign car number
-    return { driver, carNumber: Math.floor(Math.random() * 20) };
-};
+
 
 io.on('connection', (socket) => {
     console.log('New client connected');
@@ -46,6 +41,16 @@ socket.on('addRaceSession', (session) => {
         sessionName: session.sessionName,
         drivers: session.drivers || []  
     });
+
+    // Update race session
+socket.on('updateRaceSession', (updatedSession) => {
+    const sessionIndex = raceSessions.findIndex(session => session.sessionId === updatedSession.sessionId);
+    
+    if (sessionIndex !== -1) {
+        raceSessions[sessionIndex] = updatedSession; // Replace the session with the updated one
+        io.emit('raceSessions', raceSessions);  // Broadcast updated race sessions to all clients
+    }
+});
     io.emit('raceSessions', raceSessions);  // Broadcast updated race sessions to all clients
 });
 
