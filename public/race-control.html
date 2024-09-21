@@ -5,10 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
     <link rel="stylesheet" href="css/race-control.css"/>
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Race control</h1>
+        <div id="login" class="form-container">
+            <h2>Login</h2>
+            <input type="password" id="accessKey" placeholder="Enter Access Key">
+            <button id="loginButton">Login</button>
+        </div>
+        <div id="app" class="form-container" style="display: none;"></div>
+        <h3>Race control</h3>
     </div>
     <script src="js/race-control.js"></script>
 </body>
