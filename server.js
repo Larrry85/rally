@@ -80,12 +80,6 @@ io.on('connection', (socket) => {
         } else if (key === INTERFACE_KEYS.lapLineTracker) {
             clientRole = 'lapLineTracker';
             socket.emit('authenticated', { success: true, role: 'lapLineTracker' });
-        } else if (key === INTERFACE_KEYS.leaderBoard) {
-            clientRole = 'leaderBoard';
-            socket.emit('authenticated', { success: true, role: 'leaderBoard' });
-        } else if (key === INTERFACE_KEYS.raceFlags) {
-            clientRole = 'raceFlags';
-            socket.emit('authenticated', { success: true, role: 'raceFlags' });
         } else {
             socket.emit('authenticated', { success: false });
             socket.disconnect();  // Disconnect if authentication fails
