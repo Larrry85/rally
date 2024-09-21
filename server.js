@@ -20,7 +20,31 @@ app.get('/', (req, res) => {
 
 // Define routes for each interface
 app.get('/front-desk', (req, res) => {
-    res.sendFile(__dirname + '/public/front-desk.html'); // Front desk interface
+    res.sendFile(__dirname + '/public/front-desk.html'); 
+});
+
+app.get('/lap-line-tracker', (req, res) => {
+    res.sendFile(__dirname + '/public/lap-line-tracker.html'); 
+});
+
+app.get('/leader-board', (req, res) => {
+    res.sendFile(__dirname + '/public/leader-board.html'); 
+});
+
+app.get('/race-flags', (req, res) => {
+    res.sendFile(__dirname + '/public/race-flags.html'); 
+});
+
+app.get('/race-countdown', (req, res) => {
+    res.sendFile(__dirname + '/public/race-countdown.html'); 
+});
+
+app.get('/race-control', (req, res) => {
+    res.sendFile(__dirname + '/public/race-control.html'); 
+});
+
+app.get('/next-race', (req, res) => {
+    res.sendFile(__dirname + '/public/next-race.html'); 
 });
 
 const server = http.createServer(app);
