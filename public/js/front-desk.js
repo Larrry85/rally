@@ -7,12 +7,14 @@ document.getElementById('loginButton').addEventListener('click', () => {
 });
 
 socket.on('authenticated', (data) => {
+    const messageContainer = document.getElementById('loginMessage')
     if (data.success) {
+        messageContainer.textContent = '';
         document.getElementById('login').style.display = 'none';
-        document.getElementById('app').style.display = 'block';
+        document.getElementById('raceControlApp').style.display = 'block';
         socket.emit('getRaceSessions'); // Request current race sessions
     } else {
-        alert('Invalid access key');
+        messageContainer.textContent = 'Invalid access key'
     }
 });
 

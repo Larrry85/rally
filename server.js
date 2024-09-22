@@ -72,15 +72,18 @@ io.on('connection', (socket) => {
         if (key === INTERFACE_KEYS.frontDesk) {
             clientRole = 'frontDesk';
             socket.emit('authenticated', { success: true, role: 'frontDesk' });
+            console.log('client logged in');
         } else if (key === INTERFACE_KEYS.raceControl) {
             clientRole = 'raceControl';
             socket.emit('authenticated', { success: true, role: 'raceControl' });
+            console.log('client logged in');
         } else if (key === INTERFACE_KEYS.lapLineTracker) {
             clientRole = 'lapLineTracker';
             socket.emit('authenticated', { success: true, role: 'lapLineTracker' });
+            console.log('client logged in');
         } else {
             socket.emit('authenticated', { success: false });
-            socket.disconnect();  // Disconnect if authentication fails
+            console.log('wrong access key')
         }
     });
 
@@ -91,17 +94,32 @@ io.on('connection', (socket) => {
         }
     });
 
-    // Add a new race session for raceControl
-    socket.on('addRaceSession', (session) => {
-        if (clientRole === 'frontDesk') {
-            raceSessions.push({
-                sessionId: Date.now(),
-                sessionName: session.sessionName,
-                drivers: session.drivers || []
-            });
-            io.emit('raceSessions', raceSessions);  // Broadcast updated race sessions to all clients
-        }
-    });
+   
+
+// Add a new race session for raceControl
+socket.on('addRaceSession', (session) => {
+    if (clientRole === 'frontDesk') {
+        // Create new session
+        const newSession = {
+            sessionId: Date.now(),
+            sessionName: session.sessionName,
+            drivers: session.drivers || [],
+            // isNext will be set later
+        };
+        
+        // Add the new session to the list
+        raceSessions.push(newSession);
+
+        // Set isNext to true for the first session only
+        raceSessions.forEach((s, index) => {
+            s.isNext = (index === 0); // Mark the first session as next
+        });
+        
+        io.emit('raceSessions', raceSessions);  // Broadcast updated race sessions to all clients
+    }
+});
+
+
     
     // Update an existing race session (for raceControl role)
     socket.on('updateRaceSession', (updatedSession) => {

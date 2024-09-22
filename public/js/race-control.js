@@ -1,3 +1,4 @@
+//race control
 const socket = io();
 
 // Handle login
@@ -7,12 +8,14 @@ document.getElementById('loginButton').addEventListener('click', () => {
 });
 
 socket.on('authenticated', (data) => {
+    const messageContainer = document.getElementById('loginMessage')
     if (data.success) {
+        messageContainer.textContent = '';
         document.getElementById('login').style.display = 'none';
         document.getElementById('raceControlApp').style.display = 'block';
         socket.emit('getRaceSessions'); // Request current race sessions
     } else {
-        alert('Invalid access key');
+        messageContainer.textContent = 'Invalid access key'
     }
 });
 
@@ -21,19 +24,25 @@ socket.on('raceSessions', (sessions) => {
     const container = document.getElementById('raceSessionContainer');
     container.innerHTML = ''; // Clear the previous sessions
 
-    // Render the race sessions
-    sessions.forEach(session => {
+    // Filter to get only the next race session
+    const nextSession = sessions.find(session => session.isNext);
+
+    if (nextSession) {
         const sessionElement = document.createElement('div');
         sessionElement.classList.add('race-session');
         sessionElement.innerHTML = `
-            <h3>${session.sessionName}</h3>
+            <h3>${nextSession.sessionName}</h3>
             <ul>
-                ${session.drivers.map(driver => `<li>${driver.driver} (Car: ${driver.carNumber})</li>`).join('')}
+                ${nextSession.drivers.map(driver => `<li>${driver.driver} (Car: ${driver.carNumber})</li>`).join('')}
             </ul>
         `;
         container.appendChild(sessionElement);
-    });
+    } else {
+        container.innerHTML = '<p>No upcoming race sessions.</p>';
+    }
 });
+
+
 
 // Emit event to start the race
 document.getElementById('startRaceButton').addEventListener('click', () => {
