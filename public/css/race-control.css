@@ -38,11 +38,11 @@ h1, h2, h3, h4 {
     border-radius: 5px;
     background: #fafafa;
     display: flex;
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
+    flex-direction: column;   /* Keep items stacked vertically */
+    align-items: center;      /* Center items horizontally */
     min-height: 300px;
 }
+
 
 
 
