@@ -1,0 +1,1 @@
+-kaikilla access key voi kirjautua kaikkiin vaikka ne on eritelty mutta jos ei ole siinä .env listassa niin tulee error wrong access key

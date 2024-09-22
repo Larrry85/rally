@@ -72,15 +72,15 @@ io.on('connection', (socket) => {
         if (key === INTERFACE_KEYS.frontDesk) {
             clientRole = 'frontDesk';
             socket.emit('authenticated', { success: true, role: 'frontDesk' });
-            console.log('client logged in');
+            console.log('Receptionist logged in');
         } else if (key === INTERFACE_KEYS.raceControl) {
             clientRole = 'raceControl';
             socket.emit('authenticated', { success: true, role: 'raceControl' });
-            console.log('client logged in');
+            console.log('Race Control logged in');
         } else if (key === INTERFACE_KEYS.lapLineTracker) {
             clientRole = 'lapLineTracker';
             socket.emit('authenticated', { success: true, role: 'lapLineTracker' });
-            console.log('client logged in');
+            console.log('Lap Line Tracker logged in');
         } else {
             socket.emit('authenticated', { success: false });
             console.log('wrong access key')
