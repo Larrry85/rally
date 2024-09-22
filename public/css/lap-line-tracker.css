@@ -24,10 +24,15 @@ h1, h2, h3, h4 {
     border: 1px solid #ddd;
     border-radius: 5px;
     background: #fafafa;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 300px;
 }
 
 input[type="text"], input[type="password"] {
-    width: calc(100% - 20px);
+    width: 105px;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;

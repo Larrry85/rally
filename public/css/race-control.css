@@ -24,10 +24,30 @@ h1, h2, h3, h4 {
     border: 1px solid #ddd;
     border-radius: 5px;
     background: #fafafa;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 300px;
 }
 
+.form-container2 {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 300px;
+}
+
+
+
 input[type="text"], input[type="password"] {
-    width: calc(100% - 20px);
+    width: 105px;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -81,4 +101,43 @@ button:hover {
 .session strong {
     display: block;
     margin-bottom: 5px;
+}
+
+.light-container {
+    display: flex;
+    justify-content: center;   /* Center items horizontally */
+    align-items: center;       /* Center items vertically (if needed) */
+    gap: 30px;                 /* Space between lights */
+}
+
+.green {
+    width: 75px;
+    height: 75px;
+    background-color: green;
+    border: 2px solid black; /* Add a black border */
+    border-radius: 50%; /* Keep it circular */ 
+}
+
+.yellow {
+    width: 75px;
+    height: 75px;
+    background-color: yellow;
+    border: 2px solid black; /* Add a black border */
+    border-radius: 50%; /* Keep it circular */  
+}
+
+.red {
+    width: 75px;
+    height: 75px;
+    background-color: red;
+    border: 2px solid black; /* Add a black border */
+    border-radius: 50%; /* Keep it circular */
+}
+
+.finish-image {
+    width: 75px;          /* Set the width */
+    height: 75px;         /* Set the height to the same value to keep it circular */
+    border-radius: 50%;   /* Make it round */
+    object-fit: cover;    /* Ensure the image covers the area without stretching */
+    margin-top: 10px;     /* Space between lights and image */
 }

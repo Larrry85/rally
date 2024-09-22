@@ -9,22 +9,28 @@
 </head>
 <body>
     <div class="container">
-        <h1>Race Control</h1>
         
         <!-- Login Section -->
         <div id="login" class="form-container">
-            <h2>Login</h2>
+            <h2>Login to race control interface</h2>
             <input type="password" id="accessKey" placeholder="Enter Access Key">
             <button id="loginButton">Login</button>
             <div id="loginMessage" style="color: red; margin-top: 10px;"></div>
         </div>
         
         <!-- Race Control Section -->
-        <div id="raceControlApp" class="form-container" style="display: none;">
-            <h2>Next race</h2>
+       
+        <div id="raceControlApp" class="form-container2" style="display: none;">
+            <h1>Next race</h1>
             <div id="raceSessionContainer"></div>
             <button id="startRaceButton">Start Race</button>
         </div>
+        <div id="raceLights" class="light-container" style="display: none;">
+                <div class="green"></div>
+                <div class="yellow"></div>
+                <div class="red"></div>
+                <img src="image/finish.png" alt="Finish Line" class="finish-image" />
+        </div>      
     </div>
 
     <script src="js/race-control.js"></script>

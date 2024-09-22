@@ -13,6 +13,7 @@ socket.on('authenticated', (data) => {
         messageContainer.textContent = '';
         document.getElementById('login').style.display = 'none';
         document.getElementById('raceControlApp').style.display = 'block';
+        document.getElementById('raceLights').style.display = 'flex';
         socket.emit('getRaceSessions'); // Request current race sessions
     } else {
         messageContainer.textContent = 'Invalid access key'
