@@ -91,7 +91,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    // Add a new race session (for roles like raceControl)
+    // Add a new race session for raceControl
     socket.on('addRaceSession', (session) => {
         if (clientRole === 'frontDesk') {
             raceSessions.push({
@@ -102,7 +102,7 @@ io.on('connection', (socket) => {
             io.emit('raceSessions', raceSessions);  // Broadcast updated race sessions to all clients
         }
     });
-
+    
     // Update an existing race session (for raceControl role)
     socket.on('updateRaceSession', (updatedSession) => {
         if (clientRole === 'frontDesk') {

@@ -48,18 +48,7 @@ socket.on('raceSessions', (sessions) => {
 
             // Populate the form with existing drivers
             session.drivers.forEach(driver => {
-                const driverEntry = document.createElement('div');
-                driverEntry.classList.add('driver-entry');
-                driverEntry.innerHTML = `
-                    <input type="text" class="driverName" value="${driver.driver}" required>
-                    <button class="removeDriverButton">Remove</button>
-                `;
-                driversList.appendChild(driverEntry);
-
-                // Add remove driver functionality for the editing
-                driverEntry.querySelector('.removeDriverButton').addEventListener('click', () => {
-                    driversList.removeChild(driverEntry);
-                });
+                driversList.appendChild(createDriverEntry(driver.driver)); // Use function to create driver entry
             });
 
             currentSessionId = session.sessionId;  // Track which session is being edited
@@ -67,24 +56,27 @@ socket.on('raceSessions', (sessions) => {
     });
 });
 
+// Function to create a driver entry
+function createDriverEntry(name = '') {
+    const driverEntry = document.createElement('div');
+    driverEntry.classList.add('driver-entry');
+    driverEntry.innerHTML = `
+        <input type="text" class="driverName" value="${name}" placeholder="Driver Name" required>
+        <button class="removeDriverButton">Remove</button>
+    `;
+    driverEntry.querySelector('.removeDriverButton').addEventListener('click', () => {
+        driverEntry.remove(); // More concise remove logic
+    });
+    return driverEntry;
+}
+
 // Add another driver input field (Max 8 drivers)
 document.getElementById('addDriverFieldButton').addEventListener('click', () => {
     const driversList = document.getElementById('driversList');
     const currentDrivers = document.querySelectorAll('.driver-entry').length;
 
     if (currentDrivers < 8) { // Enforce maximum of 8 drivers
-        const driverEntry = document.createElement('div');
-        driverEntry.classList.add('driver-entry');
-        driverEntry.innerHTML = `
-            <input type="text" class="driverName" placeholder="Driver Name" required>
-            <button class="removeDriverButton">Remove</button>
-        `;
-        driversList.appendChild(driverEntry);
-
-        // Remove driver functionality
-        driverEntry.querySelector('.removeDriverButton').addEventListener('click', () => {
-            driversList.removeChild(driverEntry);
-        });
+        driversList.appendChild(createDriverEntry());
     } else {
         alert("You can only add up to 8 drivers.");
     }
@@ -105,7 +97,6 @@ document.getElementById('addSessionButton').addEventListener('click', () => {
     const driverNamesSet = new Set();  // To check for unique driver names
     let hasDuplicate = false;  // Flag to check for duplicates
 
-    // Assign car numbers in sequential order, starting from 1
     driverElements.forEach((driverElement, index) => {
         const driverName = driverElement.querySelector('.driverName').value.trim();
         if (driverName) {
@@ -153,16 +144,9 @@ document.getElementById('addSessionButton').addEventListener('click', () => {
     
     // Reset drivers list to only one input field
     const driversList = document.getElementById('driversList');
-    driversList.innerHTML = `
-        <h4>Drivers</h4>
-        <div class="driver-entry">
-            <input type="text" class="driverName" placeholder="Driver Name" required>
-            <button class="removeDriverButton">Remove</button>
-        </div>
-    `;
+    driversList.innerHTML = ''; // Clear all drivers
 
-    // Re-add remove button
-    driversList.querySelector('.removeDriverButton').addEventListener('click', () => {
-        driversList.removeChild(driversList.querySelector('.driver-entry'));
-    });
+    // Add a default driver input
+    driversList.appendChild(createDriverEntry());
+
 });
