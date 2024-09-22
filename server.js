@@ -19,8 +19,6 @@ const INTERFACE_KEYS = {
     frontDesk: process.env.RECEPTIONIST_KEY,
     raceControl: process.env.RACECONTROL_KEY,
     lapLineTracker: process.env.LAP_LINE_TRACKER_KEY,
-    leaderBoard: process.env.LEADER_BOARD_KEY,
-    raceFlags: process.env.RACE_FLAGS_KEY
 };
 
 
@@ -88,14 +86,14 @@ io.on('connection', (socket) => {
 
     // Event to send race sessions after authentication
     socket.on('getRaceSessions', () => {
-        if (clientRole) {
+        if (clientRole === 'raceControl') {
             socket.emit('raceSessions', raceSessions);  // Send current race sessions to authenticated clients
         }
     });
 
     // Add a new race session (for roles like raceControl)
     socket.on('addRaceSession', (session) => {
-        if (clientRole === 'raceControl') {
+        if (clientRole === 'frontDesk') {
             raceSessions.push({
                 sessionId: Date.now(),
                 sessionName: session.sessionName,
@@ -107,7 +105,7 @@ io.on('connection', (socket) => {
 
     // Update an existing race session (for raceControl role)
     socket.on('updateRaceSession', (updatedSession) => {
-        if (clientRole === 'raceControl') {
+        if (clientRole === 'frontDesk') {
             const sessionIndex = raceSessions.findIndex(session => session.sessionId === updatedSession.sessionId);
             if (sessionIndex !== -1) {
                 raceSessions[sessionIndex] = updatedSession;  // Replace with updated session
@@ -118,7 +116,7 @@ io.on('connection', (socket) => {
 
     // Remove a race session (for raceControl role)
     socket.on('removeRaceSession', (sessionId) => {
-        if (clientRole === 'raceControl') {
+        if (clientRole === 'frontDesk') {
             raceSessions = raceSessions.filter(session => session.sessionId !== sessionId);
             io.emit('raceSessions', raceSessions);  // Broadcast updated list of race sessions
         }

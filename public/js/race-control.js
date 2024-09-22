@@ -1,3 +1,4 @@
+//race-contol.js
 const socket = io();
 
 // Handle login
@@ -14,4 +15,17 @@ socket.on('authenticated', (data) => {
     } else {
         alert('Invalid access key');
     }
+});
+
+document.getElementById('startRaceButton').addEventListener('click', () => {
+    socket.emit('startRace');
+});
+
+
+socket.on('raceSession', (sessions) => {
+
+});
+
+socket.on('raceStarted', () => {
+    alert('race started')
 });
