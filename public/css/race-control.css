@@ -172,3 +172,9 @@ button:hover {
 .on.finish-image {
     box-shadow: 0 0 20px 10px rgba(66, 41, 41, 0.7); 
 }
+
+.message {
+    font-size: 24px;
+    color: red;
+    margin-top: 10px;
+}

@@ -107,7 +107,9 @@ document.getElementById("startRaceButton").addEventListener("click", () => {
 
 // Notify when a race has started
 socket.on("raceStarted", () => {
-  alert("Race started");
+  const startMessage = document.getElementById('message');
+  startMessage.innerHTML = "Race is starting!";
+  startMessage.style.display = "block";
 });
 
 // Handle flag clicks
