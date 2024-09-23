@@ -142,22 +142,22 @@ button:hover {
 
 /* .on class for glowing effect */
 .on.green {
-    box-shadow: 0 0 20px 10px rgba(0, 255, 0, 0.7); /* Green glow */
+    box-shadow: 0 0 20px 10px rgba(0, 255, 0, 0.7); 
 }
 
 .on.yellow {
-    box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.7); /* Yellow glow */
+    box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.7); 
 }
 
 .on.red {
-    box-shadow: 0 0 20px 10px rgba(255, 0, 0, 0.7); /* Red glow */
+    box-shadow: 0 0 20px 10px rgba(255, 0, 0, 0.7); 
 }
 
 .button-container {
     display: flex;
-    justify-content: center;   /* Spread buttons in the same way as lights */
+    justify-content: center;   
     align-items: center;
-    gap: 40px;                       /* Space between buttons */
+    gap: 40px;                      
 }
 
 
