@@ -19,6 +19,7 @@ const INTERFACE_KEYS = {
     frontDesk: process.env.RECEPTIONIST_KEY,
     raceControl: process.env.RACECONTROL_KEY,
     lapLineTracker: process.env.LAP_LINE_TRACKER_KEY,
+    leaderboard: process.env.NO_KEY,
 };
 
 
@@ -93,10 +94,14 @@ io.on('connection', (socket) => {
             clientRole = 'lapLineTracker';
             socket.emit('authenticated', { success: true, role: 'lapLineTracker' });
             console.log('Lap Line Tracker logged in');
+        } else if (clientRole = 'leaderboard') {
+            console.log('leaderboard logged in')
         } else {
             socket.emit('authenticated', { success: false });
             console.log('wrong access key')
-        }
+        } 
+
+        
     });
 
     // Event to send race sessions after authentication
