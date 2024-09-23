@@ -24,8 +24,10 @@ h2 {
     margin-bottom: 20px;
 }
 
-#driverList, #countdown, #flags {
-    font-size: 2em;
+#countdown {
+    font-size: 30em; /* Make the timer huge */
+    font-weight: bold;
+    color: #007bff;
     margin-top: 20px;
 }
 
