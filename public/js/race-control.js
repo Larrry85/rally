@@ -13,6 +13,7 @@ socket.on("authenticated", (data) => {
     document.getElementById("login").style.display = "none";
     document.getElementById("raceControlApp").style.display = "block";
     document.getElementById("raceLights").style.display = "flex";
+    document.getElementById("buttons").style.display = "flex";
     socket.emit("getRaceSessions"); // Request current race sessions
   } else {
     messageContainer.textContent = "Invalid access key";
@@ -51,6 +52,30 @@ socket.on("raceSessions", (sessions) => {
     container.innerHTML = "<p>No upcoming race sessions.</p>";
   }
 });
+
+document.getElementById('green').addEventListener('click', () => {
+  const greenLight = document.querySelector('.green');
+  greenLight.classList.toggle('on');  // Toggle the 'on' class on click
+  
+});
+
+document.getElementById('yellow').addEventListener('click', () => {
+  const yellowLight = document.querySelector('.yellow');
+  yellowLight.classList.toggle('on');  // Toggle the 'on' class on click
+  
+});
+
+document.getElementById('red').addEventListener('click', () => {
+  const redLight = document.querySelector('.red');
+  redLight.classList.toggle('on');  // Toggle the 'on' class on click
+  
+});
+
+document.getElementById('finish').addEventListener('click', () => {
+  const finishImage = document.querySelector('.finish-image');
+  finishImage.classList.toggle('on');  // Toggle the 'on' class on click
+});
+
 
 // Emit event to start the race
 document.getElementById("startRaceButton").addEventListener("click", () => {

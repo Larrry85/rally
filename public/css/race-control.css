@@ -43,9 +43,6 @@ h1, h2, h3, h4 {
     min-height: 300px;
 }
 
-
-
-
 input[type="text"], input[type="password"] {
     width: 105px;
     padding: 10px;
@@ -105,9 +102,10 @@ button:hover {
 
 .light-container {
     display: flex;
-    justify-content: center;   /* Center items horizontally */
-    align-items: center;       /* Center items vertically (if needed) */
-    gap: 30px;                 /* Space between lights */
+    justify-content: center;   /* Spread lights and buttons horizontally */
+    align-items: center;             /* Center items vertically */
+    margin-bottom: 10px;             /* Add space below the lights */
+    gap: 30px;
 }
 
 .green {
@@ -140,4 +138,37 @@ button:hover {
     border-radius: 50%;   /* Make it round */
     object-fit: cover;    /* Ensure the image covers the area without stretching */
     margin-top: 10px;     /* Space between lights and image */
+}
+
+/* .on class for glowing effect */
+.on.green {
+    box-shadow: 0 0 20px 10px rgba(0, 255, 0, 0.7); /* Green glow */
+}
+
+.on.yellow {
+    box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.7); /* Yellow glow */
+}
+
+.on.red {
+    box-shadow: 0 0 20px 10px rgba(255, 0, 0, 0.7); /* Red glow */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;   /* Spread buttons in the same way as lights */
+    align-items: center;
+    gap: 40px;                       /* Space between buttons */
+}
+
+
+.finish-image {
+    width: 75px;             
+    height: 75px;            
+    border-radius: 50%;      
+    object-fit: cover;      
+    margin-top: 10px;        
+}
+
+.on.finish-image {
+    box-shadow: 0 0 20px 10px rgba(66, 41, 41, 0.7); 
 }
