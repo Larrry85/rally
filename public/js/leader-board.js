@@ -3,7 +3,7 @@ const socket = io();
 let raceData = {
   drivers: [],
   remainingTime: 600, // 10 minutes in seconds
-  raceMode: "Safe",
+  raceMode: "Danger",
 };
 
 function updateLeaderboard() {
@@ -30,8 +30,10 @@ function updateLeaderboard() {
                 <td>${index + 1}</td>
                 <td>${driver.carNumber}</td>
                 <td>${driver.driver}</td>
-                <td>${driver.fastestLap.toFixed(3)}s</td>
-                <td>${driver.currentLap}</td>
+                <td>${
+                  driver.fastestLap ? driver.fastestLap.toFixed(3) : "N/A"
+                }s</td>
+                <td>${driver.currentLap || 0}</td>
             </tr>
         `;
     leaderboardBody.innerHTML += row;
@@ -42,12 +44,8 @@ function updateRaceInfo() {
   const remainingTimeElement = document.getElementById("remainingTime");
   const raceModeElement = document.getElementById("raceMode");
 
-  if (!remainingTimeElement) {
-    console.error("Remaining time element not found");
-    return;
-  }
-  if (!raceModeElement) {
-    console.error("Race mode element not found");
+  if (!remainingTimeElement || !raceModeElement) {
+    console.error("Race info elements not found");
     return;
   }
 
@@ -74,7 +72,7 @@ function getRaceModeColor(mode) {
     case "Finish":
       return "gray";
     default:
-      return "blue";
+      return "red";
   }
 }
 
@@ -85,23 +83,36 @@ socket.on("raceUpdate", (data) => {
   updateRaceInfo();
 });
 
-socket.on("raceStart", (initialData) => {
-  raceData = initialData;
+socket.on("raceStarted", ({ race }) => {
+  raceData.drivers = race.drivers;
+  raceData.remainingTime = 600; // Reset to 10 minutes
+  raceData.raceMode = "Safe";
+
+  const countdownInterval = setInterval(() => {
+    raceData.remainingTime--;
+    if (raceData.remainingTime <= 0) {
+      clearInterval(countdownInterval);
+      raceData.raceMode = "Finish";
+    }
+    updateLeaderboard();
+    updateRaceInfo();
+  }, 1000);
+
   updateLeaderboard();
   updateRaceInfo();
 });
 
-socket.on("raceEnd", () => {
-  // Handle race end (e.g., display final results, show a message)
-  alert("Race has ended!");
+socket.on("raceFlags", (flag) => {
+  raceData.raceMode = flag;
+  updateRaceInfo();
 });
 
-// Wait for DOM to be fully loaded before initializing
+// Initialize the leaderboard
 document.addEventListener("DOMContentLoaded", () => {
-  // Initial update
   updateLeaderboard();
   updateRaceInfo();
-
-  // Request initial race data from server
-  socket.emit("requestRaceData");
+  socket.emit("getRaceSessions");
 });
+
+// Request initial race data from server
+socket.emit("requestRaceData");
