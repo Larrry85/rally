@@ -9,7 +9,7 @@ socket.on('raceSessions', (sessions) => {
     if (nextSession) {
         const driverListDiv = document.getElementById('driverList');
         driverListDiv.innerHTML = nextSession.drivers.map(driver => `
-            <p><strong>Car Number:</strong> ${driver.carNumber}, <strong>Driver Name:</strong> ${driver.driverName}</p>
+            <p><strong>Car Number:</strong> ${driver.carNumber}, <strong>Driver Name:</strong> ${driver.driver}</p>
         `).join('');
     }
 });
