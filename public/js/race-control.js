@@ -17,7 +17,7 @@ socket.on("authenticated", (data) => {
     socket.emit("getRaceSessions"); // Request current race sessions
 
     // Turn on the red light by default
-    switchLight('red'); 
+    switchLight("red");
   } else {
     messageContainer.textContent = "Invalid access key";
   }
@@ -58,47 +58,51 @@ socket.on("raceSessions", (sessions) => {
 
 // Function to turn off all lights
 function turnOffAllLights() {
-  document.querySelector('.green').classList.remove('on');
-  document.querySelector('.yellow').classList.remove('on');
-  document.querySelector('.red').classList.remove('on');
-  document.querySelector('.finish-image').classList.remove('on');
+  document.querySelector(".green").classList.remove("on");
+  document.querySelector(".yellow").classList.remove("on");
+  document.querySelector(".red").classList.remove("on");
+  document.querySelector(".finish-image").classList.remove("on");
 }
 
 // Function to switch on a specific light
 function switchLight(light) {
   turnOffAllLights(); // Ensure all lights are off
-  if (light === 'green') {
-    document.querySelector('.green').classList.add('on');
-  } else if (light === 'yellow') {
-    document.querySelector('.yellow').classList.add('on');
-  } else if (light === 'red') {
-    document.querySelector('.red').classList.add('on');
-  } else if (light === 'finish') {
-    document.querySelector('.finish-image').classList.add('on');
+  if (light === "green") {
+    document.querySelector(".green").classList.add("on");
+    socket.emit("updateFlags", "Safe");
+  } else if (light === "yellow") {
+    document.querySelector(".yellow").classList.add("on");
+    socket.emit("updateFlags", "Hazard");
+  } else if (light === "red") {
+    document.querySelector(".red").classList.add("on");
+    socket.emit("updateFlags", "Danger");
+  } else if (light === "finish") {
+    document.querySelector(".finish-image").classList.add("on");
+    socket.emit("updateFlags", "Finish");
   }
 }
 
 // Button event listeners
-document.getElementById('green').addEventListener('click', () => {
-  switchLight('green');
+document.getElementById("green").addEventListener("click", () => {
+  switchLight("green");
 });
 
-document.getElementById('yellow').addEventListener('click', () => {
-  switchLight('yellow');
+document.getElementById("yellow").addEventListener("click", () => {
+  switchLight("yellow");
 });
 
-document.getElementById('red').addEventListener('click', () => {
-  switchLight('red');
+document.getElementById("red").addEventListener("click", () => {
+  switchLight("red");
 });
 
-document.getElementById('finish').addEventListener('click', () => {
-  switchLight('finish');
+document.getElementById("finish").addEventListener("click", () => {
+  switchLight("finish");
 });
 
 // Emit event to start the race
 document.getElementById("startRaceButton").addEventListener("click", () => {
   socket.emit("startRace");
-  switchLight('green'); // Turn on green light when the race starts
+  switchLight("green"); // Turn on green light when the race starts
 });
 
 // Notify when a race has started
