@@ -15,6 +15,9 @@ socket.on("authenticated", (data) => {
     document.getElementById("raceLights").style.display = "flex";
     document.getElementById("buttons").style.display = "flex";
     socket.emit("getRaceSessions"); // Request current race sessions
+
+    // Turn on the red light by default
+    switchLight('red'); 
   } else {
     messageContainer.textContent = "Invalid access key";
   }
@@ -53,33 +56,49 @@ socket.on("raceSessions", (sessions) => {
   }
 });
 
+// Function to turn off all lights
+function turnOffAllLights() {
+  document.querySelector('.green').classList.remove('on');
+  document.querySelector('.yellow').classList.remove('on');
+  document.querySelector('.red').classList.remove('on');
+  document.querySelector('.finish-image').classList.remove('on');
+}
+
+// Function to switch on a specific light
+function switchLight(light) {
+  turnOffAllLights(); // Ensure all lights are off
+  if (light === 'green') {
+    document.querySelector('.green').classList.add('on');
+  } else if (light === 'yellow') {
+    document.querySelector('.yellow').classList.add('on');
+  } else if (light === 'red') {
+    document.querySelector('.red').classList.add('on');
+  } else if (light === 'finish') {
+    document.querySelector('.finish-image').classList.add('on');
+  }
+}
+
+// Button event listeners
 document.getElementById('green').addEventListener('click', () => {
-  const greenLight = document.querySelector('.green');
-  greenLight.classList.toggle('on');  // Toggle the 'on' class on click
-  
+  switchLight('green');
 });
 
 document.getElementById('yellow').addEventListener('click', () => {
-  const yellowLight = document.querySelector('.yellow');
-  yellowLight.classList.toggle('on');  // Toggle the 'on' class on click
-  
+  switchLight('yellow');
 });
 
 document.getElementById('red').addEventListener('click', () => {
-  const redLight = document.querySelector('.red');
-  redLight.classList.toggle('on');  // Toggle the 'on' class on click
-  
+  switchLight('red');
 });
 
 document.getElementById('finish').addEventListener('click', () => {
-  const finishImage = document.querySelector('.finish-image');
-  finishImage.classList.toggle('on');  // Toggle the 'on' class on click
+  switchLight('finish');
 });
-
 
 // Emit event to start the race
 document.getElementById("startRaceButton").addEventListener("click", () => {
   socket.emit("startRace");
+  switchLight('green'); // Turn on green light when the race starts
 });
 
 // Notify when a race has started
