@@ -1,4 +1,3 @@
-//race control
 const socket = io();
 
 // Handle login
@@ -8,7 +7,7 @@ document.getElementById('loginButton').addEventListener('click', () => {
 });
 
 socket.on('authenticated', (data) => {
-    const messageContainer = document.getElementById('loginMessage')
+    const messageContainer = document.getElementById('loginMessage');
     if (data.success) {
         messageContainer.textContent = '';
         document.getElementById('login').style.display = 'none';
@@ -16,7 +15,7 @@ socket.on('authenticated', (data) => {
         document.getElementById('raceLights').style.display = 'flex';
         socket.emit('getRaceSessions'); // Request current race sessions
     } else {
-        messageContainer.textContent = 'Invalid access key'
+        messageContainer.textContent = 'Invalid access key';
     }
 });
 
@@ -34,7 +33,7 @@ socket.on('raceSessions', (sessions) => {
         sessionElement.innerHTML = `
             <h3>${nextSession.sessionName}</h3>
             <ul>
-                ${nextSession.drivers.map(driver => `<li>${driver.driver} (Car: ${driver.carNumber})</li>`).join('')}
+                ${nextSession.drivers.map(driver => `<li>${driver.driverName} (Car: ${driver.carNumber})</li>`).join('')}
             </ul>
         `;
         container.appendChild(sessionElement);
@@ -42,8 +41,6 @@ socket.on('raceSessions', (sessions) => {
         container.innerHTML = '<p>No upcoming race sessions.</p>';
     }
 });
-
-
 
 // Emit event to start the race
 document.getElementById('startRaceButton').addEventListener('click', () => {
@@ -53,4 +50,23 @@ document.getElementById('startRaceButton').addEventListener('click', () => {
 // Notify when a race has started
 socket.on('raceStarted', () => {
     alert('Race started');
+});
+
+// Handle flag clicks
+document.querySelectorAll('.flag').forEach(flagButton => {
+    flagButton.addEventListener('click', () => {
+        const flag = flagButton.getAttribute('data-flag');
+        socket.emit('updateFlags', flag);
+    });
+});
+
+// Request race sessions
+socket.emit('getRaceSessions');
+
+// Display race sessions
+socket.on('raceSessions', (sessions) => {
+    const raceListDiv = document.getElementById('raceList');
+    raceListDiv.innerHTML = sessions.map(session => `
+        <p><strong>Session Name:</strong> ${session.sessionName}, <strong>Drivers:</strong> ${session.drivers.map(driver => driver.driverName).join(', ')}</p>
+    `).join('');
 });

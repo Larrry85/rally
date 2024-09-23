@@ -54,11 +54,23 @@ app.get('/next-race', (req, res) => {
     res.sendFile(__dirname + '/public/next-race.html');
 });
 
+app.get('/race-countdown', (req, res) => {
+    res.sendFile(__dirname + '/public/race-countdown.html');
+});
+
+// New route to get the race list
+app.get('/api/race-list', (req, res) => {
+    res.json(raceSessions);
+});
+
 const server = http.createServer(app);
 const io = socketIo(server);
 
 // In-memory storage for race sessions and drivers
 let raceSessions = [];
+let currentRace = null;
+let raceStartTime = null;
+let raceFlags = '';
 
 // Handle socket connections
 io.on('connection', (socket) => {
@@ -139,6 +151,35 @@ socket.on('addRaceSession', (session) => {
             io.emit('raceSessions', raceSessions);  // Broadcast updated list of race sessions
         }
     });
+
+    // Start the race and set the timer
+socket.on('startRace', () => {
+    if (clientRole === 'raceControl') {
+        currentRace = raceSessions.find(session => session.isNext);
+        if (currentRace) {
+            raceStartTime = Date.now() + 600000; // 10 minutes from now
+            io.emit('raceStarted', { race: currentRace, startTime: raceStartTime });
+        }
+    }
+});
+
+
+// Update race flags
+socket.on('updateFlags', (flag) => {
+    if (clientRole === 'raceControl') {
+        raceFlags = flag;
+        io.emit('raceFlags', raceFlags);  // Broadcast updated flags to all clients
+    }
+});
+
+// Send current race flags to new connections
+socket.on('getRaceFlags', () => {
+    socket.emit('raceFlags', raceFlags);
+});
+
+
+
+
 
     socket.on('disconnect', () => {
         console.log('Client disconnected');
