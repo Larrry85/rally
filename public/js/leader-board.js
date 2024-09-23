@@ -4,7 +4,10 @@ let raceData = {
   drivers: [],
   remainingTime: 600, // 10 minutes in seconds
   raceMode: "Danger",
+  isRaceActive: false,
 };
+
+let countdownInterval;
 
 function updateLeaderboard() {
   const leaderboardBody = document.getElementById("leaderboardBody");
@@ -76,26 +79,43 @@ function getRaceModeColor(mode) {
   }
 }
 
+function endRace() {
+  raceData.isRaceActive = false;
+  clearInterval(countdownInterval);
+  raceData.raceMode = "Finish";
+  updateRaceInfo();
+  socket.emit("endRace");
+}
+
 // Socket.IO event listeners
 socket.on("raceUpdate", (data) => {
-  raceData = data;
+  raceData = { ...raceData, ...data };
   updateLeaderboard();
   updateRaceInfo();
 });
 
 socket.on("raceStarted", ({ race }) => {
-  raceData.drivers = race.drivers;
-  raceData.remainingTime = 600; // Reset to 10 minutes
-  raceData.raceMode = "Safe";
+  raceData = {
+    ...raceData,
+    drivers: race.drivers,
+    remainingTime: 600, // Reset to 10 minutes
+    raceMode: "Safe",
+    isRaceActive: true,
+  };
 
-  const countdownInterval = setInterval(() => {
-    raceData.remainingTime--;
-    if (raceData.remainingTime <= 0) {
-      clearInterval(countdownInterval);
-      raceData.raceMode = "Finish";
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+  }
+
+  countdownInterval = setInterval(() => {
+    if (raceData.isRaceActive && raceData.remainingTime > 0) {
+      raceData.remainingTime--;
+      if (raceData.remainingTime <= 0) {
+        endRace();
+      }
+      updateLeaderboard();
+      updateRaceInfo();
     }
-    updateLeaderboard();
-    updateRaceInfo();
   }, 1000);
 
   updateLeaderboard();
@@ -105,6 +125,9 @@ socket.on("raceStarted", ({ race }) => {
 socket.on("raceFlags", (flag) => {
   raceData.raceMode = flag;
   updateRaceInfo();
+  if (flag === "Finish") {
+    endRace();
+  }
 });
 
 // Initialize the leaderboard
@@ -116,3 +139,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Request initial race data from server
 socket.emit("requestRaceData");
+
+// Handle finish button click (assuming it's in the race control page)
+document.getElementById("finish").addEventListener("click", () => {
+  endRace();
+});
