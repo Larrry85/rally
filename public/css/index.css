@@ -1,44 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+  background-image: url("../image/automobile.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: "Orbitron", sans-serif;
+  margin: 0;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
+  max-width: 800px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  text-align: center;
 }
 
-h1, h2 {
-    color: #333;
+h1,
+h2 {
+  color: rgba(0, 0, 0, 0.8); /* Semi-transparent white */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3); /* Multiple shadows for better contrast */
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2em; /* Adjust size as needed */
+  letter-spacing: 1px; /* Spacing between letters for style */
+  animation: textGlow 5s ease-in-out infinite;
+}
+
+h2 {
+  font-size: 1.5em; /* Adjust size as needed */
+  margin-top: 0.5em;
+  color: white;
 }
 
 .button-container {
-    margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
 }
 
 .big-button {
-    display: inline-block;
-    padding: 20px 40px;
-    margin: 10px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+  padding: 15px 30px;
+  background-color: rgba(0, 123, 255, 0.8);
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
 }
 
 .big-button:hover {
-    background-color: #0056b3;
+  background-color: rgba(0, 86, 179, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transform: perspective(500px) rotateX(15deg) scale(1.1);
 }
 
 .big-button:active {
-    background-color: #00408d;
+  background-color: rgba(0, 64, 141, 1);
+  transform: translateY(1px);
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 69, 0, 0.5), 0 0 15px rgba(0, 123, 255, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 165, 0, 0.8),
+      0 0 30px rgba(0, 191, 255, 0.6);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(255, 69, 0, 0.5), 0 0 15px rgba(0, 123, 255, 0.3);
+  }
 }

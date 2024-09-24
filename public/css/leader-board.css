@@ -3,21 +3,22 @@ body {
   line-height: 1.6;
   margin: 0;
   padding: 20px;
-  background-color: #f4f4f4;
+  background-color: #1e2329;
+  color: #ffffff;
 }
 
 .container {
   max-width: 800px;
   margin: auto;
-  background: white;
+  background: rgba(30, 35, 41, 0.8);
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 h1 {
   text-align: center;
-  color: #333;
+  color: #ffffff;
 }
 
 .race-info {
@@ -35,6 +36,7 @@ h1 {
   padding: 5px 10px;
   border-radius: 5px;
   color: white;
+  background-color: #f44336;
 }
 
 table {
@@ -46,18 +48,23 @@ th,
 td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #2c3238;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: #2196f3;
+  color: #ffffff;
   font-weight: bold;
 }
 
 tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #2c3238;
 }
 
 tr:hover {
-  background-color: #f5f5f5;
+  background-color: #3a4148;
+}
+
+.fastest-lap {
+  color: #ffc107;
 }
