@@ -8,7 +8,7 @@ document.getElementById("loginButton").addEventListener("click", () => {
 
 socket.on("authenticated", (data) => {
   const messageContainer = document.getElementById("loginMessage");
-  if (data.success) {
+  if (data.success && data.role === "raceControl") {
     messageContainer.textContent = "";
     document.getElementById("login").style.display = "none";
     document.getElementById("raceControlApp").style.display = "block";
@@ -20,6 +20,7 @@ socket.on("authenticated", (data) => {
     switchLight("red");
   } else {
     messageContainer.textContent = "Invalid access key";
+    document.getElementById("accessKey").value = ""; // Clear the input field
   }
 });
 
@@ -107,9 +108,8 @@ document.getElementById("startRaceButton").addEventListener("click", () => {
 
 // Notify when a race has started
 socket.on("raceStarted", () => {
-  const startMessage = document.getElementById('message');
+  const startMessage = document.getElementById("message");
   startMessage.innerHTML = "Race is starting!";
-  
 });
 
 // Handle flag clicks
