@@ -29,6 +29,10 @@ h2 {
     font-weight: bold;
     color: #007bff;
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%; /* Ensure it takes the full height of the viewport */
 }
 
 button.fullscreen-btn {

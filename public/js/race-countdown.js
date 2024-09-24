@@ -13,7 +13,9 @@ socket.on('raceStarted', ({ startTime }) => {
         } else {
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            countdownDiv.innerHTML = `${minutes} : ${seconds}`;
+            const formattedMinutes = String(minutes).padStart(2, '0');
+            const formattedSeconds = String(seconds).padStart(2, '0');
+            countdownDiv.innerHTML = `${formattedMinutes} : ${formattedSeconds}`;
         }
     }, 1000);
 });

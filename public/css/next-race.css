@@ -13,19 +13,20 @@ body {
     width: 90%;
     max-width: 1200px;
     text-align: center;
-    background-color: #fff;
+    color : white;
+    background-color: black;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
 
 h2 {
-    font-size: 3em;
+    font-size: 1em;
     margin-bottom: 20px;
 }
 
-#driverList, #countdown, #flags {
-    font-size: 2em;
+#driverList {
+    font-size: 3em;
     margin-top: 20px;
 }
 
