@@ -101,6 +101,11 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on('startSession', () => {
+    socket.emit('startSession')
+    console.log('session started')
+  })
+
   // Event to send race sessions after authentication
   socket.on("getRaceSessions", () => {
     if (clientRole === "raceControl") {

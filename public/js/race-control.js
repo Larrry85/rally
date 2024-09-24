@@ -12,8 +12,6 @@ socket.on("authenticated", (data) => {
     messageContainer.textContent = "";
     document.getElementById("login").style.display = "none";
     document.getElementById("raceControlApp").style.display = "block";
-    document.getElementById("raceLights").style.display = "flex";
-    document.getElementById("buttons").style.display = "flex";
     socket.emit("getRaceSessions"); // Request current race sessions
 
     // Turn on the red light by default
@@ -22,6 +20,16 @@ socket.on("authenticated", (data) => {
     messageContainer.textContent = "Invalid access key";
     document.getElementById("accessKey").value = ""; // Clear the input field
   }
+});
+
+document.getElementById('startSessionButton').addEventListener('click', () => {
+  socket.emit('startSession');
+});
+
+socket.on('startSession', () => {
+    document.getElementById("raceLights").style.display = "flex";
+    document.getElementById("buttons").style.display = "flex";
+    document.getElementById("session").style.display = "flex";
 });
 
 // Listen for race sessions data and render it
@@ -99,6 +107,7 @@ document.getElementById("red").addEventListener("click", () => {
 document.getElementById("finish").addEventListener("click", () => {
   switchLight("finish");
 });
+
 
 // Emit event to start the race
 document.getElementById("startRaceButton").addEventListener("click", () => {
