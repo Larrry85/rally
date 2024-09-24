@@ -25,7 +25,7 @@ h2 {
 }
 
 #countdown {
-    font-size: 30em; /* Make the timer huge */
+    font-size: 20em; /* Make the timer huge */
     font-weight: bold;
     color: #007bff;
     margin-top: 20px;

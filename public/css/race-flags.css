@@ -24,31 +24,8 @@ h2 {
     margin-bottom: 20px;
 }
 
-#flags {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45em; /* Increase the size */
-    height: 45em; /* Increase the size */
-    background-color: red;
-    border: 2px solid black; /* Add a black border */
-    border-radius: 50%; /* Keep it circular */
-    margin: 0 auto; /* Center the flag container */
-}
 
-.flag {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
 
-.flag img.flag-image {
-    width: 45rem; /* Increase the size */
-    height: 45em; /* Increase the size */
-    border-radius: 50%;
-}
 
 button.fullscreen-btn {
     position: fixed;
