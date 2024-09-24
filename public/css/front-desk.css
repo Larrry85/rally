@@ -87,3 +87,9 @@ button:hover {
     display: block;
     margin-bottom: 5px;
 }
+
+.message {
+    font-size: 24px;
+    color: red;
+    margin-top: 10px;
+}

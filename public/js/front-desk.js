@@ -80,7 +80,8 @@ document.getElementById('addDriverFieldButton').addEventListener('click', () => 
     if (currentDrivers < 8) { // Enforce maximum of 8 drivers
         driversList.appendChild(createDriverEntry());
     } else {
-        alert("You can only add up to 8 drivers.");
+        const maxDrivers = document.getElementById('message');
+        maxDrivers.innerHTML = "max 8 drivers!";
     }
 });
 
@@ -89,7 +90,8 @@ document.getElementById('addSessionButton').addEventListener('click', () => {
     const sessionName = document.getElementById('sessionName').value;
 
     if (!sessionName) {
-        alert("Please provide a session name.");
+        const sessionName = document.getElementById('message2');
+        sessionName.innerHTML = 'Please add a session name.';
         return;
     }
 
@@ -122,12 +124,8 @@ document.getElementById('addSessionButton').addEventListener('click', () => {
     }
 
     if (drivers.length === 0) {
-        alert("Please add at least one driver.");
-        return;
-    }
-
-    if (drivers.length > 8) {
-        alert("You cannot have more than 8 drivers.");
+        const minDrivers = document.getElementById('message1');
+        minDrivers.innerHTML = "you need atleast 1 driver!";
         return;
     }
 
