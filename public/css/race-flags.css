@@ -1,68 +1,96 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
 }
 
 .container {
-    width: 90%;
-    max-width: 1200px;
-    text-align: center;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+  width: 90%;
+  max-width: 1200px;
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 h2 {
-    font-size: 3em;
-    margin-bottom: 20px;
+  font-size: 3em;
+  margin-bottom: 20px;
 }
 
-#flags { /* flags container */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: black;
+#animated-flags {
+  width: 380px;
+  height: 350px;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
-.flag { /* flag inside the container */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40em; /* Adjust the size */
-    height: 35em; /* Adjust the size */
-    border: 2px solid black; /* Add a black border */
-    border-radius: 10px; /* Add rounded corners */
-    margin: 0 auto; /* Center the flag container */
+.column {
+  display: flex;
+  flex-direction: column;
+  margin-right: -4px;
 }
 
-.flag img.flag-image {
-    width: 30em; /* Adjust the size */
-    height: 30em; /* Adjust the size */
-    border-radius: 5px; /* Add rounded corners */
+.flag-unit {
+  width: 13px;
+  height: 10px;
+  animation: vertical 1s infinite;
+}
+
+@keyframes vertical {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(
+      calc(var(--displacement) * -2),
+      calc(var(--displacement) * -1)
+    );
+  }
+
+  75% {
+    transform: translate(
+      calc(var(--displacement) * 2),
+      calc(var(--displacement) * 4)
+    );
+  }
 }
 
 button.fullscreen-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    font-size: 1.5em;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  font-size: 1.5em;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
 }
 
 button.fullscreen-btn:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
+}
+
+footer {
+  position: fixed;
+  right: 1em;
+  bottom: 1em;
+  color: white;
+}
+
+footer a {
+  color: white;
 }

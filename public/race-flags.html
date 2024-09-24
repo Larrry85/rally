@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Race Flags</title>
-    <link rel="stylesheet" href="css/race-flags.css"/>
-
+    <link rel="stylesheet" href="css/race-flags.css" />
 </head>
+
 <body>
     <div class="container">
-
-        <h2>Current Race Flags</h2>
-        <div id="flags"></div>
-        
+        <h2>Current Race Flag</h2>
+        <div id="animated-flags"></div>
     </div>
-    <button class="fullscreen-btn" onclick="toggleFullScreen('flags')">Full Screen Flags</button>
+    <button class="fullscreen-btn" onclick="toggleFullScreen('animated-flags')">Full Screen Flag</button>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/race-flags.js"></script>
     <script src="js/fullscreen.js"></script>
 </body>
+
 </html>
