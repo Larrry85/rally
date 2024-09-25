@@ -13,11 +13,12 @@ body {
     width: 90%;
     max-width: 1200px;
     text-align: center;
-    color : white;
+    color: white;
     background-color: black;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    height: 90%;
 }
 
 h2 {
@@ -26,8 +27,22 @@ h2 {
 }
 
 #driverList {
-    font-size: 3em;
+    font-size: 2.5em;
     margin-top: 20px;
+    padding-top: 20px; /* Add space on top of the driver list */
+    text-align: center; /* Center the content */
+    max-width: 90%;
+}
+
+#driverList p {
+    display: inline-block; /* Make the <p> elements inline-block */
+    width: 90%; /* Set the width to 90% */
+    margin: 0 auto 10px auto; /* Center the <p> elements and add space between rows */
+}
+
+#driverList p:nth-child(odd) {
+    background-color: #333; /* Slightly lighter background for odd lines */
+    max-width: 90%;
 }
 
 button.fullscreen-btn {
