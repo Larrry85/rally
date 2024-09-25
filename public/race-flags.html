@@ -11,7 +11,16 @@
 <body>
     <div class="container">
         <h2>Current Race Flag</h2>
-        <div id="animated-flags"></div>
+        <div id="flag-container">
+            <div id="animated-flags"></div>
+
+            <div id="traffic-light" class="traffic-light">
+                <div class="light red"></div>
+                <div class="light yellow"></div>
+                <div class="light green"></div>
+            </div>
+            <div id="go-message" class="go-message">GO!</div>
+        </div>
     </div>
     <button class="fullscreen-btn" onclick="toggleFullScreen('animated-flags')">Full Screen Flag</button>
     <script src="/socket.io/socket.io.js"></script>

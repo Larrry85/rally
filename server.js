@@ -101,10 +101,10 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on('startSession', () => {
-    socket.emit('startSession')
-    console.log('session started')
-  })
+  socket.on("startSession", () => {
+    io.emit("startSession");
+    console.log("session started");
+  });
 
   // Event to send race sessions after authentication
   socket.on("getRaceSessions", () => {
@@ -159,17 +159,17 @@ io.on("connection", (socket) => {
     }
   });
 
-// Start the race and set the timer
-socket.on("startRace", () => {
-  if (clientRole === "raceControl") {
-    currentRace = raceSessions.find((session) => session.isNext);
-    if (currentRace) {
-      raceStartTime = Date.now() + 600000; // 10 minutes from now
-      io.emit("raceStarted", { race: currentRace, startTime: raceStartTime });
-      io.emit("startRace"); // Broadcast startRace event to all clients
+  // Start the race and set the timer
+  socket.on("startRace", () => {
+    if (clientRole === "raceControl") {
+      currentRace = raceSessions.find((session) => session.isNext);
+      if (currentRace) {
+        raceStartTime = Date.now() + 600000; // 10 minutes from now
+        io.emit("raceStarted", { race: currentRace, startTime: raceStartTime });
+        io.emit("startRace"); // Broadcast startRace event to all clients
+      }
     }
-  }
-});
+  });
 
   socket.on("sendCarList", (carIds) => {
     if (clientRole === "frontDesk") {

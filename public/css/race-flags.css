@@ -17,6 +17,7 @@ body {
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  position: relative;
 }
 
 h2 {
@@ -51,14 +52,12 @@ h2 {
   100% {
     transform: translate(0, 0);
   }
-
   25% {
     transform: translate(
       calc(var(--displacement) * -2),
       calc(var(--displacement) * -1)
     );
   }
-
   75% {
     transform: translate(
       calc(var(--displacement) * 2),
@@ -82,6 +81,84 @@ button.fullscreen-btn {
 
 button.fullscreen-btn:hover {
   background-color: #0056b3;
+}
+
+/* Traffic light section */
+#flag-container {
+  position: relative;
+  width: 380px;
+  height: 350px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#traffic-light,
+#go-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#traffic-light {
+  flex-direction: row;
+  background-color: #333;
+  border-radius: 15px;
+  padding: 10px;
+  width: 300px;
+  height: 100px;
+  justify-content: space-around;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.light {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 5px;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.light.active {
+  opacity: 1;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+    inset 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.red {
+  background-color: #ff0000;
+}
+.yellow {
+  background-color: #ffff00;
+}
+.green {
+  background-color: #00ff00;
+}
+
+#traffic-light::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 20px;
+  background-color: #333;
+  border-radius: 10px 10px 0 0;
+}
+
+#go-message {
+  font-size: 72px;
+  font-weight: bold;
+  color: green;
 }
 
 footer {

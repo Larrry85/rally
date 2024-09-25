@@ -2,8 +2,12 @@
 const socket = io();
 
 const animatedFlagEl = document.getElementById("animated-flags");
+const trafficLightEl = document.getElementById("traffic-light");
+const goMessageEl = document.getElementById("go-message");
 const rows = 25;
 const columns = 38;
+
+let isTrafficLightSequence = false;
 
 // Create animated flag structure
 for (let i = 0; i < columns; i++) {
@@ -29,15 +33,59 @@ socket.on("raceFlags", (flag) => {
   updateAnimatedFlag(flag);
 });
 
-// // Update race flags in real-time
+// Update race flags in real-time
 socket.on("updateFlags", (flag) => {
-  updateAnimatedFlag(flag);
+  if (!isTrafficLightSequence) {
+    updateAnimatedFlag(flag);
+  }
 });
 
-function updateAnimatedFlag(flag) {
-  const flagUnits = document.querySelectorAll(".flag-unit");
-  let color;
+// Handle start session event
+socket.on("startSession", () => {
+  console.log("Start session event received");
+  updateAnimatedFlag("Safe");
+});
 
+// Handle start race event
+socket.on("startRace", () => {
+  console.log("Start race event received");
+  startTrafficLightSequence();
+});
+
+function updateDisplay(state) {
+  console.log("Updating display to:", state);
+
+  // Ensure all displays are hidden first
+  animatedFlagEl.style.display = "none";
+  trafficLightEl.style.display = "none";
+  goMessageEl.style.display = "none";
+
+  // Then activate the correct one based on state
+  switch (state) {
+    case "flag":
+      animatedFlagEl.style.display = "flex";
+      break;
+    case "traffic-light":
+      trafficLightEl.style.display = "flex";
+      break;
+    case "go":
+      goMessageEl.style.display = "flex";
+      break;
+  }
+}
+
+function updateAnimatedFlag(flag) {
+  if (isTrafficLightSequence) {
+    console.log("Skipping flag update during traffic light sequence");
+    return;
+  }
+
+  console.log("Updating flag to:", flag);
+
+  updateDisplay("flag");
+  const flagUnits = document.querySelectorAll(".flag-unit");
+
+  let color;
   switch (flag) {
     case "Safe":
       color = "green";
@@ -61,10 +109,55 @@ function updateAnimatedFlag(flag) {
       color = "red"; // Default to red
   }
 
+  console.log("Setting flag color to:", color);
   // Set all flag units to the same color for non-Finish flags
   flagUnits.forEach((unit) => {
     unit.style.backgroundColor = color;
   });
+}
+
+function startTrafficLightSequence() {
+  console.log("Starting traffic light sequence");
+  isTrafficLightSequence = true;
+
+  // Force display to traffic light
+  updateDisplay("traffic-light");
+
+  const lights = trafficLightEl.querySelectorAll(".light");
+
+  // Reset lights
+  lights.forEach((light) => light.classList.remove("active"));
+
+  // Red light (4 seconds)
+  console.log("Red light");
+  lights[0].classList.add("active");
+
+  setTimeout(() => {
+    // Yellow light (3 seconds)
+    console.log("Yellow light");
+    lights[0].classList.remove("active");
+    lights[1].classList.add("active");
+
+    setTimeout(() => {
+      // Green light (3 seconds)
+      console.log("Green light");
+      lights[1].classList.remove("active");
+      lights[2].classList.add("active");
+
+      setTimeout(() => {
+        // Show GO! message
+        console.log("Showing GO! message");
+        updateDisplay("go");
+
+        // After 1 second, switch back to green flag
+        setTimeout(() => {
+          console.log("Switching back to green flag");
+          isTrafficLightSequence = false;
+          updateAnimatedFlag("Safe");
+        }, 3000);
+      }, 300);
+    }, 3000);
+  }, 4000);
 }
 
 function toggleFullScreen(elementId) {
@@ -97,3 +190,8 @@ function toggleFullScreen(elementId) {
     }
   }
 }
+
+// Initialize display on page load
+document.addEventListener("DOMContentLoaded", () => {
+  updateDisplay("flag");
+});
