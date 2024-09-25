@@ -127,9 +127,9 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
     if (driverName) {
       // Check if the driver name is already added
       if (driverNamesSet.has(driverName)) {
-        alert(
-          `The driver name "${driverName}" has already been added. Please use a unique name.`
-        );
+        const duplicateName = document.getElementById('message3')
+        duplicateName.innerHTML = `The driver name "${driverName}" has already been added. Please use a unique name.`
+        
         hasDuplicate = true; // Set duplicate flag to true
       }
       driverNamesSet.add(driverName); // Add name to the set
