@@ -1,5 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Orbitron", sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -24,15 +27,21 @@ h2 {
     margin-bottom: 20px;
 }
 
+#countdownCircle {
+    position: relative;
+    width: 20em;
+    height: 20em;
+    margin: 1em auto;
+}
+
 #countdown {
-    font-size: 20em; /* Make the timer huge */
+    font-size: 2em; /* Default size inside the circle */
     font-weight: bold;
     color: #007bff;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90%; /* Ensure it takes the full height of the viewport */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 button.fullscreen-btn {
@@ -50,4 +59,39 @@ button.fullscreen-btn {
 
 button.fullscreen-btn:hover {
     background-color: #0056b3;
+}
+
+/* New styles for the SVG countdown circle */
+:root {
+    --duration: 600; /* 10 minutes in seconds */
+    --color1: #8a9b0f;
+    --color2: #940a3d;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+}
+
+circle {
+    fill: none;
+    stroke: silver;
+}
+
+circle:nth-child(2) {
+    stroke-linecap: round;
+    stroke: var(--color1);
+    stroke-dasharray: 1;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+/* Fullscreen styles */
+:fullscreen #countdownCircle {
+    width: 100vw;
+    height: 100vh;
+}
+
+:fullscreen #countdown {
+    font-size: 10vw; /* Larger size in full-screen mode */
 }
