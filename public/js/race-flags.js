@@ -41,10 +41,10 @@ socket.on("updateFlags", (flag) => {
 });
 
 // Handle start session event
-socket.on("startSession", () => {
+/*socket.on("startSession", () => {
   console.log("Start session event received");
   updateAnimatedFlag("Safe");
-});
+});*/
 
 // Handle start race event
 socket.on("startRace", () => {

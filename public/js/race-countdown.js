@@ -34,6 +34,6 @@ function startCountdown(duration) {
 }
 
 socket.on('startRace', () => {
-    const duration = 10 * 60; // 10 minutes in seconds
+    const duration = 606; // 10:06 minutes in seconds
     startCountdown(duration);
 });
