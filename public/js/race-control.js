@@ -119,6 +119,9 @@ document.getElementById("startRaceButton").addEventListener("click", () => {
 socket.on("raceStarted", () => {
   const startMessage = document.getElementById("message");
   startMessage.innerHTML = "Race is starting!";
+  setTimeout(() => {
+    startMessage.innerHTML = ""
+  }, 10000)
 });
 
 // Handle flag clicks
