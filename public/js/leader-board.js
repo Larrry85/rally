@@ -24,8 +24,16 @@ function updateLeaderboard() {
 
   leaderboardBody.innerHTML = "";
 
-  // Sort drivers by fastest lap time
-  raceData.drivers.sort((a, b) => a.fastestLap - b.fastestLap);
+  // Sort drivers by car ID first, then by fastest lap time
+  raceData.drivers.sort((a, b) => {
+    if (a.carNumber !== b.carNumber) {
+      return a.carNumber - b.carNumber;
+    }
+    if (a.fastestLap && b.fastestLap) {
+      return a.fastestLap - b.fastestLap;
+    }
+    return 0;
+  });
 
   raceData.drivers.forEach((driver, index) => {
     const row = `
@@ -128,6 +136,25 @@ socket.on("raceFlags", (flag) => {
   if (flag === "Finish") {
     endRace();
   }
+});
+
+socket.on("lapUpdate", (data) => {
+  console.log("Lap update received:", data); // Debugging log
+  const { carId, laps, lapTime } = data;
+
+  // Find the driver and update their lap count and lap time
+  const driver = raceData.drivers.find(driver => driver.carNumber === carId);
+  if (driver) {
+    if (!driver.lapTimes) {
+      driver.lapTimes = [];
+    }
+    driver.lapTimes.push(lapTime);
+    driver.currentLap = laps;
+    driver.lastLapTime = lapTime;
+    driver.fastestLap = Math.min(...driver.lapTimes);
+  }
+
+  updateLeaderboard();
 });
 
 // Initialize the leaderboard

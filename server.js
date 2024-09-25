@@ -170,6 +170,18 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("sendCarList", (carIds) => {
+    if (clientRole === "frontDesk") {
+      console.log("Broadcasting car list:", carIds); // Debugging log
+      io.emit("carIds", carIds); // Broadcast car IDs to all clients
+    }
+  });
+
+  socket.on("lapAdded", (data) => {
+    console.log("Lap added:", data); // Debugging log
+    io.emit("lapUpdate", data); // Broadcast lap data to all clients
+  });
+
   // Update race flags
   socket.on("updateFlags", (flag) => {
     if (clientRole === "raceControl") {

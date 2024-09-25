@@ -32,11 +32,11 @@ socket.on("raceSessions", (sessions) => {
             <strong>${session.sessionName}</strong>
             <ul>
                 ${session.drivers
-                  .map(
-                    (driver) =>
-                      `<li>${driver.driver} (Car: ${driver.carNumber})</li>`
-                  )
-                  .join("")}
+        .map(
+          (driver) =>
+            `<li>${driver.driver} (Car: ${driver.carNumber})</li>`
+        )
+        .join("")}
             </ul>
             <button class="editSessionButton">Edit</button>
             <button class="removeSessionButton">Remove</button>
@@ -100,6 +100,12 @@ document
     }
   });
 
+function sendCarListToServer(drivers) {
+  const carIds = drivers.map(driver => driver.carNumber);
+  console.log("Sending car list to server:", carIds); // Debugging log
+  socket.emit("sendCarList", carIds);
+}
+
 // Add a new or update race session with drivers (Max 8 drivers and unique names)
 document.getElementById("addSessionButton").addEventListener("click", () => {
   const sessionName = document.getElementById("sessionName").value;
@@ -162,6 +168,9 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
       drivers: drivers,
     });
   }
+
+  // Send car list to the server
+  sendCarListToServer(drivers);
 
   // Clear inputs
   document.getElementById("sessionName").value = "";

@@ -52,38 +52,27 @@ button:hover {
     background-color: #218838;
 }
 
-.driver-entry {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.driver-entry input {
-    margin-right: 10px;
-    flex-grow: 1;
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
 }
 
-.removeDriverButton {
-    background-color: #dc3545;
+th {
+    background-color: #2196f3;
+    color: #ffffff;
+    font-weight: bold;
 }
 
-.removeDriverButton:hover {
-    background-color: #c82333;
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-#sessions {
-    margin-top: 20px;
-}
-
-.session {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background: #e9ecef;
-}
-
-.session strong {
-    display: block;
-    margin-bottom: 5px;
+tr:hover {
+    background-color: #ddd;
 }

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>Lap Line Tracker</title>
     <link rel="stylesheet" href="css/lap-line-tracker.css"/>
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <div class="container">
         <div id="login" class="form-container">
-            <h2>Login to Lap line tracker interface</h2>
+            <h2>Login to Lap Line Tracker Interface</h2>
             <input type="password" id="accessKey" placeholder="Enter Access Key">
             <button id="loginButton">Login</button>
             <div id="loginMessage" style="color: red; margin-top: 10px;"></div>
@@ -19,11 +19,25 @@
         <!-- Race Control Section -->
         <div id="lapLinerApp" class="form-container" style="display: none;">
             <h2>Laps</h2>
-            <button id="">lap</button>
+            <!-- Buttons will be dynamically added here -->
         </div>
-       
+
+        <!-- Leaderboard Section -->
+        <div class="form-container">
+            <h2>Leaderboard</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Car ID</th>
+                        <th>Laps</th>
+                        <th>Last Lap Time</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                </tbody>
+            </table>
+        </div>
     </div>
     <script src="js/lap-line-tracker.js"></script>
 </body>
 </html>
-
