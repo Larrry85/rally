@@ -21,6 +21,7 @@ h1, h2, h3, h4 {
     font-weight: bold;
 }
 
+
 .form-container {
     margin-bottom: 20px;
     padding: 20px;
@@ -59,6 +60,8 @@ button {
 button:hover {
     background-color: #218838;
 }
+
+
 
 table {
     width: 100%;
@@ -141,4 +144,8 @@ tr:hover {
         max-width: 60px;
         max-height: 60px;
     }
+}
+
+.red-button {
+    background-color: red;
 }

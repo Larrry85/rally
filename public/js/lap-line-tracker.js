@@ -29,6 +29,12 @@ socket.on("carIds", (carIds) => {
   const lapLinerApp = document.getElementById("lapLinerApp");
   lapLinerApp.innerHTML = ""; // Clear existing buttons
 
+  const header = document.createElement("h2");
+  header.textContent = "Lap Tracker";
+  lapLinerApp.appendChild(header);
+
+
+
   // Create buttons and place them in the grid
   carIds.forEach((carId, index) => {
     const button = document.createElement("button");
@@ -46,6 +52,17 @@ socket.on("carIds", (carIds) => {
 
     lapLinerApp.appendChild(button);
   });
+
+  const returnButton = document.createElement("button");
+  returnButton.textContent = "Return";
+  returnButton.classList.add("red-button"); // Add CSS class to button
+  returnButton.addEventListener("click", () => {
+    // Reset the lapLinerApp to its default state
+    lapLinerApp.innerHTML = `
+      <h2>Lap Tracker</h2>
+    `;
+  });
+  lapLinerApp.appendChild(returnButton);
 });
 
 // Enable buttons when the race starts
