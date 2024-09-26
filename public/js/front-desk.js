@@ -182,3 +182,4 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
   // Add a default driver input
   driversList.appendChild(createDriverEntry());
 });
+//////////////
