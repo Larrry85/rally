@@ -71,26 +71,7 @@ function addLap(carId) {
   }
   raceData.laps[carId]++;
   const lapTime = new Date().toLocaleTimeString();
-  updateLeaderboard(carId, raceData.laps[carId], lapTime);
 
   // Emit lap data to the server
   socket.emit("lapAdded", { carId, laps: raceData.laps[carId], lapTime });
-}
-
-function updateLeaderboard(carId, laps, lapTime) {
-  const leaderboardBody = document.getElementById("leaderboardBody");
-  let row = document.getElementById(`car-${carId}`);
-  if (!row) {
-    row = document.createElement("tr");
-    row.id = `car-${carId}`;
-    row.innerHTML = `
-      <td>${carId}</td>
-      <td>${laps}</td>
-      <td>${lapTime}</td>
-    `;
-    leaderboardBody.appendChild(row);
-  } else {
-    row.cells[1].textContent = laps;
-    row.cells[2].textContent = lapTime;
-  }
 }
