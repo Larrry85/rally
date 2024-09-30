@@ -1,4 +1,4 @@
-# Race Track Screens
+# Race Track Info Screens
 
 A real-timesystem to control races and inform spectators.
 
