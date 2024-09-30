@@ -1,63 +1,83 @@
+/* Style the body element */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    font-family: Arial, sans-serif; /* Use Arial font */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    height: 100vh; /* Set height to 100% of the viewport height */
+    background-color: #f0f0f0; /* Set background color */
 }
 
+/* Style the container element */
 .container {
-    width: 90%;
-    max-width: 1200px;
-    text-align: center;
-    color: white;
-    background-color: black;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    height: 90%;
+    width: 90%; /* Set width to 90% */
+    max-width: 1200px; /* Set maximum width */
+    text-align: center; /* Center text */
+    color: white; /* Set text color to white */
+    background-color: black; /* Set background color to black */
+    padding: 20px; /* Add padding inside the container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    border-radius: 10px; /* Round the corners */
+    height: 90%; /* Set height to 90% of the container */
 }
 
+/* Style h2 elements */
 h2 {
-    font-size: 1em;
-    margin-bottom: 20px;
+    font-size: 1em; /* Set font size */
+    margin-bottom: 20px; /* Add margin to the bottom */
 }
 
+/* Style the driver list container */
 #driverList {
-    font-size: 2.5em;
-    margin-top: 20px;
+    font-size: 2.5em; /* Set font size */
+    margin-top: 20px; /* Add margin to the top */
     padding-top: 20px; /* Add space on top of the driver list */
     text-align: center; /* Center the content */
-    max-width: 90%;
+    max-width: 90%; /* Set maximum width */
 }
 
+/* Style paragraphs inside the driver list */
 #driverList p {
     display: inline-block; /* Make the <p> elements inline-block */
     width: 90%; /* Set the width to 90% */
-    margin: 0 auto 10px auto; /* Center the <p> elements and add space between rows */
+    margin: 0 auto 20px auto; /* Center the <p> elements and add more space between rows */
+    font-size: 1.2em; /* Increase font size */
 }
 
-#driverList p:nth-child(odd) {
+.listheader {
     background-color: #333; /* Slightly lighter background for odd lines */
-    max-width: 90%;
+    max-width: 90%; /* Set maximum width */
 }
 
+/* Style odd child paragraphs inside the driver list */
+#driverList p:nth-child(even) {
+    background-color: #333; /* Slightly lighter background for odd lines */
+    max-width: 90%; /* Set maximum width */
+}
+
+/* Style the fullscreen button */
 button.fullscreen-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    font-size: 1.5em;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
+    position: fixed; /* Fix the position */
+    top: 20px; /* Position 20px from the top */
+    right: 20px; /* Position 20px from the right */
+    padding: 10px 20px; /* Add padding inside the button */
+    font-size: 1.5em; /* Set font size */
+    cursor: pointer; /* Change cursor to pointer */
+    background-color: #007bff; /* Set background color */
+    color: #fff; /* Set text color to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Round the corners */
 }
 
+/* Style the fullscreen button on hover */
 button.fullscreen-btn:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Change background color */
+}
+
+/* Fullscreen styles */
+:fullscreen #driverList p {
+    font-size: 2em; /* Increase font size in fullscreen mode */
+    margin: 0 auto 30px auto; /* Add more space between rows in fullscreen mode */
 }

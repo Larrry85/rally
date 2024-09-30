@@ -1,176 +1,205 @@
+/* Style the body element */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #1e2329;
-  margin: 0;
-  padding: 20px;
-  min-height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-}
-.container {
-  max-width: 800px;
-  width: 100%;
-  background: rgba(30, 35, 41, 0.8);
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  padding: 30px;
-  text-align: center;
+  font-family: Arial, sans-serif; /* Use Arial font */
+  background-color: #1e2329; /* Set background color */
+  margin: 0; /* Remove default margin */
+  padding: 20px; /* Add padding around the body */
+  min-height: 100%; /* Set minimum height to 100% of the viewport height */
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  color: #ffffff; /* Set text color to white */
 }
 
+/* Style the container element */
+.container {
+  max-width: 800px; /* Set maximum width */
+  width: 100%; /* Set width to 100% */
+  background: rgba(30, 35, 41, 0.8); /* Semi-transparent dark background */
+  border-radius: 20px; /* Round the corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  padding: 30px; /* Add padding inside the container */
+  text-align: center; /* Center text */
+}
+
+/* Style heading elements */
 h1,
 h2 {
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9); /* Semi-transparent white color */
+  font-weight: bold; /* Make text bold */
 }
 
+/* Style h1 element */
 h1 {
-  font-size: 2em;
-  letter-spacing: 1px;
+  font-size: 2em; /* Set font size */
+  letter-spacing: 1px; /* Add spacing between letters */
 }
 
+/* Style form containers */
 .form-container,
 .form-container2 {
-  margin-bottom: 20px;
-  padding: 20px;
-  border: 1px solid #2c3238;
-  border-radius: 5px;
-  background: rgba(30, 35, 41, 0.6);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 300px;
+  margin-bottom: 20px; /* Add margin to the bottom */
+  padding: 20px; /* Add padding inside the container */
+  border: 1px solid #2c3238; /* Add border */
+  border-radius: 5px; /* Round the corners */
+  background: rgba(30, 35, 41, 0.6); /* Semi-transparent dark background */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Arrange items in a column */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+  min-height: 300px; /* Set minimum height */
 }
 
+/* Style text and password input fields */
 input[type="text"],
 input[type="password"] {
-  width: 200px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #2c3238;
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  width: 200px; /* Set width */
+  padding: 10px; /* Add padding inside the input */
+  margin-bottom: 10px; /* Add margin to the bottom */
+  border: 1px solid #2c3238; /* Add border */
+  border-radius: 5px; /* Round the corners */
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  color: #ffffff; /* Set text color to white */
 }
 
+/* Style the button element */
 button {
-  padding: 15px 30px;
-  background-color: rgba(0, 123, 255, 0.8);
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: "Orbitron", sans-serif;
-  font-size: 16px;
+  padding: 15px 30px; /* Add padding inside the button */
+  background-color: rgba(0, 123, 255, 0.8); /* Set background color */
+  color: white; /* Set text color to white */
+  border: none; /* Remove border */
+  border-radius: 25px; /* Round the corners */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
+  font-size: 16px; /* Set font size */
 }
 
+/* Style the button on hover */
 button:hover {
-  background-color: rgba(0, 86, 179, 0.9);
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 86, 179, 0.9); /* Change background color */
+  transform: translateY(-3px); /* Move button up */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
 }
 
+/* Style the button on active (click) */
 button:active {
-  background-color: rgba(0, 64, 141, 1);
-  transform: translateY(1px);
+  background-color: rgba(0, 64, 141, 1); /* Change background color */
+  transform: translateY(1px); /* Move button down */
 }
 
+/* Style the light container */
 .light-container {
-  display: flex;
-  justify-content: center; /* Spread lights and buttons horizontally */
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center items horizontally */
   align-items: center; /* Center items vertically */
   margin-bottom: 10px; /* Add space below the lights */
-  gap: 30px;
+  gap: 30px; /* Add gap between lights */
 }
 
+/* Style the green, yellow, and red lights */
 .green,
 .yellow,
 .red {
-  width: 60px;
-  height: 60px;
-  border: 3px solid #444;
-  border-radius: 50%;
-  transition: box-shadow 0.3s;
+  width: 60px; /* Set width */
+  height: 60px; /* Set height */
+  border: 3px solid #444; /* Add border */
+  border-radius: 50%; /* Round the corners */
+  transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
 }
 
+/* Set background color for green light */
 .green {
   background-color: green;
 }
+
+/* Set background color for yellow light */
 .yellow {
   background-color: yellow;
 }
+
+/* Set background color for red light */
 .red {
   background-color: red;
 }
 
+/* Style the green light when it is on */
 .on.green {
-  box-shadow: 0 0 25px 12px rgba(76, 175, 80, 0.7);
+  box-shadow: 0 0 25px 12px rgba(76, 175, 80, 0.7); /* Add green glow */
 }
+
+/* Style the yellow light when it is on */
 .on.yellow {
-  box-shadow: 0 0 25px 12px rgba(255, 193, 7, 0.7);
+  box-shadow: 0 0 25px 12px rgba(255, 193, 7, 0.7); /* Add yellow glow */
 }
+
+/* Style the red light when it is on */
 .on.red {
-  box-shadow: 0 0 25px 12px rgba(244, 67, 54, 0.7);
+  box-shadow: 0 0 25px 12px rgba(244, 67, 54, 0.7); /* Add red glow */
 }
 
+/* Style the finish image */
 .finish-image {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-top: 15px;
-  border: 3px solid #444;
-  transition: box-shadow 0.3s;
+  width: 60px; /* Set width */
+  height: 60px; /* Set height */
+  border-radius: 50%; /* Round the corners */
+  object-fit: cover; /* Cover the object */
+  margin-top: 15px; /* Add margin to the top */
+  border: 3px solid #444; /* Add border */
+  transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
 }
 
+/* Style the finish image when it is on */
 .on.finish-image {
-  box-shadow: 0 0 25px 12px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 25px 12px rgba(255, 255, 255, 0.7); /* Add white glow */
 }
 
+/* Style the button container */
 .button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-top: 10px;
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  gap: 15px; /* Add gap between buttons */
+  margin-top: 10px; /* Add margin to the top */
 }
 
+/* Style buttons inside the button container */
 .button-container button {
   padding: 15px 20px; /* Smaller padding */
-  background-color: rgba(0, 123, 255, 0.8);
-  color: white;
-  border: none;
+  background-color: rgba(0, 123, 255, 0.8); /* Set background color */
+  color: white; /* Set text color to white */
+  border: none; /* Remove border */
   border-radius: 15px; /* Slightly reduced border-radius */
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: "Orbitron", sans-serif;
+  cursor: pointer; /* Change cursor to pointer */
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
   font-size: 14px; /* Smaller font size */
 }
 
+/* Style the message element */
 .message {
-  font-size: 28px;
-  color: #f44336;
-  margin-top: 20px;
-  text-align: center;
-  font-weight: bold;
-  text-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+  font-size: 28px; /* Set font size */
+  color: #f44336; /* Set text color to red */
+  margin-top: 20px; /* Add margin to the top */
+  text-align: center; /* Center text */
+  font-weight: bold; /* Make text bold */
+  text-shadow: 0 0 10px rgba(244, 67, 54, 0.5); /* Add red text shadow */
 }
 
+/* Define keyframes for pulse animation */
 @keyframes pulse {
   0% {
-    transform: scale(1);
+    transform: scale(1); /* Initial scale */
   }
   50% {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Scale up */
   }
   100% {
-    transform: scale(1);
+    transform: scale(1); /* Scale back to initial */
   }
 }
 
+/* Apply pulse animation to elements with the .on class */
 .on {
-  animation: pulse 1s infinite;
+  animation: pulse 1s infinite; /* Infinite pulse animation */
 }

@@ -1,90 +1,100 @@
+/* Import the Orbitron font from Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
 
+/* Style the body element */
 body {
-  background-image: url("../image/automobile.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  font-family: "Orbitron", sans-serif;
-  margin: 0;
-  padding: 20px;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  background-image: url("../image/automobile.jpg"); /* Set background image */
+  background-size: cover; /* Cover the entire background */
+  background-position: center; /* Center the background image */
+  background-attachment: fixed; /* Fix the background image in place */
+  font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
+  margin: 0; /* Remove default margin */
+  padding: 20px; /* Add padding around the body */
+  height: 100vh; /* Set height to 100% of the viewport height */
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  overflow: hidden; /* Hide overflow content */
 }
 
+/* Style the container element */
 .container {
-  max-width: 800px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(6px);
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  padding: 30px;
-  text-align: center;
+  max-width: 800px; /* Set maximum width */
+  width: 100%; /* Set width to 100% */
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  backdrop-filter: blur(6px); /* Apply blur effect */
+  border-radius: 20px; /* Round the corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  padding: 30px; /* Add padding inside the container */
+  text-align: center; /* Center text */
 }
 
+/* Style h1 and h2 elements */
 h1,
 h2 {
-  color: rgba(0, 0, 0, 0.8); /* Semi-transparent white */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3); /* Multiple shadows for better contrast */
-  font-weight: bold;
+  color: rgba(0, 0, 0, 0.8); /* Semi-transparent black color */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3); /* Add text shadows for contrast */
+  font-weight: bold; /* Make text bold */
 }
 
+/* Style h1 element */
 h1 {
-  font-size: 2em; /* Adjust size as needed */
-  letter-spacing: 1px; /* Spacing between letters for style */
-  animation: textGlow 5s ease-in-out infinite;
+  font-size: 2em; /* Set font size */
+  letter-spacing: 1px; /* Add spacing between letters */
+  animation: textGlow 5s ease-in-out infinite; /* Apply text glow animation */
 }
 
+/* Style h2 element */
 h2 {
-  font-size: 1.5em; /* Adjust size as needed */
-  margin-top: 0.5em;
-  color: white;
+  font-size: 1.5em; /* Set font size */
+  margin-top: 0.5em; /* Add margin to the top */
+  color: white; /* Set text color to white */
 }
 
+/* Style the button container */
 .button-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 30px;
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow buttons to wrap */
+  justify-content: center; /* Center buttons horizontally */
+  gap: 15px; /* Add gap between buttons */
+  margin-top: 30px; /* Add margin to the top */
 }
 
+/* Style the big buttons */
 .big-button {
-  padding: 15px 30px;
-  background-color: rgba(0, 123, 255, 0.8);
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
+  padding: 15px 30px; /* Add padding inside the button */
+  background-color: rgba(0, 123, 255, 0.8); /* Set background color */
+  color: white; /* Set text color to white */
+  text-decoration: none; /* Remove underline from links */
+  font-size: 16px; /* Set font size */
+  border-radius: 25px; /* Round the corners */
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  border: 2px solid transparent; /* Transparent border */
 }
 
+/* Style the big buttons on hover */
 .big-button:hover {
-  background-color: rgba(0, 86, 179, 0.9);
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transform: perspective(500px) rotateX(15deg) scale(1.1);
+  background-color: rgba(0, 86, 179, 0.9); /* Change background color */
+  transform: translateY(-3px); /* Move button up */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  transform: perspective(500px) rotateX(15deg) scale(1.1); /* Apply 3D rotation and scaling */
 }
 
+/* Style the big buttons on active (click) */
 .big-button:active {
-  background-color: rgba(0, 64, 141, 1);
-  transform: translateY(1px);
+  background-color: rgba(0, 64, 141, 1); /* Change background color */
+  transform: translateY(1px); /* Move button down */
 }
 
+/* Define keyframes for text glow animation */
 @keyframes textGlow {
   0% {
-    text-shadow: 0 0 5px rgba(255, 69, 0, 0.5), 0 0 15px rgba(0, 123, 255, 0.3);
+    text-shadow: 0 0 5px rgba(255, 69, 0, 0.5), 0 0 15px rgba(0, 123, 255, 0.3); /* Initial shadow */
   }
   50% {
-    text-shadow: 0 0 20px rgba(255, 165, 0, 0.8),
-      0 0 30px rgba(0, 191, 255, 0.6);
+    text-shadow: 0 0 20px rgba(255, 165, 0, 0.8), 0 0 30px rgba(0, 191, 255, 0.6); /* Midway shadow */
   }
   100% {
-    text-shadow: 0 0 5px rgba(255, 69, 0, 0.5), 0 0 15px rgba(0, 123, 255, 0.3);
+    text-shadow: 0 0 5px rgba(255, 69, 0, 0.5), 0 0 15px rgba(0, 123, 255, 0.3); /* Final shadow */
   }
 }

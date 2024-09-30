@@ -1,151 +1,166 @@
+/* Import the Orbitron font from Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
 
+/* Style the body element */
 body {
-  font-family: "Orbitron", sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #1e2329;
+  font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
+  margin: 0; /* Remove default margin */
+  padding: 20px; /* Add padding around the body */
+  background-color: #1e2329; /* Set background color */
 }
 
+/* Style the container element */
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: rgba(30, 35, 41, 0.8);
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    padding: 20px;
+  max-width: 800px; /* Set maximum width */
+  margin: 0 auto; /* Center the container */
+  background: rgba(30, 35, 41, 0.8); /* Semi-transparent dark background */
+  border-radius: 20px; /* Round the corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  padding: 20px; /* Add padding inside the container */
 }
 
+/* Style heading elements */
 h1, h2, h3, h4 {
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: bold;
+  color: rgba(255, 255, 255, 0.9); /* Semi-transparent white color */
+  font-weight: bold; /* Make text bold */
 }
 
-
+/* Style the form container */
 .form-container {
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #2c3238;
-    border-radius: 5px;
-    background: rgba(30, 35, 41, 0.6);
-    display: flex;
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
-    min-height: 300px;
+  margin-bottom: 20px; /* Add margin to the bottom */
+  padding: 20px; /* Add padding inside the container */
+  border: 1px solid #2c3238; /* Add border */
+  border-radius: 5px; /* Round the corners */
+  background: rgba(30, 35, 41, 0.6); /* Semi-transparent dark background */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Arrange items in a column */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+  min-height: 300px; /* Set minimum height */
 }
 
+/* Style text and password input fields */
 input[type="text"], input[type="password"] {
-    width: 200px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #2c3238;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-  }
+  width: 200px; /* Set width */
+  padding: 10px; /* Add padding inside the input */
+  margin-bottom: 10px; /* Add margin to the bottom */
+  border: 1px solid #2c3238; /* Add border */
+  border-radius: 5px; /* Round the corners */
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  color: #ffffff; /* Set text color to white */
+}
 
+/* Style the button element */
 button {
-    padding: 15px 30px;
-    background-color: rgba(0, 123, 255, 0.8);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: "Orbitron", sans-serif;
-    font-size: 16px;
+  padding: 15px 30px; /* Add padding inside the button */
+  background-color: rgba(0, 123, 255, 0.8); /* Set background color */
+  color: white; /* Set text color to white */
+  border: none; /* Remove border */
+  border-radius: 25px; /* Round the corners */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
+  font-size: 16px; /* Set font size */
 }
 
+/* Style the button on hover */
 button:hover {
-    background-color: #218838;
+  background-color: #218838; /* Change background color */
 }
 
-
-
+/* Style the table element */
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%; /* Set width to 100% */
+  border-collapse: collapse; /* Collapse borders */
 }
 
+/* Style table header and data cells */
 th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+  padding: 12px; /* Add padding inside cells */
+  text-align: left; /* Align text to the left */
+  border-bottom: 1px solid #ddd; /* Add bottom border */
 }
 
+/* Style table header cells */
 th {
-    background-color: #2196f3;
-    color: #ffffff;
-    font-weight: bold;
+  background-color: #2196f3; /* Set background color */
+  color: #ffffff; /* Set text color to white */
+  font-weight: bold; /* Make text bold */
 }
 
+/* Style even table rows */
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2; /* Set background color */
 }
 
+/* Style table rows on hover */
 tr:hover {
-    background-color: #ddd;
+  background-color: #ddd; /* Change background color */
 }
 
+/* Style the lapLinerApp element */
 #lapLinerApp {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr); /* Adjust the number of columns as needed */
-    grid-template-rows: repeat(8, 1fr); /* Adjust the number of rows as needed */
-    gap: 10px;
-    justify-items: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
+  display: grid; /* Use grid layout */
+  grid-template-columns: repeat(8, 1fr); /* Define 8 columns */
+  grid-template-rows: repeat(8, 1fr); /* Define 8 rows */
+  gap: 10px; /* Add gap between grid items */
+  justify-items: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  height: 100%; /* Set height to 100% */
+  width: 100%; /* Set width to 100% */
+  padding: 10px; /* Add padding inside the element */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
+/* Style buttons inside lapLinerApp */
 #lapLinerApp button {
-    width: 100%;
-    height: 100%;
-    max-width: 100px;
-    max-height: 100px;
-    border-radius: 50%; /* Make the buttons round */
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%; /* Set width to 100% */
+  height: 100%; /* Set height to 100% */
+  max-width: 100px; /* Set maximum width */
+  max-height: 100px; /* Set maximum height */
+  border-radius: 50%; /* Make the buttons round */
+  padding: 10px; /* Add padding inside the button */
+  background-color: #28a745; /* Set background color */
+  color: white; /* Set text color to white */
+  border: none; /* Remove border */
+  cursor: pointer; /* Change cursor to pointer */
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
 }
 
+/* Style buttons inside lapLinerApp on hover */
 #lapLinerApp button:hover {
-    background-color: #218838;
+  background-color: #218838; /* Change background color */
 }
 
 /* Responsive design for tablets */
 @media (max-width: 1024px) {
-    #lapLinerApp {
-        grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns for smaller screens */
-        grid-template-rows: repeat(4, 1fr); /* Adjust the number of rows for smaller screens */
-    }
+  #lapLinerApp {
+    grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns for smaller screens */
+    grid-template-rows: repeat(4, 1fr); /* Adjust the number of rows for smaller screens */
+  }
 
-    #lapLinerApp button {
-        max-width: 80px;
-        max-height: 80px;
-    }
+  #lapLinerApp button {
+    max-width: 80px; /* Set maximum width */
+    max-height: 80px; /* Set maximum height */
+  }
 }
 
+/* Responsive design for mobile devices */
 @media (max-width: 768px) {
-    #lapLinerApp {
-        grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns for smaller screens */
-        grid-template-rows: repeat(3, 1fr); /* Adjust the number of rows for smaller screens */
-    }
+  #lapLinerApp {
+    grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns for smaller screens */
+    grid-template-rows: repeat(3, 1fr); /* Adjust the number of rows for smaller screens */
+  }
 
-    #lapLinerApp button {
-        max-width: 60px;
-        max-height: 60px;
-    }
+  #lapLinerApp button {
+    max-width: 60px; /* Set maximum width */
+    max-height: 60px; /* Set maximum height */
+  }
 }
 
+/* Style for red buttons */
 .red-button {
-    background-color: red;
+  background-color: red; /* Set background color to red */
 }

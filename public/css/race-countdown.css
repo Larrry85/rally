@@ -1,95 +1,105 @@
+/* Import the Orbitron font from Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
 
-
+/* Style the body element */
 body {
-    font-family: "Orbitron", sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    height: 100vh; /* Set height to 100% of the viewport height */
+    background-color: #f0f0f0; /* Set background color */
 }
 
+/* Style the container element */
 .container {
-    width: 90%;
-    max-width: 1200px;
-    text-align: center;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    width: 90%; /* Set width to 90% */
+    max-width: 1200px; /* Set maximum width */
+    text-align: center; /* Center text */
+    background-color: #fff; /* Set background color to white */
+    padding: 20px; /* Add padding inside the container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    border-radius: 10px; /* Round the corners */
 }
 
+/* Style h2 elements */
 h2 {
-    font-size: 3em;
-    margin-bottom: 20px;
+    font-size: 3em; /* Set font size */
+    margin-bottom: 20px; /* Add margin to the bottom */
 }
 
+/* Style the countdown circle container */
 #countdownCircle {
-    position: relative;
-    width: 20em;
-    height: 20em;
-    margin: 1em auto;
+    position: relative; /* Position relative for absolute positioning of children */
+    width: 20em; /* Set width */
+    height: 20em; /* Set height */
+    margin: 1em auto; /* Center the element with margin */
 }
 
+/* Style the countdown text inside the circle */
 #countdown {
     font-size: 2em; /* Default size inside the circle */
-    font-weight: bold;
-    color: #007bff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    font-weight: bold; /* Make text bold */
+    color: #007bff; /* Set text color */
+    position: absolute; /* Position absolute to center within parent */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to be exactly centered */
 }
 
+/* Style the fullscreen button */
 button.fullscreen-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    font-size: 1.5em;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
+    position: fixed; /* Fix the position */
+    top: 20px; /* Position 20px from the top */
+    right: 20px; /* Position 20px from the right */
+    padding: 10px 20px; /* Add padding inside the button */
+    font-size: 1.5em; /* Set font size */
+    cursor: pointer; /* Change cursor to pointer */
+    background-color: #007bff; /* Set background color */
+    color: #fff; /* Set text color to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Round the corners */
 }
 
+/* Style the fullscreen button on hover */
 button.fullscreen-btn:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Change background color */
 }
 
 /* New styles for the SVG countdown circle */
 :root {
     --duration: 600; /* 10 minutes in seconds */
-    --color1: #8a9b0f;
-    --color2: #940a3d;
+    --color1: #8a9b0f; /* First color for the countdown circle */
+    --color2: #940a3d; /* Second color for the countdown circle */
 }
 
+/* Style the SVG element */
 svg {
-    width: 100%;
-    height: 100%;
+    width: 100%; /* Set width to 100% */
+    height: 100%; /* Set height to 100% */
 }
 
+/* Style the circle elements inside the SVG */
 circle {
-    fill: none;
-    stroke: silver;
+    fill: none; /* Remove fill color */
+    stroke: silver; /* Set stroke color */
 }
 
+/* Style the second circle element inside the SVG */
 circle:nth-child(2) {
-    stroke-linecap: round;
-    stroke: var(--color1);
-    stroke-dasharray: 1;
-    transform: rotate(-90deg);
-    transform-origin: 50% 50%;
+    stroke-linecap: round; /* Round the ends of the stroke */
+    stroke: var(--color1); /* Use the first color for the stroke */
+    stroke-dasharray: 1; /* Set dash array for the stroke */
+    transform: rotate(-90deg); /* Rotate the circle */
+    transform-origin: 50% 50%; /* Set the origin for the transformation */
 }
 
 /* Fullscreen styles */
 :fullscreen #countdownCircle {
-    width: 100vw;
-    height: 100vh;
+    width: 100vw; /* Set width to 100% of the viewport width */
+    height: 100vh; /* Set height to 100% of the viewport height */
 }
 
 :fullscreen #countdown {

@@ -1,10 +1,15 @@
+// Load environment variables from .env file
 require("dotenv").config();
+
+// Import required modules
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 
+// Create an Express application
 const app = express();
 
+// List of required environment keys
 const requiredKeys = [
   "RECEPTIONIST_KEY",
   "RACECONTROL_KEY",
@@ -18,15 +23,17 @@ requiredKeys.forEach((key) => {
   }
 });
 
-// Define interface keys
+// Define interface keys from environment variables
 const INTERFACE_KEYS = {
   frontDesk: process.env.RECEPTIONIST_KEY,
   raceControl: process.env.RACECONTROL_KEY,
   lapLineTracker: process.env.LAP_LINE_TRACKER_KEY,
 };
 
+// Serve static files from the "public" directory
 app.use(express.static("public"));
 
+// Define route for the home page
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
@@ -65,6 +72,7 @@ app.get("/api/race-list", (req, res) => {
   res.json(raceSessions);
 });
 
+// Create an HTTP server and attach Socket.IO to it
 const server = http.createServer(app);
 const io = socketIo(server);
 
@@ -101,6 +109,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Start a new session
   socket.on("startSession", () => {
     io.emit("startSession");
     console.log("session started");
@@ -113,7 +122,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  // Add a new race session for raceControl
+  // Add a new race session for frontDesk
   socket.on("addRaceSession", (session) => {
     if (clientRole === "frontDesk") {
       // Create new session
@@ -136,7 +145,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  // Update an existing race session (for raceControl role)
+  // Update an existing race session for frontDesk
   socket.on("updateRaceSession", (updatedSession) => {
     if (clientRole === "frontDesk") {
       const sessionIndex = raceSessions.findIndex(
@@ -149,7 +158,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  // Remove a race session (for raceControl role)
+  // Remove a race session for frontDesk
   socket.on("removeRaceSession", (sessionId) => {
     if (clientRole === "frontDesk") {
       raceSessions = raceSessions.filter(
@@ -171,6 +180,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Broadcast car list
   socket.on("sendCarList", (carIds) => {
     if (clientRole === "frontDesk") {
       console.log("Broadcasting car list:", carIds); // Debugging log
@@ -178,6 +188,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Broadcast lap data
   socket.on("lapAdded", (data) => {
     console.log("Lap added:", data); // Debugging log
     io.emit("lapUpdate", data); // Broadcast lap data to all clients
@@ -196,11 +207,13 @@ io.on("connection", (socket) => {
     socket.emit("raceFlags", raceFlags);
   });
 
+  // Handle client disconnection
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
 });
 
+// Start the server and listen on port 3000
 server.listen(3000, () => {
   console.log("Server listening on port 3000");
 });

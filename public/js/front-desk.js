@@ -1,20 +1,21 @@
-const socket = io();
+const socket = io(); // Initialize Socket.IO client
 
-// Handle login
+// Handle login button click event
 document.getElementById("loginButton").addEventListener("click", () => {
-  const key = document.getElementById("accessKey").value;
-  socket.emit("authenticate", key); // Emit authentication event
+  const key = document.getElementById("accessKey").value; // Get the access key from input
+  socket.emit("authenticate", key); // Emit authentication event with the access key
 });
 
+// Handle authentication response from the server
 socket.on("authenticated", (data) => {
   const messageContainer = document.getElementById("loginMessage");
   if (data.success && data.role === "frontDesk") {
-    messageContainer.textContent = "";
-    document.getElementById("login").style.display = "none";
-    document.getElementById("frontDeskApp").style.display = "block";
-    socket.emit("getRaceSessions"); // Request current race sessions
+    messageContainer.textContent = ""; // Clear any previous messages
+    document.getElementById("login").style.display = "none"; // Hide login screen
+    document.getElementById("frontDeskApp").style.display = "block"; // Show front desk interface
+    socket.emit("getRaceSessions"); // Request current race sessions from the server
   } else {
-    messageContainer.textContent = "Invalid access key";
+    messageContainer.textContent = "Invalid access key"; // Show error message
     document.getElementById("accessKey").value = ""; // Clear the input field
   }
 });
@@ -22,10 +23,12 @@ socket.on("authenticated", (data) => {
 // Display race sessions
 let currentSessionId = null; // Variable to track session being edited
 
+// Handle race sessions received from the server
 socket.on("raceSessions", (sessions) => {
   const sessionDiv = document.getElementById("sessions");
   sessionDiv.innerHTML = ""; // Clear existing sessions
 
+  // Iterate over each session and create HTML elements
   sessions.forEach((session) => {
     const sessionElement = document.createElement("div");
     sessionElement.innerHTML = `
@@ -41,16 +44,16 @@ socket.on("raceSessions", (sessions) => {
             <button class="editSessionButton">Edit</button>
             <button class="removeSessionButton">Remove</button>
         `;
-    sessionDiv.appendChild(sessionElement);
+    sessionDiv.appendChild(sessionElement); // Add session element to the DOM
 
-    // Handle Remove Session
+    // Handle Remove Session button click event
     sessionElement
       .querySelector(".removeSessionButton")
       .addEventListener("click", () => {
         socket.emit("removeRaceSession", session.sessionId); // Emit remove session request
       });
 
-    // Handle Edit Session
+    // Handle Edit Session button click event
     sessionElement
       .querySelector(".editSessionButton")
       .addEventListener("click", () => {
@@ -79,9 +82,9 @@ function createDriverEntry(name = "") {
   driverEntry
     .querySelector(".removeDriverButton")
     .addEventListener("click", () => {
-      driverEntry.remove(); // More concise remove logic
+      driverEntry.remove(); // Remove driver entry on button click
     });
-  return driverEntry;
+  return driverEntry; // Return the created driver entry element
 }
 
 // Add another driver input field (Max 8 drivers)
@@ -93,26 +96,27 @@ document
 
     if (currentDrivers < 8) {
       // Enforce maximum of 8 drivers
-      driversList.appendChild(createDriverEntry());
+      driversList.appendChild(createDriverEntry()); // Add new driver entry
     } else {
       const maxDrivers = document.getElementById("message");
-      maxDrivers.innerHTML = "max 8 drivers!";
+      maxDrivers.innerHTML = "max 8 drivers!"; // Show message if max drivers reached
     }
   });
 
+// Function to send car list to the server
 function sendCarListToServer(drivers) {
-  const carIds = drivers.map(driver => driver.carNumber);
+  const carIds = drivers.map(driver => driver.carNumber); // Extract car numbers from drivers
   console.log("Sending car list to server:", carIds); // Debugging log
-  socket.emit("sendCarList", carIds);
+  socket.emit("sendCarList", carIds); // Emit car list to the server
 }
 
 // Add a new or update race session with drivers (Max 8 drivers and unique names)
 document.getElementById("addSessionButton").addEventListener("click", () => {
-  const sessionName = document.getElementById("sessionName").value;
+  const sessionName = document.getElementById("sessionName").value; // Get session name from input
 
   if (!sessionName) {
     const sessionName = document.getElementById("message2");
-    sessionName.innerHTML = "Please add a session name.";
+    sessionName.innerHTML = "Please add a session name."; // Show message if session name is empty
     return;
   }
 
@@ -148,7 +152,7 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
 
   if (drivers.length === 0) {
     const minDrivers = document.getElementById("message1");
-    minDrivers.innerHTML = "you need atleast 1 driver!";
+    minDrivers.innerHTML = "you need atleast 1 driver!"; // Show message if no drivers are added
     return;
   }
 

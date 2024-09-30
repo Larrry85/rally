@@ -1,125 +1,143 @@
+/* Import the Orbitron font from Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
 
+/* Style the body element */
 body {
-  font-family: "Orbitron", sans-serif;
-  background-color: #1e2329;
-  margin: 0;
-  padding: 20px;
-  min-height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
+  font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
+  background-color: #1e2329; /* Set background color */
+  margin: 0; /* Remove default margin */
+  padding: 20px; /* Add padding around the body */
+  min-height: 100%; /* Set minimum height to 100% of the viewport height */
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  color: #ffffff; /* Set text color to white */
 }
 
+/* Style the container element */
 .container {
-  max-width: 800px;
-  width: 100%;
-  background: rgba(30, 35, 41, 0.8);
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  padding: 30px;
-  text-align: center;
+  max-width: 800px; /* Set maximum width */
+  width: 100%; /* Set width to 100% */
+  background: rgba(30, 35, 41, 0.8); /* Semi-transparent dark background */
+  border-radius: 20px; /* Round the corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  padding: 30px; /* Add padding inside the container */
+  text-align: center; /* Center text */
 }
 
+/* Style heading elements */
 h1,
 h2,
 h3,
 h4 {
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9); /* Semi-transparent white color */
+  font-weight: bold; /* Make text bold */
 }
 
+/* Style h1 element */
 h1 {
-  font-size: 2em;
-  letter-spacing: 1px;
+  font-size: 2em; /* Set font size */
+  letter-spacing: 1px; /* Add spacing between letters */
 }
 
+/* Style the form container */
 .form-container {
-  margin-bottom: 20px;
-  padding: 20px;
-  border: 1px solid #2c3238;
-  border-radius: 5px;
-  background: rgba(30, 35, 41, 0.6);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 300px;
+  margin-bottom: 20px; /* Add margin to the bottom */
+  padding: 20px; /* Add padding inside the container */
+  border: 1px solid #2c3238; /* Add border */
+  border-radius: 5px; /* Round the corners */
+  background: rgba(30, 35, 41, 0.6); /* Semi-transparent dark background */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Arrange items in a column */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+  min-height: 300px; /* Set minimum height */
 }
 
+/* Style text and password input fields */
 input[type="text"],
 input[type="password"] {
-  width: 200px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #2c3238;
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  width: 200px; /* Set width */
+  padding: 10px; /* Add padding inside the input */
+  margin-bottom: 10px; /* Add margin to the bottom */
+  border: 1px solid #2c3238; /* Add border */
+  border-radius: 5px; /* Round the corners */
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  color: #ffffff; /* Set text color to white */
 }
 
+/* Style the button element */
 button {
-  padding: 15px 30px;
-  background-color: rgba(0, 123, 255, 0.8);
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: "Orbitron", sans-serif;
-  font-size: 16px;
+  padding: 15px 30px; /* Add padding inside the button */
+  background-color: rgba(0, 123, 255, 0.8); /* Set background color */
+  color: white; /* Set text color to white */
+  border: none; /* Remove border */
+  border-radius: 25px; /* Round the corners */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
+  font-size: 16px; /* Set font size */
 }
 
+/* Style the button on hover */
 button:hover {
-  background-color: rgba(0, 86, 179, 0.9);
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 86, 179, 0.9); /* Change background color */
+  transform: translateY(-3px); /* Move button up */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
 }
 
+/* Style the button on active (click) */
 button:active {
-  background-color: rgba(0, 64, 141, 1);
-  transform: translateY(1px);
+  background-color: rgba(0, 64, 141, 1); /* Change background color */
+  transform: translateY(1px); /* Move button down */
 }
 
+/* Style the driver entry container */
 .driver-entry {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  margin-bottom: 10px; /* Add margin to the bottom */
 }
 
+/* Style the input inside driver entry */
 .driver-entry input {
-  margin-right: 10px;
-  flex-grow: 1;
+  margin-right: 10px; /* Add margin to the right */
+  flex-grow: 1; /* Allow input to grow */
 }
 
+/* Style the remove driver button */
 .removeDriverButton {
-  background-color: rgba(220, 53, 69, 0.8);
+  background-color: rgba(220, 53, 69, 0.8); /* Set background color */
 }
 
+/* Style the remove driver button on hover */
 .removeDriverButton:hover {
-  background-color: rgba(200, 35, 51, 0.9);
+  background-color: rgba(200, 35, 51, 0.9); /* Change background color */
 }
 
+/* Style the sessions container */
 #sessions {
-  margin-top: 20px;
+  margin-top: 20px; /* Add margin to the top */
 }
 
+/* Style individual session elements */
 .session {
-  padding: 10px;
-  border: 1px solid #2c3238;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  background: rgba(46, 52, 64, 0.6);
+  padding: 10px; /* Add padding inside the session */
+  border: 1px solid #2c3238; /* Add border */
+  border-radius: 5px; /* Round the corners */
+  margin-bottom: 10px; /* Add margin to the bottom */
+  background: rgba(46, 52, 64, 0.6); /* Semi-transparent dark background */
 }
 
+/* Style strong elements inside session */
 .session strong {
-  display: block;
-  margin-bottom: 5px;
+  display: block; /* Display as block element */
+  margin-bottom: 5px; /* Add margin to the bottom */
 }
 
+/* Style the message element */
 .message {
-  font-size: 24px;
-  color: #f44336;
-  margin-top: 10px;
+  font-size: 24px; /* Set font size */
+  color: #f44336; /* Set text color to red */
+  margin-top: 10px; /* Add margin to the top */
 }

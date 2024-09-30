@@ -1,70 +1,82 @@
+/* Style the body element */
 body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  margin: 0;
-  padding: 20px;
-  background-color: #1e2329;
-  color: #ffffff;
+  font-family: Arial, sans-serif; /* Use Arial font */
+  line-height: 1.6; /* Set line height */
+  margin: 0; /* Remove default margin */
+  padding: 20px; /* Add padding around the body */
+  background-color: #1e2329; /* Set background color */
+  color: #ffffff; /* Set text color to white */
 }
 
+/* Style the container element */
 .container {
-  max-width: 800px;
-  margin: auto;
-  background: rgba(30, 35, 41, 0.8);
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 800px; /* Set maximum width */
+  margin: auto; /* Center the container */
+  background: rgba(30, 35, 41, 0.8); /* Semi-transparent dark background */
+  padding: 20px; /* Add padding inside the container */
+  border-radius: 5px; /* Round the corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
 }
 
+/* Style h1 element */
 h1 {
-  text-align: center;
-  color: #ffffff;
+  text-align: center; /* Center the text */
+  color: #ffffff; /* Set text color to white */
 }
 
+/* Style the race-info container */
 .race-info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space out items */
+  margin-bottom: 20px; /* Add margin to the bottom */
 }
 
+/* Style span elements inside race-info */
 .race-info span {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 18px; /* Set font size */
+  font-weight: bold; /* Make text bold */
 }
 
+/* Style the race mode element */
 #raceMode {
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: white;
-  background-color: #f44336;
+  padding: 5px 10px; /* Add padding inside the element */
+  border-radius: 5px; /* Round the corners */
+  color: white; /* Set text color to white */
+  background-color: #f44336; /* Set background color */
 }
 
+/* Style the table element */
 table {
-  width: 100%;
-  border-collapse: collapse;
+  width: 100%; /* Set width to 100% */
+  border-collapse: collapse; /* Collapse borders */
 }
 
+/* Style th and td elements */
 th,
 td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #2c3238;
+  padding: 12px; /* Add padding inside the cells */
+  text-align: left; /* Align text to the left */
+  border-bottom: 1px solid #2c3238; /* Add bottom border */
 }
 
+/* Style th elements */
 th {
-  background-color: #2196f3;
-  color: #ffffff;
-  font-weight: bold;
+  background-color: #2196f3; /* Set background color */
+  color: #ffffff; /* Set text color to white */
+  font-weight: bold; /* Make text bold */
 }
 
+/* Style even rows */
 tr:nth-child(even) {
-  background-color: #2c3238;
+  background-color: #2c3238; /* Set background color */
 }
 
+/* Style rows on hover */
 tr:hover {
-  background-color: #3a4148;
+  background-color: #3a4148; /* Change background color on hover */
 }
 
+/* Style the fastest lap element */
 .fastest-lap {
-  color: #ffc107;
+  color: #ffc107; /* Set text color to yellow */
 }

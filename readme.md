@@ -10,6 +10,8 @@ A real-time system to control races and inform spectators.
 
 ## Starting the program AS A DEVELOPER
 
+- Install ngrok
+
 Get your token in https://dashboard.ngrok.com/authtokens,   
 something like: cr_2mmTDXIW9yeSetpkY5lmFJ0Ctqi
 
@@ -28,9 +30,24 @@ Copy your url and type in web browswer window
     https://7243-176-72-149-84.ngrok-free.app/
 
 
+
+
+### OPTIONAL: Example of Client-Side Code Update
+
+If you have a client-side JavaScript file that connects to your server using Socket.IO, you would update the connection URL to use the ngrok URL:
+
+```javascript
+// Original connection to local server
+// const socket = io("http://localhost:3000");
+
+// Updated connection to use ngrok URL
+const socket = io("http://abcd1234.ngrok.io");
+```    
+
+
 ## Starting the program AS A TESTER
 
-Copy the url and type in web browswer window,   
+After the developer has started ngrok, and shared their url, copy the url and type in web browswer window,   
 something like:
 
 ```

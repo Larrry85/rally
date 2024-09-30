@@ -1,22 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const socket = io();
+    const socket = io(); // Initialize Socket.IO client
 
-    const driverListDiv = document.getElementById('driverList');
-    driverListDiv.innerHTML = '<p><strong>Driver List</strong></p><p>Waiting for drivers data...</p>'; // Set default message with header
+    const driverListDiv = document.getElementById('driverList'); // Get the driver list div element
+    driverListDiv.innerHTML = '<p class="listheader"><strong>Driver List</strong></p><p>Waiting for drivers data...</p>'; // Set default message with header
 
     // Request driver list for the next race
-    socket.emit('getRaceSessions');
+    socket.emit('getRaceSessions'); // Emit event to request race sessions
 
     // Display driver list
-    socket.on('raceSessions', (sessions) => {
-        const nextSession = sessions.find(session => session.isNext);
+    socket.on('raceSessions', (sessions) => { // Listen for 'raceSessions' event from server
+        const nextSession = sessions.find(session => session.isNext); // Find the next race session
         
-        if (nextSession && nextSession.drivers.length > 0) {
-            driverListDiv.innerHTML = '<p><strong>Driver List</strong></p><br>' + nextSession.drivers.map(driver => `
+        if (nextSession && nextSession.drivers.length > 0) { // Check if next session exists and has drivers
+            driverListDiv.innerHTML = '<p class="listheader"><strong>Driver List</strong></p><br>' + nextSession.drivers.map(driver => `
                 <p><strong>Car:</strong> ${driver.carNumber} <strong> - Driver:</strong> ${driver.driver}</p>
-            `).join('');
+            `).join(''); // Update driver list with driver details
         } else {
-            driverListDiv.innerHTML = '<p><strong>Driver List</strong></p><p style="font-size: small;"><small>Waiting for drivers data...</small></p>';
+            driverListDiv.innerHTML = '<p><strong>Driver List</strong></p><p style="font-size: small;"><small>Waiting for drivers data...</small></p>'; // Display waiting message if no drivers
         }
     });
 });
