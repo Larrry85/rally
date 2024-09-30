@@ -77,20 +77,20 @@ Lap-line Observer sees the buttons of each car in a current race. Each button re
 #### Guest
 
 Leader Board    
-/leader-board
+leader-board
 
 Guest can see the leaderboard that shows the list af drivers in a current race. Drivers are shown first by car numbers, then by fastest driver. Driver's fastest lap in showing. fastest Leaderboard has a timer and current flag showing.
 
 #### Race Driver
 
 Next Race   
-/next-race
+next-race
 
 Race Countdown  
-/race-countdown
+race-countdown
 
 Race Flag   
-/race-flags 
+race-flags 
 
 Race Driver can see a list of drivers participating in the next race, the timer of currect race, and the current flags in big screens all over the race track.
 
