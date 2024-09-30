@@ -36,7 +36,7 @@ Copy your url and type in web browswer window
 ```
 https://7243-176-72-149-84.ngrok-free.app/
 ```
-
+---------------------------------------------
 
 ### Access keys
 
@@ -49,6 +49,7 @@ Access key: 0001
 Lap-line Tracker    
 Access key: 0002
 
+---------------------------------------------
 
 ### Interfaces
 
@@ -93,6 +94,7 @@ Race Flag
 
 Race Driver can see a list of drivers participating in the next race, the timer of currect race, and the current flags in big screens all over the race track.
 
+---------------------------------------------
 
 ## Coders
 
