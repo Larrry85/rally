@@ -98,7 +98,7 @@ Race Driver can see a list of drivers participating in the next race, the timer 
 
 ## Coders
 
-Jonathan Dahl - Raigo Hoim - Laura Levisto
+Jonathan Dahl - Raigo Hoim - Laura Levistö
 
 10/2024
 
