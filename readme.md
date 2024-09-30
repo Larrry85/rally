@@ -10,8 +10,8 @@ A real-time system to control races and inform spectators.
 
 ## Starting the program AS A DEVELOPER
 
-- Get your token in https://dashboard.ngrok.com/authtokens
-- Something like: cr_2mmTDXIW9yeSetpkY5lmFJ0Ctqi
+Get your token in https://dashboard.ngrok.com/authtokens,   
+something like: cr_2mmTDXIW9yeSetpkY5lmFJ0Ctqi
 
 ```
 ngrok authtoken YOUR_AUTHTOKEN
@@ -30,8 +30,8 @@ Copy your url and type in web browswer window
 
 ## Starting the program AS A TESTER
 
-- Copy the url and type in web browswer window,
-- something like:
+Copy the url and type in web browswer window,   
+something like:
 
 ```
 https://7243-176-72-149-84.ngrok-free.app/
