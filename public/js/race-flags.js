@@ -131,32 +131,38 @@ function startTrafficLightSequence() {
   lights[0].classList.add("active"); // Activate red light
 
   setTimeout(() => {
-    // Yellow light (3 seconds)
-    console.log("Yellow light"); // Log yellow light
-    lights[0].classList.remove("active"); // Deactivate red light
-    lights[1].classList.add("active"); // Activate yellow light
-
-    setTimeout(() => {
-      // Green light (3 seconds)
-      console.log("Green light"); // Log green light
-      lights[1].classList.remove("active"); // Deactivate yellow light
-      lights[2].classList.add("active"); // Activate green light
+      // Yellow light (3 seconds)
+      console.log("Yellow light"); // Log yellow light
+      lights[0].classList.remove("active"); // Deactivate red light
+      lights[1].classList.add("active"); // Activate yellow light
 
       setTimeout(() => {
-        // Show GO! message
-        console.log("Showing GO! message"); // Log showing GO! message
-        updateDisplay("go"); // Update display to show GO! message
+          // Green light (3 seconds)
+          console.log("Green light"); // Log green light
+          lights[1].classList.remove("active"); // Deactivate yellow light
+          lights[2].classList.add("active"); // Activate green light
 
-        // After 3 seconds, switch back to green flag
-        setTimeout(() => {
-          console.log("Switching back to green flag"); // Log switching back to green flag
-          isTrafficLightSequence = false; // Set traffic light sequence flag to false
-          updateAnimatedFlag("Safe"); // Update animated flag to Safe
-        }, 3000); // 3 seconds
+          setTimeout(() => {
+              // Show GO! message
+              console.log("Showing GO! message"); // Log showing GO! message
+              updateDisplay("go"); // Update display to show GO! message
+
+              // Emit startRace event to start the countdown timer
+              socket.emit("startRace");
+
+              // After 3 seconds, switch back to green flag
+              setTimeout(() => {
+                  console.log("Switching back to green flag"); // Log switching back to green flag
+                  isTrafficLightSequence = false; // Set traffic light sequence flag to false
+                  updateAnimatedFlag("Safe"); // Update animated flag to Safe
+              }, 3000); // 3 seconds
+          }, 3000); // 3 seconds
       }, 3000); // 3 seconds
-    }, 3000); // 3 seconds
   }, 4000); // 4 seconds
 }
+
+// Listen for the 'startTrafficLightSequence' event from the client
+socket.on('startTrafficLightSequence', startTrafficLightSequence);
 
 // Function to toggle full screen mode
 function toggleFullScreen(elementId) {

@@ -29,21 +29,24 @@ let countdownInterval; // Variable to store the countdown interval
 function startCountdown(duration) {
     let remainingTime = duration; // Initialize remaining time with the duration
 
-    // Set an interval to update the countdown every second
-    countdownInterval = setInterval(() => {
-        if (remainingTime <= 0) { // Check if the countdown has finished
-            clearInterval(countdownInterval); // Clear the interval
-            document.getElementById('countdown').textContent = "End of race!"; // Display end of race message
-        } else {
-            const minutes = Math.floor((remainingTime % (60 * 60)) / 60); // Calculate minutes
-            const seconds = Math.floor(remainingTime % 60); // Calculate seconds
+    // Set a delay before starting the countdown
+    setTimeout(() => {
+        // Set an interval to update the countdown every second
+        countdownInterval = setInterval(() => {
+            if (remainingTime <= 0) { // Check if the countdown has finished
+                clearInterval(countdownInterval); // Clear the interval
+                document.getElementById('countdown').textContent = "End of race!"; // Display end of race message
+            } else {
+                const minutes = Math.floor((remainingTime % (60 * 60)) / 60); // Calculate minutes
+                const seconds = Math.floor(remainingTime % 60); // Calculate seconds
 
-            updateCountdownDisplay(minutes, seconds); // Update the countdown display
-            updateSVGProgress(remainingTime, duration); // Update the SVG progress circle
+                updateCountdownDisplay(minutes, seconds); // Update the countdown display
+                updateSVGProgress(remainingTime, duration); // Update the SVG progress circle
 
-            remainingTime--; // Decrement the remaining time
-        }
-    }, 1000); // Interval set to 1 second
+                remainingTime--; // Decrement the remaining time
+            }
+        }, 1000); // Interval set to 1 second
+    }, 10000); // Delay set to 6 seconds
 }
 
 // Listen for the 'startRace' event from the server

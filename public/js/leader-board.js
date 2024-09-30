@@ -120,17 +120,20 @@ socket.on("raceStarted", ({ race }) => {
     clearInterval(countdownInterval); // Clear existing countdown interval if any
   }
 
-  // Start the countdown interval
-  countdownInterval = setInterval(() => {
-    if (raceData.isRaceActive && raceData.remainingTime > 0) {
-      raceData.remainingTime--; // Decrement remaining time
-      if (raceData.remainingTime <= 0) {
-        endRace(); // End the race if time runs out
+  // Set a delay before starting the countdown
+  setTimeout(() => {
+    // Start the countdown interval
+    countdownInterval = setInterval(() => {
+      if (raceData.isRaceActive && raceData.remainingTime > 0) {
+        raceData.remainingTime--; // Decrement remaining time
+        if (raceData.remainingTime <= 0) {
+          endRace(); // End the race if time runs out
+        }
+        updateLeaderboard(); // Update the leaderboard
+        updateRaceInfo(); // Update race information
       }
-      updateLeaderboard(); // Update the leaderboard
-      updateRaceInfo(); // Update race information
-    }
-  }, 1000); // Interval set to 1 second
+    }, 1000); // Interval set to 1 second
+  }, 11000); // Delay set to 6 seconds
 
   updateLeaderboard(); // Initial leaderboard update
   updateRaceInfo(); // Initial race information update
