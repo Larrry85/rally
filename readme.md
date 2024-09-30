@@ -43,10 +43,10 @@ https://7243-176-72-149-84.ngrok-free.app/
 Front Desk  
 Access key: 0000
 
-Race Control 
+Race Control    
 Access key: 0001
 
-Lap-line Tracker
+Lap-line Tracker    
 Access key: 0002
 
 
