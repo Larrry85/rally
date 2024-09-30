@@ -94,6 +94,60 @@ race-flags
 
 Race Driver can see a list of drivers participating in the next race, the timer of currect race, and the current flags in big screens all over the race track.
 
+```
++-------------------+       +-------------------+       +-------------------+
+|                   |       |                   |       |                   |
+|   Front Desk      |       |   Race Control    |       |   Lap Line Tracker|
+|                   |       |                   |       |                   |
+| - Login           |       | - Login           |       | - Login           |
+| - Manage Sessions |       | - Start Session   |       | - Track Laps      |
+| - Manage Drivers  |       | - Control Lights  |       |                   |
+|                   |       | - Start Race      |       |                   |
++---------+---------+       +---------+---------+       +---------+---------+
+          |                           |                           |
+          |                           |                           |
+          |                           |                           |
+          |                           |                           |
+          |                           |                           |
+          |                           |                           |
+          v                           v                           v
++--------------------------------------------------------------------------+
+|                                                                          |
+|                                Server                                    |
+|                                                                          |
+| - Express.js for serving static files and routes                         |
+| - Socket.IO for real-time communication                                  |
+| - In-memory storage for race sessions, drivers, and race state           |
+|                                                                          |
+| +-------------------+       +-------------------+       +-------------------+
+| |                   |       |                   |       |                   |
+| |   Race Flags      |       |   Race Countdown  |       |   Leader Board    |
+| |                   |       |                   |       |                   |
+| | - Display Flags   |       | - Countdown Timer |       | - Display Leader  |
+| | - Traffic Lights  |       | - SVG Progress    |       |   Board           |
+| |                   |       |                   |       | - Update in Real- |
+| |                   |       |                   |       |   Time            |
+| +-------------------+       +-------------------+       +-------------------+
+|                                                                          |
++--------------------------------------------------------------------------+
+          ^                           ^                           ^
+          |                           |                           |
+          |                           |                           |
+          |                           |                           |
+          |                           |                           |
+          |                           |                           |
+          +---------------------------+---------------------------+
+                                      |
+                                      v
+                            +-------------------+
+                            |                   |
+                            |   Next Race       |
+                            |                   |
+                            | - Display Drivers |
+                            |   for Next Race   |
+                            |                   |
+                            +-------------------+
+```
 ---------------------------------------------
 
 ## Coders
