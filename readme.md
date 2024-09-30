@@ -54,41 +54,41 @@ Access key: 0002
 
 #### Receptionist
 
-Front Desk 
+Front Desk  
 /front-desk
 
 Receptionist can add a lists of drivers in races. They can edit and remove drivers.
 
 #### Safety Official
 
-Race Control
+Race Control    
 /race-control
 
 Safety official sees the next race list. They can start the session, start the race, change the flags, ens race and end session. Interace is designed for a mobilephone.
 
 #### Lap-line Observer
 
-Lap-line Tracker
+Lap-line Tracker    
 /lap-line-tracker
 
 Lap-line Observer sees the buttons of each car in a current race. Each button repsesents the car id number. Buttons are available only during the race. Interface is designed for a tablet.
 
 #### Guest
 
-Leader Board
+Leader Board    
 /leader-board
 
 Guest can see the leaderboard that shows the list af drivers in a current race. Drivers are shown first by car numbers, then by fastest driver. Driver's fastest lap in showing. fastest Leaderboard has a timer and current flag showing.
 
 #### Race Driver
 
-Next Race
+Next Race   
 /next-race
 
-Race Countdown
+Race Countdown  
 /race-countdown
 
-Race Flag
+Race Flag   
 /race-flags 
 
 Race Driver can see a list of drivers participating in the next race, the timer of currect race, and the current flags in big screens all over the race track.
