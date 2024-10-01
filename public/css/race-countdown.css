@@ -3,105 +3,123 @@
 
 /* Style the body element */
 body {
-    font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-    display: flex; /* Use flexbox for layout */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
-    height: 100vh; /* Set height to 100% of the viewport height */
-    background-color: #f0f0f0; /* Set background color */
+  font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  min-height: 100vh; /* Set minimum height to 100% of the viewport height */
+  background-color: #000000; /* Set background color to black */
+  color: #ffffff; /* Set text color to white */
 }
 
 /* Style the container element */
 .container {
-    width: 90%; /* Set width to 90% */
-    max-width: 1200px; /* Set maximum width */
-    text-align: center; /* Center text */
-    background-color: #fff; /* Set background color to white */
-    padding: 20px; /* Add padding inside the container */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-    border-radius: 10px; /* Round the corners */
+  width: 90%; /* Set width to 90% */
+  max-width: 800px; /* Set maximum width */
+  text-align: center; /* Center text */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Semi-transparent white background */
+  padding: 30px; /* Add padding inside the container */
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.3); /* Add blue glow effect */
+  border-radius: 20px; /* Round the corners */
 }
 
 /* Style h2 elements */
 h2 {
-    font-size: 3em; /* Set font size */
-    margin-bottom: 20px; /* Add margin to the bottom */
+  font-size: 2.5em; /* Set font size */
+  margin-bottom: 20px; /* Add margin to the bottom */
+  color: #00aaff; /* Set text color to light blue */
+  text-shadow: 0 0 10px rgba(0, 170, 255, 0.7); /* Add text shadow for glow effect */
 }
 
 /* Style the countdown circle container */
 #countdownCircle {
-    position: relative; /* Position relative for absolute positioning of children */
-    width: 20em; /* Set width */
-    height: 20em; /* Set height */
-    margin: 1em auto; /* Center the element with margin */
+  position: relative; /* Position relative for absolute positioning of children */
+  width: 20em; /* Set width */
+  height: 20em; /* Set height */
+  margin: 1em auto; /* Center the element with margin */
 }
 
 /* Style the countdown text inside the circle */
 #countdown {
-    font-size: 2em; /* Default size inside the circle */
-    font-weight: bold; /* Make text bold */
-    color: #007bff; /* Set text color */
-    position: absolute; /* Position absolute to center within parent */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust position to be exactly centered */
+  font-size: 2em; /* Default size inside the circle */
+  font-weight: bold; /* Make text bold */
+  color: #00aaff; /* Set text color to light blue */
+  position: absolute; /* Position absolute to center within parent */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust position to be exactly centered */
+  text-shadow: 0 0 10px rgba(0, 170, 255, 0.7); /* Add text shadow for glow effect */
 }
 
 /* Style the fullscreen button */
 button.fullscreen-btn {
-    position: fixed; /* Fix the position */
-    top: 20px; /* Position 20px from the top */
-    right: 20px; /* Position 20px from the right */
-    padding: 10px 20px; /* Add padding inside the button */
-    font-size: 1.5em; /* Set font size */
-    cursor: pointer; /* Change cursor to pointer */
-    background-color: #007bff; /* Set background color */
-    color: #fff; /* Set text color to white */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Round the corners */
+  position: fixed; /* Fix the position */
+  top: 20px; /* Position 20px from the top */
+  right: 20px; /* Position 20px from the right */
+  padding: 15px 30px; /* Add padding inside the button */
+  font-size: 1.2em; /* Set font size */
+  cursor: pointer; /* Change cursor to pointer */
+  background-color: rgba(0, 123, 255, 0.8); /* Set background color */
+  color: #fff; /* Set text color to white */
+  border: none; /* Remove border */
+  border-radius: 25px; /* Round the corners */
+  transition: all 0.3s ease; /* Smooth transition for all properties */
 }
 
 /* Style the fullscreen button on hover */
 button.fullscreen-btn:hover {
-    background-color: #0056b3; /* Change background color */
+  background-color: rgba(0, 86, 179, 0.9); /* Change background color */
+  transform: translateY(-3px); /* Move button up */
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.5); /* Add shadow for depth */
 }
 
 /* New styles for the SVG countdown circle */
 :root {
-    --duration: 600; /* 10 minutes in seconds */
-    --color1: #8a9b0f; /* First color for the countdown circle */
-    --color2: #940a3d; /* Second color for the countdown circle */
+  --duration: 600; /* 10 minutes in seconds */
+  --color1: #00aaff; /* First color for the countdown circle (light blue) */
+  --color2: #0056b3; /* Second color for the countdown circle (darker blue) */
 }
 
 /* Style the SVG element */
 svg {
-    width: 100%; /* Set width to 100% */
-    height: 100%; /* Set height to 100% */
+  width: 100%; /* Set width to 100% */
+  height: 100%; /* Set height to 100% */
 }
 
 /* Style the circle elements inside the SVG */
 circle {
-    fill: none; /* Remove fill color */
-    stroke: silver; /* Set stroke color */
+  fill: none; /* Remove fill color */
+  stroke: rgba(
+    255,
+    255,
+    255,
+    0.2
+  ); /* Set stroke color to semi-transparent white */
 }
 
 /* Style the second circle element inside the SVG */
 circle:nth-child(2) {
-    stroke-linecap: round; /* Round the ends of the stroke */
-    stroke: var(--color1); /* Use the first color for the stroke */
-    stroke-dasharray: 1; /* Set dash array for the stroke */
-    transform: rotate(-90deg); /* Rotate the circle */
-    transform-origin: 50% 50%; /* Set the origin for the transformation */
+  stroke-linecap: round; /* Round the ends of the stroke */
+  stroke: var(--color1); /* Use the first color for the stroke */
+  stroke-dasharray: 1; /* Set dash array for the stroke */
+  transform: rotate(-90deg); /* Rotate the circle */
+  transform-origin: 50% 50%; /* Set the origin for the transformation */
+  filter: drop-shadow(0 0 10px rgba(0, 170, 255, 0.7)); /* Add glow effect */
 }
 
-/* Fullscreen styles */
+/* Fullscreen styles (unchanged) */
 :fullscreen #countdownCircle {
-    width: 100vw; /* Set width to 100% of the viewport width */
-    height: 100vh; /* Set height to 100% of the viewport height */
+  width: 100vw; /* Set width to 100% of the viewport width */
+  height: 100vh; /* Set height to 100% of the viewport height */
 }
 
 :fullscreen #countdown {
-    font-size: 10vw; /* Larger size in full-screen mode */
+  font-size: 10vw; /* Larger size in full-screen mode */
 }
