@@ -1,83 +1,132 @@
+/* Import the Orbitron font from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+
 /* Style the body element */
 body {
-    font-family: Arial, sans-serif; /* Use Arial font */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-    display: flex; /* Use flexbox for layout */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
-    height: 100vh; /* Set height to 100% of the viewport height */
-    background-color: #f0f0f0; /* Set background color */
+  background-color: #000000; /* Set background color to black */
+  font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
+  margin: 0; /* Remove default margin */
+  padding: 20px; /* Add padding around the body */
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  color: #ffffff; /* Set text color to white */
+  position: relative; /* Set position to relative for absolute positioning of children */
 }
 
 /* Style the container element */
 .container {
-    width: 90%; /* Set width to 90% */
-    max-width: 1200px; /* Set maximum width */
-    text-align: center; /* Center text */
-    color: white; /* Set text color to white */
-    background-color: black; /* Set background color to black */
-    padding: 20px; /* Add padding inside the container */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-    border-radius: 10px; /* Round the corners */
-    height: 90%; /* Set height to 90% of the container */
+  max-width: 800px; /* Set maximum width */
+  width: 100%; /* Set width to 100% */
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  border-radius: 20px; /* Round the corners */
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.3); /* Add blue glow effect */
+  padding: 30px; /* Add padding inside the container */
+  text-align: center; /* Center text */
 }
 
 /* Style h2 elements */
 h2 {
-    font-size: 1em; /* Set font size */
-    margin-bottom: 20px; /* Add margin to the bottom */
+  font-size: 1.8em; /* Set font size */
+  margin-bottom: 20px; /* Add margin to the bottom */
+  color: #00aaff; /* Set text color to light blue */
+  text-shadow: 0 0 10px rgba(0, 170, 255, 0.7); /* Add text shadow for glow effect */
+  font-weight: bold; /* Make text bold */
 }
 
 /* Style the driver list container */
 #driverList {
-    font-size: 2.5em; /* Set font size */
-    margin-top: 20px; /* Add margin to the top */
-    padding-top: 20px; /* Add space on top of the driver list */
-    text-align: center; /* Center the content */
-    max-width: 90%; /* Set maximum width */
+  font-size: 1.2em; /* Set font size */
+  margin-top: 20px; /* Add margin to the top */
+  padding-top: 20px; /* Add space on top of the driver list */
+  text-align: center; /* Center the content */
+  max-width: 100%; /* Set maximum width */
 }
 
 /* Style paragraphs inside the driver list */
 #driverList p {
-    display: inline-block; /* Make the <p> elements inline-block */
-    width: 90%; /* Set the width to 90% */
-    margin: 0 auto 20px auto; /* Center the <p> elements and add more space between rows */
-    font-size: 1.2em; /* Increase font size */
+  display: block; /* Make the <p> elements block */
+  width: 100%; /* Set the width to 100% */
+  margin: 0 auto 10px auto; /* Center the <p> elements and add space between rows */
+  padding: 10px; /* Add padding */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Semi-transparent white background */
+  border-radius: 10px; /* Round the corners */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
 }
 
-.listheader {
-    background-color: #333; /* Slightly lighter background for odd lines */
-    max-width: 90%; /* Set maximum width */
-}
-
-/* Style odd child paragraphs inside the driver list */
-#driverList p:nth-child(even) {
-    background-color: #333; /* Slightly lighter background for odd lines */
-    max-width: 90%; /* Set maximum width */
+/* Style paragraphs inside the driver list on hover */
+#driverList p:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Lighter background on hover */
 }
 
 /* Style the fullscreen button */
 button.fullscreen-btn {
-    position: fixed; /* Fix the position */
-    top: 20px; /* Position 20px from the top */
-    right: 20px; /* Position 20px from the right */
-    padding: 10px 20px; /* Add padding inside the button */
-    font-size: 1.5em; /* Set font size */
-    cursor: pointer; /* Change cursor to pointer */
-    background-color: #007bff; /* Set background color */
-    color: #fff; /* Set text color to white */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Round the corners */
+  position: absolute; /* Set position to absolute */
+  top: 20px; /* Position 20px from the top */
+  right: 20px; /* Position 20px from the right */
+  padding: 15px 30px; /* Add padding inside the button */
+  background-color: rgba(0, 123, 255, 0.8); /* Set background color */
+  color: white; /* Set text color to white */
+  border: none; /* Remove border */
+  border-radius: 25px; /* Round the corners */
+  font-size: 16px; /* Set font size */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: all 0.3s ease; /* Smooth transition for all properties */
 }
 
 /* Style the fullscreen button on hover */
 button.fullscreen-btn:hover {
-    background-color: #0056b3; /* Change background color */
+  background-color: rgba(0, 86, 179, 0.9); /* Change background color */
+  transform: translateY(-3px); /* Move button up */
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.5); /* Add shadow for depth */
 }
 
 /* Fullscreen styles */
-:fullscreen #driverList p {
-    font-size: 2em; /* Increase font size in fullscreen mode */
-    margin: 0 auto 30px auto; /* Add more space between rows in fullscreen mode */
+:fullscreen .container {
+  height: 100vh; /* Set height to 100% of the viewport height */
+  overflow-y: auto; /* Add vertical scrolling if needed */
 }
+
+:fullscreen #driverList p {
+  font-size: 1.5em; /* Increase font size in fullscreen mode */
+  margin: 0 auto 20px auto; /* Add more space between rows in fullscreen mode */
+}
+
+/* Add a subtle animation to the driver list items */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#driverList p {
+  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+#driverList p:nth-child(1) {
+  animation-delay: 0.1s;
+}
+#driverList p:nth-child(2) {
+  animation-delay: 0.2s;
+}
+#driverList p:nth-child(3) {
+  animation-delay: 0.3s;
+}
+#driverList p:nth-child(4) {
+  animation-delay: 0.4s;
+}
+#driverList p:nth-child(5) {
+  animation-delay: 0.5s;
+}
+/* Add more if you have more drivers */
