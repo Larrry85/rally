@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Front Desk</title>
-    <link rel="stylesheet" href="css/front-desk.css"/>
+    <link rel="stylesheet" href="css/front-desk.css" />
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/front-desk.js" defer></script>
 </head>
+
 <body>
     <div class="container">
-        
+
         <!-- Login Section -->
         <div id="login" class="form-container">
             <h2>Login to front desk interface</h2>
@@ -18,7 +20,7 @@
             <button id="loginButton">Login</button>
             <div id="loginMessage" style="color: red; margin-top: 10px;"></div>
         </div>
-        
+
         <!-- Race Session Management -->
         <div id="frontDeskApp" class="form-container" style="display: none;">
             <h2>Manage Race Sessions</h2>
@@ -42,4 +44,5 @@
         </div>
     </div>
 </body>
+
 </html>
