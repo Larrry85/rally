@@ -6,6 +6,12 @@ document.getElementById("loginButton").addEventListener("click", () => {
   socket.emit("authenticate", key); // Emit authentication event with the access key
 });
 
+if (process.env.SKIP_LOGIN === 'true') {
+  socket.on("connect", () => { // Wait for socket connection
+    socket.emit("authenticate", "0000"); // Use a default key or skip if not required
+  });
+}
+
 // Handle authentication response from the server
 socket.on("authenticated", (data) => {
   const messageContainer = document.getElementById("loginMessage");
@@ -220,11 +226,6 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
       carNumber: carNumber,
     });
   });
-
-    // If there is incomplete data or duplicates, prevent the race session from being added  <-- Added section
-    if (hasIncompleteData || hasDuplicateName || hasDuplicateCarNumber) {
-      return; // Exit without adding the session
-    }
 
   // If duplicates were found, prevent the race session from being added
   if (hasDuplicateName || hasDuplicateCarNumber) {

@@ -89,7 +89,11 @@ io.on("connection", (socket) => {
   // Track client role based on authentication
   let clientRole = null;
 
-  // Authenticate client for different interfaces
+  if (SKIP_LOGIN=true) {
+    clientRole = "frontDesk";
+      socket.emit("authenticated", { success: true, role: "frontDesk" });
+      console.log("Receptionist logged in");
+  }
   socket.on("authenticate", (key) => {
     if (key === INTERFACE_KEYS.frontDesk) {
       clientRole = "frontDesk";

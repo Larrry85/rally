@@ -22,6 +22,7 @@ socket.on("authenticated", (data) => {
   }
 });
 
+
 // Handle start session button click event
 document.getElementById('startSessionButton').addEventListener('click', () => {
   socket.emit('startSession'); // Emit start session event

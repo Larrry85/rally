@@ -25,6 +25,8 @@ socket.on("authenticated", (data) => {
   }
 });
 
+
+
 // Handle car IDs received from the server
 socket.on("carIds", (carIds) => {
   console.log("Received car list:", carIds); // Debugging log
