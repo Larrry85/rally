@@ -71,52 +71,98 @@ socket.on("raceSessions", (sessions) => {
   });
 });
 
-// Function to create a driver entry
-function createDriverEntry(name = "") {
+// Handle authentication response from the server
+socket.on("authenticated", (data) => {
+  const messageContainer = document.getElementById("loginMessage");
+  if (data.success && data.role === "frontDesk") {
+    messageContainer.textContent = ""; // Clear any previous messages
+    document.getElementById("login").style.display = "none"; // Hide login screen
+    document.getElementById("frontDeskApp").style.display = "block"; // Show front desk interface
+    socket.emit("getRaceSessions"); // Request current race sessions from the server
+
+    // Initialize the drivers list with a default driver entry
+    const driversList = document.getElementById("driversList");
+    driversList.innerHTML = ""; // Clear the list in case it contains old data
+    driversList.appendChild(createDriverEntry()); // Add the first driver entry
+  } else {
+    messageContainer.textContent = "Invalid access key"; // Show error message
+    document.getElementById("accessKey").value = ""; // Clear the input field
+  }
+});
+
+// Function to create a driver entry with a car number dropdown
+function createDriverEntry(name = "", selectedCarNumber = null) {
   const driverEntry = document.createElement("div");
   driverEntry.classList.add("driver-entry");
+
+  // Create the car number dropdown
+  const carNumberOptions = [1, 2, 3, 4, 5, 6, 7, 8]; // Available car numbers
+  const carNumberDropdown = document.createElement("select");
+  carNumberDropdown.classList.add("carNumberDropdown");
+
+  // Add a default "Select Car Number" option
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "Select Car Number";
+  defaultOption.disabled = true;
+  defaultOption.selected = !selectedCarNumber; // Select default if no car number is pre-selected
+  carNumberDropdown.appendChild(defaultOption);
+
+  // Add car number options
+  carNumberOptions.forEach(num => {
+    const option = document.createElement("option");
+    option.value = num;
+    option.textContent = `Car ${num}`;
+    if (num === selectedCarNumber) {
+      option.selected = true; // Pre-select if a car number is passed
+    }
+    carNumberDropdown.appendChild(option);
+  });
+
+  // Set up the driver input and car number dropdown
   driverEntry.innerHTML = `
-        <input type="text" class="driverName" value="${name}" placeholder="Driver Name" required>
-        <button class="removeDriverButton">Remove</button>
-    `;
-  driverEntry
-    .querySelector(".removeDriverButton")
-    .addEventListener("click", () => {
-      driverEntry.remove(); // Remove driver entry on button click
-    });
+    <input type="text" class="driverName" value="${name}" placeholder="Driver Name" required>
+  `;
+  driverEntry.appendChild(carNumberDropdown);
+
+  const removeButton = document.createElement("button");
+  removeButton.classList.add("removeDriverButton");
+  removeButton.textContent = "Remove";
+  removeButton.addEventListener("click", () => {
+    driverEntry.remove(); // Remove driver entry on button click
+  });
+  driverEntry.appendChild(removeButton);
+
   return driverEntry; // Return the created driver entry element
 }
 
 // Add another driver input field (Max 8 drivers)
-document
-  .getElementById("addDriverFieldButton")
-  .addEventListener("click", () => {
-    const driversList = document.getElementById("driversList");
-    const currentDrivers = document.querySelectorAll(".driver-entry").length;
+document.getElementById("addDriverFieldButton").addEventListener("click", () => {
+  const driversList = document.getElementById("driversList");
+  const currentDrivers = document.querySelectorAll(".driver-entry").length;
 
-    if (currentDrivers < 8) {
-      // Enforce maximum of 8 drivers
-      driversList.appendChild(createDriverEntry()); // Add new driver entry
-    } else {
-      const maxDrivers = document.getElementById("message");
-      maxDrivers.innerHTML = "max 8 drivers!"; // Show message if max drivers reached
-    }
-  });
+  if (currentDrivers < 8) {
+    // Enforce maximum of 8 drivers
+    driversList.appendChild(createDriverEntry()); // Add new driver entry
+  } else {
+    const maxDrivers = document.getElementById("message");
+    maxDrivers.innerHTML = "max 8 drivers!"; // Show message if max drivers reached
+    setTimeout(() => {
+      maxDrivers.innerHTML = ""; // Clear message after 10 seconds
+    }, 5000);
+  }
+});
 
-// Function to send car list to the server
-function sendCarListToServer(drivers) {
-  const carIds = drivers.map(driver => driver.carNumber); // Extract car numbers from drivers
-  console.log("Sending car list to server:", carIds); // Debugging log
-  socket.emit("sendCarList", carIds); // Emit car list to the server
-}
-
-// Add a new or update race session with drivers (Max 8 drivers and unique names)
+// Add a new or update race session with drivers (Max 8 drivers and unique names and car numbers)
 document.getElementById("addSessionButton").addEventListener("click", () => {
   const sessionName = document.getElementById("sessionName").value; // Get session name from input
 
   if (!sessionName) {
     const sessionName = document.getElementById("message2");
     sessionName.innerHTML = "Please add a session name."; // Show message if session name is empty
+    setTimeout(() => {
+      sessionName.innerHTML = ""; // Clear message after 5 seconds
+    }, 5000);
     return;
   }
 
@@ -124,35 +170,70 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
   const driverElements = document.querySelectorAll(".driver-entry");
   const drivers = [];
   const driverNamesSet = new Set(); // To check for unique driver names
-  let hasDuplicate = false; // Flag to check for duplicates
+  const carNumbersSet = new Set(); // To check for unique car numbers
+  let hasDuplicateName = false; // Flag to check for duplicate names
+  let hasDuplicateCarNumber = false; // Flag to check for duplicate car numbers
+  let hasIncompleteData = false; // Flag to check for incomplete driver data
 
-  driverElements.forEach((driverElement, index) => {
+  driverElements.forEach((driverElement) => {
     const driverName = driverElement.querySelector(".driverName").value.trim();
-    if (driverName) {
-      // Check if the driver name is already added
-      if (driverNamesSet.has(driverName)) {
-        const duplicateName = document.getElementById('message3')
-        duplicateName.innerHTML = `The driver name "${driverName}" has already been added. Please use a unique name.`
-        
-        hasDuplicate = true; // Set duplicate flag to true
-      }
-      driverNamesSet.add(driverName); // Add name to the set
+    const carNumber = driverElement.querySelector(".carNumberDropdown").value;
 
-      drivers.push({
-        driver: driverName,
-        carNumber: index + 1, // Assign car number sequentially (1 to 8)
-      });
+    if (!driverName || !carNumber) {
+      const minDrivers = document.getElementById("message1");
+      minDrivers.innerHTML = "Each driver must have a name and car number."; // Show message if fields are incomplete
+      hasIncompleteData = true; // Set the flag for incomplete data
+      setTimeout(() => {
+        minDrivers.innerHTML = ""; // Clear message after 5 seconds
+      }, 5000);
+      return;
     }
+
+
+    // Check for duplicate driver names
+    if (driverNamesSet.has(driverName)) {
+      const duplicateNameMessage = document.getElementById('message3');
+      duplicateNameMessage.innerHTML = `The driver name "${driverName}" has already been added. Please use a unique name.`;
+      hasDuplicateName = true;
+      setTimeout(() => {
+        duplicateNameMessage.innerHTML = ""; // Clear message after 5 seconds
+      }, 5000);
+      return;
+    }
+    driverNamesSet.add(driverName);
+
+    // Check for duplicate car numbers
+    if (carNumbersSet.has(carNumber)) {
+      const duplicateCarNumberMessage = document.getElementById('message4');
+      duplicateCarNumberMessage.innerHTML = `The car number "${carNumber}" has already been selected. Please choose a different car number.`;
+      hasDuplicateCarNumber = true;
+      setTimeout(() => {
+        duplicateCarNumberMessage.innerHTML = ""; // Clear message after 5 seconds
+      }, 5000);
+      return;
+    }
+    carNumbersSet.add(carNumber);
+
+    // Add the driver and their selected car number
+    drivers.push({
+      driver: driverName,
+      carNumber: carNumber,
+    });
   });
 
+    // If there is incomplete data or duplicates, prevent the race session from being added  <-- Added section
+    if (hasIncompleteData || hasDuplicateName || hasDuplicateCarNumber) {
+      return; // Exit without adding the session
+    }
+
   // If duplicates were found, prevent the race session from being added
-  if (hasDuplicate) {
-    return; // Stop execution to allow the user to fix the issue
+  if (hasDuplicateName || hasDuplicateCarNumber) {
+    return;
   }
 
   if (drivers.length === 0) {
     const minDrivers = document.getElementById("message1");
-    minDrivers.innerHTML = "you need atleast 1 driver!"; // Show message if no drivers are added
+    minDrivers.innerHTML = "you need at least 1 driver!"; // Show message if no drivers are added
     return;
   }
 
@@ -185,4 +266,17 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
 
   // Add a default driver input
   driversList.appendChild(createDriverEntry());
+});
+
+// Function to send car list to the server
+function sendCarListToServer(drivers) {
+  const carIds = drivers.map(driver => driver.carNumber); // Extract car numbers from drivers
+  console.log("Sending car list to server:", carIds); // Debugging log
+  socket.emit("sendCarList", carIds); // Emit car list to the server
+}
+
+// Initialize with one driver entry when the page loads
+window.addEventListener("DOMContentLoaded", () => {
+  const driversList = document.getElementById("driversList");
+  driversList.appendChild(createDriverEntry()); // Add a default driver input when the page loads
 });
