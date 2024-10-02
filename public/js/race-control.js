@@ -139,10 +139,10 @@ socket.on("raceFinished", () => {
 socket.on("nextRaceSession", (session) => {
   if (session) {
     updateRaceSessionDisplay(session);
-    document.getElementById("startSessionButton").style.display = "block";
-    document.getElementById("raceLights").style.display = "none";
-    document.getElementById("buttons").style.display = "none";
-    document.getElementById("session").style.display = "none";
+    document.getElementById("startSessionButton").style.display = "flex";
+    document.getElementById("raceLights").style.display = "flex";
+    document.getElementById("buttons").style.display = "flex";
+    document.getElementById("session").style.display = "flex";
   } else {
     const noSessionMessage = document.getElementById("message");
     noSessionMessage.innerHTML = "No more race sessions available.";

@@ -117,7 +117,7 @@ function createDriverEntry(name = "", selectedCarNumber = null) {
   carNumberDropdown.appendChild(defaultOption);
 
   // Add car number options
-  carNumberOptions.forEach(num => {
+  carNumberOptions.forEach((num) => {
     const option = document.createElement("option");
     option.value = num;
     option.textContent = `Car ${num}`;
@@ -145,9 +145,11 @@ function createDriverEntry(name = "", selectedCarNumber = null) {
 }
 
 // Add another driver input field (Max 8 drivers)
-document.getElementById("addDriverFieldButton").addEventListener("click", () => {
-  const driversList = document.getElementById("driversList");
-  const currentDrivers = document.querySelectorAll(".driver-entry").length;
+document
+  .getElementById("addDriverFieldButton")
+  .addEventListener("click", () => {
+    const driversList = document.getElementById("driversList");
+    const currentDrivers = document.querySelectorAll(".driver-entry").length;
 
     if (currentDrivers < 8) {
       // Enforce maximum of 8 drivers
@@ -164,17 +166,25 @@ function sendCarListToServer(drivers) {
   console.log("Sending car list to server:", carIds); // Debugging log
   socket.emit("sendCarList", carIds); // Emit car list to the server
 }
-  if (currentDrivers < 8) {
-    // Enforce maximum of 8 drivers
-    driversList.appendChild(createDriverEntry()); // Add new driver entry
-  } else {
-    const maxDrivers = document.getElementById("message");
-    maxDrivers.innerHTML = "max 8 drivers!"; // Show message if max drivers reached
-    setTimeout(() => {
-      maxDrivers.innerHTML = ""; // Clear message after 10 seconds
-    }, 5000);
-  }
-});
+
+// Add another driver input field (Max 8 drivers)
+document
+  .getElementById("addDriverFieldButton")
+  .addEventListener("click", () => {
+    const driversList = document.getElementById("driversList");
+    const currentDrivers = document.querySelectorAll(".driver-entry").length;
+
+    if (currentDrivers < 8) {
+      // Enforce maximum of 8 drivers
+      driversList.appendChild(createDriverEntry()); // Add new driver entry
+    } else {
+      const maxDrivers = document.getElementById("message");
+      maxDrivers.innerHTML = "max 8 drivers!"; // Show message if max drivers reached
+      setTimeout(() => {
+        maxDrivers.innerHTML = ""; // Clear message after 10 seconds
+      }, 5000);
+    }
+  });
 
 // Add a new or update race session with drivers (Max 8 drivers and unique names and car numbers)
 document.getElementById("addSessionButton").addEventListener("click", () => {
@@ -227,10 +237,9 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
       return;
     }
 
-
     // Check for duplicate driver names
     if (driverNamesSet.has(driverName)) {
-      const duplicateNameMessage = document.getElementById('message3');
+      const duplicateNameMessage = document.getElementById("message3");
       duplicateNameMessage.innerHTML = `The driver name "${driverName}" has already been added. Please use a unique name.`;
       hasDuplicateName = true;
       setTimeout(() => {
@@ -242,7 +251,7 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
 
     // Check for duplicate car numbers
     if (carNumbersSet.has(carNumber)) {
-      const duplicateCarNumberMessage = document.getElementById('message4');
+      const duplicateCarNumberMessage = document.getElementById("message4");
       duplicateCarNumberMessage.innerHTML = `The car number "${carNumber}" has already been selected. Please choose a different car number.`;
       hasDuplicateCarNumber = true;
       setTimeout(() => {
@@ -259,10 +268,10 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
     });
   });
 
-    // If there is incomplete data or duplicates, prevent the race session from being added  <-- Added section
-    if (hasIncompleteData || hasDuplicateName || hasDuplicateCarNumber) {
-      return; // Exit without adding the session
-    }
+  // If there is incomplete data or duplicates, prevent the race session from being added  <-- Added section
+  if (hasIncompleteData || hasDuplicateName || hasDuplicateCarNumber) {
+    return; // Exit without adding the session
+  }
 
   // If duplicates were found, prevent the race session from being added
   if (hasDuplicateName || hasDuplicateCarNumber) {
@@ -311,10 +320,9 @@ socket.on("raceFinished", () => {
   socket.emit("getRaceSessions"); // Refresh the race sessions list
 });
 
-
 // Function to send car list to the server
 function sendCarListToServer(drivers) {
-  const carIds = drivers.map(driver => driver.carNumber); // Extract car numbers from drivers
+  const carIds = drivers.map((driver) => driver.carNumber); // Extract car numbers from drivers
   console.log("Sending car list to server:", carIds); // Debugging log
   socket.emit("sendCarList", carIds); // Emit car list to the server
 }
