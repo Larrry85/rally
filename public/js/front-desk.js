@@ -69,7 +69,6 @@ socket.on("raceSessions", (sessions) => {
         currentSessionId = session.sessionId; // Track which session is being edited
       });
 
-    // Add Set as Next button event listener
     const setNextButton = sessionElement.querySelector(".setNextButton");
     if (setNextButton) {
       setNextButton.addEventListener("click", () => {
@@ -157,29 +156,6 @@ document
     } else {
       const maxDrivers = document.getElementById("message");
       maxDrivers.innerHTML = "max 8 drivers!"; // Show message if max drivers reached
-    }
-  });
-
-// Function to send car list to the server
-function sendCarListToServer(drivers) {
-  const carIds = drivers.map((driver) => driver.carNumber); // Extract car numbers from drivers
-  console.log("Sending car list to server:", carIds); // Debugging log
-  socket.emit("sendCarList", carIds); // Emit car list to the server
-}
-
-// Add another driver input field (Max 8 drivers)
-document
-  .getElementById("addDriverFieldButton")
-  .addEventListener("click", () => {
-    const driversList = document.getElementById("driversList");
-    const currentDrivers = document.querySelectorAll(".driver-entry").length;
-
-    if (currentDrivers < 8) {
-      // Enforce maximum of 8 drivers
-      driversList.appendChild(createDriverEntry()); // Add new driver entry
-    } else {
-      const maxDrivers = document.getElementById("message");
-      maxDrivers.innerHTML = "max 8 drivers!"; // Show message if max drivers reached
       setTimeout(() => {
         maxDrivers.innerHTML = ""; // Clear message after 10 seconds
       }, 5000);
@@ -210,21 +186,6 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
 
   driverElements.forEach((driverElement) => {
     const driverName = driverElement.querySelector(".driverName").value.trim();
-    if (driverName) {
-      // Check if the driver name is already added
-      if (driverNamesSet.has(driverName)) {
-        const duplicateName = document.getElementById("message3");
-        duplicateName.innerHTML = `The driver name "${driverName}" has already been added. Please use a unique name.`;
-
-        hasDuplicate = true; // Set duplicate flag to true
-      }
-      driverNamesSet.add(driverName); // Add name to the set
-
-      drivers.push({
-        driver: driverName,
-        carNumber: index + 1, // Assign car number sequentially (1 to 8)
-      });
-    }
     const carNumber = driverElement.querySelector(".carNumberDropdown").value;
 
     if (!driverName || !carNumber) {
@@ -315,11 +276,6 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
   driversList.appendChild(createDriverEntry());
 });
 
-// Listen for race finished event
-socket.on("raceFinished", () => {
-  socket.emit("getRaceSessions"); // Refresh the race sessions list
-});
-
 // Function to send car list to the server
 function sendCarListToServer(drivers) {
   const carIds = drivers.map((driver) => driver.carNumber); // Extract car numbers from drivers
@@ -331,4 +287,8 @@ function sendCarListToServer(drivers) {
 window.addEventListener("DOMContentLoaded", () => {
   const driversList = document.getElementById("driversList");
   driversList.appendChild(createDriverEntry()); // Add a default driver input when the page loads
+});
+
+socket.on("raceFinished", () => {
+  socket.emit("getRaceSessions"); // Refresh the race sessions list
 });
