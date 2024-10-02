@@ -81,6 +81,35 @@ let raceSessions = [];
 let currentRace = null;
 let raceStartTime = null;
 let raceFlags = "";
+let raceTimer = null;
+
+// Function to finish a race
+function finishRace() {
+  if (currentRace) {
+    const finishedRaceIndex = raceSessions.findIndex(
+      (s) => s.sessionId === currentRace.sessionId
+    );
+    if (finishedRaceIndex !== -1) {
+      raceSessions.splice(finishedRaceIndex, 1);
+      currentRace = null;
+      raceStartTime = null;
+
+      // Clear the race timer
+      if (raceTimer) {
+        clearTimeout(raceTimer);
+        raceTimer = null;
+      }
+
+      // Set the next race
+      if (raceSessions.length > 0) {
+        raceSessions[0].isNext = true;
+      }
+
+      io.emit("raceFinished");
+      io.emit("raceSessions", raceSessions);
+    }
+  }
+}
 
 // Handle socket connections
 io.on("connection", (socket) => {
@@ -117,31 +146,22 @@ io.on("connection", (socket) => {
 
   // Event to send race sessions after authentication
   socket.on("getRaceSessions", () => {
-    if (clientRole === "raceControl") {
-      socket.emit("raceSessions", raceSessions); // Send current race sessions to authenticated clients
+    if (clientRole === "raceControl" || clientRole === "frontDesk") {
+      socket.emit("raceSessions", raceSessions);
     }
   });
 
   // Add a new race session for frontDesk
   socket.on("addRaceSession", (session) => {
     if (clientRole === "frontDesk") {
-      // Create new session
       const newSession = {
         sessionId: Date.now(),
         sessionName: session.sessionName,
         drivers: session.drivers || [],
-        // isNext will be set later
+        isNext: raceSessions.length === 0, // First added session is next by default
       };
-
-      // Add the new session to the list
       raceSessions.push(newSession);
-
-      // Set isNext to true for the first session only
-      raceSessions.forEach((s, index) => {
-        s.isNext = index === 0; // Mark the first session as next
-      });
-
-      io.emit("raceSessions", raceSessions); // Broadcast updated race sessions to all clients
+      io.emit("raceSessions", raceSessions);
     }
   });
 
@@ -152,8 +172,11 @@ io.on("connection", (socket) => {
         (session) => session.sessionId === updatedSession.sessionId
       );
       if (sessionIndex !== -1) {
-        raceSessions[sessionIndex] = updatedSession; // Replace with updated session
-        io.emit("raceSessions", raceSessions); // Broadcast updated sessions
+        raceSessions[sessionIndex] = {
+          ...raceSessions[sessionIndex],
+          ...updatedSession,
+        };
+        io.emit("raceSessions", raceSessions);
       }
     }
   });
@@ -164,7 +187,19 @@ io.on("connection", (socket) => {
       raceSessions = raceSessions.filter(
         (session) => session.sessionId !== sessionId
       );
-      io.emit("raceSessions", raceSessions); // Broadcast updated list of race sessions
+      io.emit("raceSessions", raceSessions);
+    }
+  });
+
+  // Set next race session
+  socket.on("setNextRaceSession", (sessionId) => {
+    if (clientRole === "frontDesk") {
+      raceSessions.forEach((s) => (s.isNext = false));
+      const session = raceSessions.find((s) => s.sessionId === sessionId);
+      if (session) {
+        session.isNext = true;
+        io.emit("raceSessions", raceSessions);
+      }
     }
   });
 
@@ -173,18 +208,32 @@ io.on("connection", (socket) => {
     if (clientRole === "raceControl") {
       currentRace = raceSessions.find((session) => session.isNext);
       if (currentRace) {
-        raceStartTime = Date.now() + 600000; // 10 minutes from now
+        raceStartTime = Date.now();
+        const raceDuration = 600000; // 10 minutes in milliseconds
+
         io.emit("raceStarted", { race: currentRace, startTime: raceStartTime });
-        io.emit("startRace"); // Broadcast startRace event to all clients
+        io.emit("startRace");
+
+        // Set a timer to automatically finish the race
+        raceTimer = setTimeout(() => {
+          finishRace();
+        }, raceDuration);
       }
     }
   });
 
-  // Broadcast car list
-  socket.on("sendCarList", (carIds) => {
-    if (clientRole === "frontDesk") {
-      console.log("Broadcasting car list:", carIds); // Debugging log
-      io.emit("carIds", carIds); // Broadcast car IDs to all clients
+  // Finish the race
+  socket.on("finishRace", () => {
+    if (clientRole === "raceControl") {
+      finishRace();
+    }
+  });
+
+  // Get next race session
+  socket.on("getNextRaceSession", () => {
+    if (clientRole === "raceControl") {
+      const nextSession = raceSessions.find((s) => s.isNext);
+      socket.emit("nextRaceSession", nextSession || null);
     }
   });
 

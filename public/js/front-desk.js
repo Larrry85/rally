@@ -29,22 +29,22 @@ socket.on("raceSessions", (sessions) => {
   sessionDiv.innerHTML = ""; // Clear existing sessions
 
   // Iterate over each session and create HTML elements
-  sessions.forEach((session) => {
+  sessions.forEach((session, index) => {
     const sessionElement = document.createElement("div");
     sessionElement.innerHTML = `
-            <strong>${session.sessionName}</strong>
-            <ul>
-                ${session.drivers
-        .map(
-          (driver) =>
-            `<li>${driver.driver} (Car: ${driver.carNumber})</li>`
-        )
-        .join("")}
-            </ul>
-            <button class="editSessionButton">Edit</button>
-            <button class="removeSessionButton">Remove</button>
-        `;
-    sessionDiv.appendChild(sessionElement); // Add session element to the DOM
+      <strong>${session.sessionName}</strong> ${session.isNext ? "(Next)" : ""}
+      <ul>
+        ${session.drivers
+          .map(
+            (driver) => `<li>${driver.driver} (Car: ${driver.carNumber})</li>`
+          )
+          .join("")}
+      </ul>
+      <button class="editSessionButton">Edit</button>
+      <button class="removeSessionButton">Remove</button>
+      ${index === 0 ? '<button class="setNextButton">Set as Next</button>' : ""}
+    `;
+    sessionDiv.appendChild(sessionElement);
 
     // Handle Remove Session button click event
     sessionElement
@@ -68,6 +68,14 @@ socket.on("raceSessions", (sessions) => {
 
         currentSessionId = session.sessionId; // Track which session is being edited
       });
+
+    // Add Set as Next button event listener
+    const setNextButton = sessionElement.querySelector(".setNextButton");
+    if (setNextButton) {
+      setNextButton.addEventListener("click", () => {
+        socket.emit("setNextRaceSession", session.sessionId);
+      });
+    }
   });
 });
 
@@ -109,7 +117,7 @@ function createDriverEntry(name = "", selectedCarNumber = null) {
   carNumberDropdown.appendChild(defaultOption);
 
   // Add car number options
-  carNumberOptions.forEach(num => {
+  carNumberOptions.forEach((num) => {
     const option = document.createElement("option");
     option.value = num;
     option.textContent = `Car ${num}`;
@@ -137,21 +145,46 @@ function createDriverEntry(name = "", selectedCarNumber = null) {
 }
 
 // Add another driver input field (Max 8 drivers)
-document.getElementById("addDriverFieldButton").addEventListener("click", () => {
-  const driversList = document.getElementById("driversList");
-  const currentDrivers = document.querySelectorAll(".driver-entry").length;
+document
+  .getElementById("addDriverFieldButton")
+  .addEventListener("click", () => {
+    const driversList = document.getElementById("driversList");
+    const currentDrivers = document.querySelectorAll(".driver-entry").length;
 
-  if (currentDrivers < 8) {
-    // Enforce maximum of 8 drivers
-    driversList.appendChild(createDriverEntry()); // Add new driver entry
-  } else {
-    const maxDrivers = document.getElementById("message");
-    maxDrivers.innerHTML = "max 8 drivers!"; // Show message if max drivers reached
-    setTimeout(() => {
-      maxDrivers.innerHTML = ""; // Clear message after 10 seconds
-    }, 5000);
-  }
-});
+    if (currentDrivers < 8) {
+      // Enforce maximum of 8 drivers
+      driversList.appendChild(createDriverEntry()); // Add new driver entry
+    } else {
+      const maxDrivers = document.getElementById("message");
+      maxDrivers.innerHTML = "max 8 drivers!"; // Show message if max drivers reached
+    }
+  });
+
+// Function to send car list to the server
+function sendCarListToServer(drivers) {
+  const carIds = drivers.map((driver) => driver.carNumber); // Extract car numbers from drivers
+  console.log("Sending car list to server:", carIds); // Debugging log
+  socket.emit("sendCarList", carIds); // Emit car list to the server
+}
+
+// Add another driver input field (Max 8 drivers)
+document
+  .getElementById("addDriverFieldButton")
+  .addEventListener("click", () => {
+    const driversList = document.getElementById("driversList");
+    const currentDrivers = document.querySelectorAll(".driver-entry").length;
+
+    if (currentDrivers < 8) {
+      // Enforce maximum of 8 drivers
+      driversList.appendChild(createDriverEntry()); // Add new driver entry
+    } else {
+      const maxDrivers = document.getElementById("message");
+      maxDrivers.innerHTML = "max 8 drivers!"; // Show message if max drivers reached
+      setTimeout(() => {
+        maxDrivers.innerHTML = ""; // Clear message after 10 seconds
+      }, 5000);
+    }
+  });
 
 // Add a new or update race session with drivers (Max 8 drivers and unique names and car numbers)
 document.getElementById("addSessionButton").addEventListener("click", () => {
@@ -177,6 +210,21 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
 
   driverElements.forEach((driverElement) => {
     const driverName = driverElement.querySelector(".driverName").value.trim();
+    if (driverName) {
+      // Check if the driver name is already added
+      if (driverNamesSet.has(driverName)) {
+        const duplicateName = document.getElementById("message3");
+        duplicateName.innerHTML = `The driver name "${driverName}" has already been added. Please use a unique name.`;
+
+        hasDuplicate = true; // Set duplicate flag to true
+      }
+      driverNamesSet.add(driverName); // Add name to the set
+
+      drivers.push({
+        driver: driverName,
+        carNumber: index + 1, // Assign car number sequentially (1 to 8)
+      });
+    }
     const carNumber = driverElement.querySelector(".carNumberDropdown").value;
 
     if (!driverName || !carNumber) {
@@ -189,10 +237,9 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
       return;
     }
 
-
     // Check for duplicate driver names
     if (driverNamesSet.has(driverName)) {
-      const duplicateNameMessage = document.getElementById('message3');
+      const duplicateNameMessage = document.getElementById("message3");
       duplicateNameMessage.innerHTML = `The driver name "${driverName}" has already been added. Please use a unique name.`;
       hasDuplicateName = true;
       setTimeout(() => {
@@ -204,7 +251,7 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
 
     // Check for duplicate car numbers
     if (carNumbersSet.has(carNumber)) {
-      const duplicateCarNumberMessage = document.getElementById('message4');
+      const duplicateCarNumberMessage = document.getElementById("message4");
       duplicateCarNumberMessage.innerHTML = `The car number "${carNumber}" has already been selected. Please choose a different car number.`;
       hasDuplicateCarNumber = true;
       setTimeout(() => {
@@ -221,10 +268,10 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
     });
   });
 
-    // If there is incomplete data or duplicates, prevent the race session from being added  <-- Added section
-    if (hasIncompleteData || hasDuplicateName || hasDuplicateCarNumber) {
-      return; // Exit without adding the session
-    }
+  // If there is incomplete data or duplicates, prevent the race session from being added  <-- Added section
+  if (hasIncompleteData || hasDuplicateName || hasDuplicateCarNumber) {
+    return; // Exit without adding the session
+  }
 
   // If duplicates were found, prevent the race session from being added
   if (hasDuplicateName || hasDuplicateCarNumber) {
@@ -268,9 +315,14 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
   driversList.appendChild(createDriverEntry());
 });
 
+// Listen for race finished event
+socket.on("raceFinished", () => {
+  socket.emit("getRaceSessions"); // Refresh the race sessions list
+});
+
 // Function to send car list to the server
 function sendCarListToServer(drivers) {
-  const carIds = drivers.map(driver => driver.carNumber); // Extract car numbers from drivers
+  const carIds = drivers.map((driver) => driver.carNumber); // Extract car numbers from drivers
   console.log("Sending car list to server:", carIds); // Debugging log
   socket.emit("sendCarList", carIds); // Emit car list to the server
 }
