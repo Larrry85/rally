@@ -1,9 +1,17 @@
 const socket = io(); // Initialize Socket.IO client
 
-// Handle login
-document.getElementById("loginButton").addEventListener("click", () => {
-  const key = document.getElementById("accessKey").value; // Get the access key from input
-  socket.emit("authenticate", key); // Emit authentication event with the access key
+document.addEventListener("DOMContentLoaded", () => {
+  const skipLogin = window.SKIP_LOGIN === "true";
+
+  if (skipLogin) {
+    socket.emit("authenticate", "0001"); // Automatically authenticate with default key
+  } else {
+    // Handle login button click event for manual login
+    document.getElementById("loginButton").addEventListener("click", () => {
+      const key = document.getElementById("accessKey").value;
+      socket.emit("authenticate", key);
+    });
+  }
 });
 
 socket.on("authenticated", (data) => {
