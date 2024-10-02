@@ -29,22 +29,22 @@ socket.on("raceSessions", (sessions) => {
   sessionDiv.innerHTML = ""; // Clear existing sessions
 
   // Iterate over each session and create HTML elements
-  sessions.forEach((session) => {
+  sessions.forEach((session, index) => {
     const sessionElement = document.createElement("div");
     sessionElement.innerHTML = `
-            <strong>${session.sessionName}</strong>
-            <ul>
-                ${session.drivers
-        .map(
-          (driver) =>
-            `<li>${driver.driver} (Car: ${driver.carNumber})</li>`
-        )
-        .join("")}
-            </ul>
-            <button class="editSessionButton">Edit</button>
-            <button class="removeSessionButton">Remove</button>
-        `;
-    sessionDiv.appendChild(sessionElement); // Add session element to the DOM
+      <strong>${session.sessionName}</strong> ${session.isNext ? "(Next)" : ""}
+      <ul>
+        ${session.drivers
+          .map(
+            (driver) => `<li>${driver.driver} (Car: ${driver.carNumber})</li>`
+          )
+          .join("")}
+      </ul>
+      <button class="editSessionButton">Edit</button>
+      <button class="removeSessionButton">Remove</button>
+      ${index === 0 ? '<button class="setNextButton">Set as Next</button>' : ""}
+    `;
+    sessionDiv.appendChild(sessionElement);
 
     // Handle Remove Session button click event
     sessionElement
@@ -68,6 +68,14 @@ socket.on("raceSessions", (sessions) => {
 
         currentSessionId = session.sessionId; // Track which session is being edited
       });
+
+    // Add Set as Next button event listener
+    const setNextButton = sessionElement.querySelector(".setNextButton");
+    if (setNextButton) {
+      setNextButton.addEventListener("click", () => {
+        socket.emit("setNextRaceSession", session.sessionId);
+      });
+    }
   });
 });
 
@@ -105,7 +113,7 @@ document
 
 // Function to send car list to the server
 function sendCarListToServer(drivers) {
-  const carIds = drivers.map(driver => driver.carNumber); // Extract car numbers from drivers
+  const carIds = drivers.map((driver) => driver.carNumber); // Extract car numbers from drivers
   console.log("Sending car list to server:", carIds); // Debugging log
   socket.emit("sendCarList", carIds); // Emit car list to the server
 }
@@ -131,9 +139,9 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
     if (driverName) {
       // Check if the driver name is already added
       if (driverNamesSet.has(driverName)) {
-        const duplicateName = document.getElementById('message3')
-        duplicateName.innerHTML = `The driver name "${driverName}" has already been added. Please use a unique name.`
-        
+        const duplicateName = document.getElementById("message3");
+        duplicateName.innerHTML = `The driver name "${driverName}" has already been added. Please use a unique name.`;
+
         hasDuplicate = true; // Set duplicate flag to true
       }
       driverNamesSet.add(driverName); // Add name to the set
@@ -185,4 +193,9 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
 
   // Add a default driver input
   driversList.appendChild(createDriverEntry());
+});
+
+// Listen for race finished event
+socket.on("raceFinished", () => {
+  socket.emit("getRaceSessions"); // Refresh the race sessions list
 });

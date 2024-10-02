@@ -23,12 +23,12 @@ socket.on("authenticated", (data) => {
 });
 
 // Handle start session button click event
-document.getElementById('startSessionButton').addEventListener('click', () => {
-  socket.emit('startSession'); // Emit start session event
+document.getElementById("startSessionButton").addEventListener("click", () => {
+  socket.emit("startSession"); // Emit start session event
 });
 
 // Handle start session event from the server
-socket.on('startSession', () => {
+socket.on("startSession", () => {
   document.getElementById("raceLights").style.display = "flex"; // Show race lights
   document.getElementById("buttons").style.display = "flex"; // Show control buttons
   document.getElementById("session").style.display = "flex"; // Show session information
@@ -108,6 +108,7 @@ document.getElementById("red").addEventListener("click", () => {
 
 document.getElementById("finish").addEventListener("click", () => {
   switchLight("finish"); // Switch to finish light
+  socket.emit("finishRace"); // Emit finish race event
 });
 
 // Emit event to start the race
@@ -124,6 +125,55 @@ socket.on("raceStarted", () => {
     startMessage.innerHTML = ""; // Clear message after 10 seconds
   }, 10000);
 });
+
+socket.on("raceFinished", () => {
+  const finishMessage = document.getElementById("message");
+  finishMessage.innerHTML = "Race finished! Transitioning to next session...";
+  setTimeout(() => {
+    finishMessage.innerHTML = "";
+    socket.emit("getNextRaceSession"); // Request the next race session
+  }, 5000); // Wait 5 seconds before transitioning
+});
+
+// Listen for next race session data
+socket.on("nextRaceSession", (session) => {
+  if (session) {
+    updateRaceSessionDisplay(session);
+    document.getElementById("startSessionButton").style.display = "block";
+    document.getElementById("raceLights").style.display = "none";
+    document.getElementById("buttons").style.display = "none";
+    document.getElementById("session").style.display = "none";
+  } else {
+    const noSessionMessage = document.getElementById("message");
+    noSessionMessage.innerHTML = "No more race sessions available.";
+  }
+});
+
+// Function to update race session display
+function updateRaceSessionDisplay(session) {
+  const container = document.getElementById("raceSessionContainer");
+  container.innerHTML = "";
+
+  const sessionElement = document.createElement("div");
+  sessionElement.classList.add("race-session");
+
+  const maxNameLength = Math.max(
+    ...session.drivers.map((driver) => driver.driver.length)
+  );
+
+  const formattedDrivers = session.drivers
+    .map((driver) => {
+      const paddedName = driver.driver.padEnd(maxNameLength);
+      return `<span style="display:inline-block; min-width: ${maxNameLength}ch;"><strong>${paddedName}</strong></span> (Car: ${driver.carNumber})`;
+    })
+    .join("<br>");
+
+  sessionElement.innerHTML = `
+    <h3>${session.sessionName}</h3>
+    <pre style="font-family: inherit;">${formattedDrivers}</pre>
+  `;
+  container.appendChild(sessionElement);
+}
 
 // Handle flag clicks
 document.querySelectorAll(".flag").forEach((flagButton) => {
