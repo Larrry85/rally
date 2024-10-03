@@ -119,44 +119,41 @@ io.on("connection", (socket) => {
   let clientRole = null;
 
   // Check if login should be skipped in dev mode
-  if (process.env.SKIP_LOGIN === "true") {
-    // Automatic login for each interface based on predefined keys
-    if (process.env.RECEPTIONIST_KEY === "0000") {
-      clientRole = "frontDesk";
-      socket.emit("authenticated", { success: true, role: "frontDesk" });
-      console.log("Receptionist logged in automatically");
-    }
-    if (process.env.RACECONTROL_KEY === "0001") {
-      clientRole = "raceControl";
-      socket.emit("authenticated", { success: true, role: "raceControl" });
-      console.log("Race Control logged in automatically");
-    }
-    if (process.env.LAP_LINE_TRACKER_KEY === "0002") {
-      clientRole = "lapLineTracker";
-      socket.emit("authenticated", { success: true, role: "lapLineTracker" });
-      console.log("Lap Line Tracker logged in automatically");
-    }
-  } else {
-    // Manual login based on authentication key
-    socket.on("authenticate", (key) => {
-      if (key === INTERFACE_KEYS.frontDesk) {
+  socket.on("authenticate", () => {
+    if (process.env.SKIP_LOGIN === "true") {
+      // Automatic login for each interface based on predefined keys
+      if (process.env.RECEPTIONIST_KEY === "0000") {
         clientRole = "frontDesk";
         socket.emit("authenticated", { success: true, role: "frontDesk" });
-        console.log("Receptionist logged in");
-      } else if (key === INTERFACE_KEYS.raceControl) {
+        console.log("Receptionist logged in automatically");
+      } else if (process.env.RACECONTROL_KEY === "0001") {
         clientRole = "raceControl";
         socket.emit("authenticated", { success: true, role: "raceControl" });
-        console.log("Race Control logged in");
-      } else if (key === INTERFACE_KEYS.lapLineTracker) {
+        console.log("Race Control logged in automatically");
+      } else if (process.env.LAP_LINE_TRACKER_KEY === "0002") {
         clientRole = "lapLineTracker";
         socket.emit("authenticated", { success: true, role: "lapLineTracker" });
-        console.log("Lap Line Tracker logged in");
-      } else {
-        socket.emit("authenticated", { success: false });
-        console.log("Wrong access key");
+        console.log("Lap Line Tracker logged in automatically");
       }
-    });
-  }
+    }
+  });
+
+  // Manual login handler
+  socket.on("authenticate", (key) => {
+    if (key === INTERFACE_KEYS.frontDesk) {
+      clientRole = "frontDesk";
+      socket.emit("authenticated", { success: true, role: "frontDesk" });
+    } else if (key === INTERFACE_KEYS.raceControl) {
+      clientRole = "raceControl";
+      socket.emit("authenticated", { success: true, role: "raceControl" });
+    } else if (key === INTERFACE_KEYS.lapLineTracker) {
+      clientRole = "lapLineTracker";
+      socket.emit("authenticated", { success: true, role: "lapLineTracker" });
+    } else {
+      socket.emit("authenticated", { success: false });
+      console.log("Wrong access key");
+    }
+  });
 
 
 

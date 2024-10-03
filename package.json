@@ -20,6 +20,7 @@
     "destroy": "^1.2.0",
     "dotenv": "^16.4.5",
     "ee-first": "^1.1.1",
+    "ejs": "^3.1.10",
     "encodeurl": "^2.0.0",
     "engine.io": "^6.5.5",
     "engine.io-parser": "^5.2.3",
@@ -81,12 +82,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "SKIP_LOGIN=false node server.js", 
-    "dev": "SKIP_LOGIN=true node server.js" 
+    "start": "SKIP_LOGIN=false node server.js",
+    "dev": "SKIP_LOGIN=true node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
   "description": ""
 }
