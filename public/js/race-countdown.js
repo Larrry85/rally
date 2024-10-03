@@ -51,6 +51,7 @@ function startCountdown(duration) {
 
 // Listen for the 'startRace' event from the server
 socket.on('startRace', () => {
+    //const duration = 600; // Set the countdown duration to 10 minutes (600 seconds)
     const duration = 600; // Set the countdown duration to 10 minutes (600 seconds)
     startCountdown(duration); // Start the countdown
 });
