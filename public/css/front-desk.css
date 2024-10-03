@@ -54,26 +54,32 @@ h1 {
   min-height: 300px; /* Set minimum height */
 }
 
+.session-name,
+#driversList {
+  text-align: left;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
 /* Style text and password input fields */
 input[type="text"],
-input[type="password"] {
-  width: 200px; /* Set width */
-  padding: 10px; /* Add padding inside the input */
-  margin-bottom: 10px; /* Add margin to the bottom */
-  border: 1px solid #2c3238; /* Add border */
-  border-radius: 5px; /* Round the corners */
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.1
-  ); /* Semi-transparent white background */
-  color: #ffffff; /* Set text color to white */
+input[type="password"],
+select {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #2c3238;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  box-sizing: border-box;
 }
 
 /* Style the button element */
-button {
-  padding: 10px 20px; /* Add padding inside the button */
+button,
+select {
+  padding: 10px;
   background-color: rgba(0, 123, 255, 0.8); /* Set background color */
   color: white; /* Set text color to white */
   border: none; /* Remove border */
@@ -82,6 +88,18 @@ button {
   transition: all 0.3s ease; /* Smooth transition for all properties */
   font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
   font-size: 16px; /* Set font size */
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 10px);
+  background-position-y: 50%;
+  background-color: rgba(0, 123, 255, 0.8);
+  color: white;
 }
 
 /* Style the button on hover */
@@ -97,26 +115,47 @@ button:active {
   transform: translateY(1px); /* Move button down */
 }
 
+select,
+.driver-entry select {
+  width: auto; /* Allow the width to be determined by content */
+  min-width: 150px; /* Set a minimum width */
+  max-width: 210px; /* Set a maximum width */
+  padding-right: 30px; /* Add extra padding on the right for the dropdown arrow */
+}
+
 /* Style the driver entry container */
 .driver-entry {
-  display: flex; /* Use flexbox for layout */
-  align-items: center; /* Center items vertically */
-  margin-bottom: 10px; /* Add margin to the bottom */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the start (left) */
+  margin-bottom: 10px;
+  gap: 5px; /* Add space between elements */
+}
+
+.driver-entry input,
+.driver-entry select,
+.driver-entry button {
+  height: 40px; /* Set a consistent height */
+  box-sizing: border-box; /* Ensure padding doesn't affect overall height */
+  margin: 0; /* Remove any default margins */
 }
 
 /* Style the input inside driver entry */
 .driver-entry input {
-  margin-right: 10px; /* Add margin to the right */
-  flex-grow: 1; /* Allow input to grow */
+  margin-right: 0; /* Add margin to the right */
 }
 
 /* Style the remove driver button */
-.removeDriverButton {
+.removeDriverButton,
+.removeSessionButton {
   background-color: rgba(220, 53, 69, 0.8); /* Set background color */
+  padding: 0 15px; /* Adjust padding to your preference */
+  line-height: 40px; /* Match the height for vertical centering of text */
 }
 
 /* Style the remove driver button on hover */
-.removeDriverButton:hover {
+.removeDriverButton:hover,
+.removeSessionButton:hover {
   background-color: rgba(200, 35, 51, 0.9); /* Change background color */
 }
 
