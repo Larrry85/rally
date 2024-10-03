@@ -259,6 +259,13 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("sendCarList", (carIds) => {
+    if (clientRole === "frontDesk") {
+      console.log("Broadcasting car list:", carIds); // Debugging log
+      io.emit("carIds", carIds); // Broadcast car IDs to all clients
+    }
+  });
+
   // Broadcast lap data
   socket.on("lapAdded", (data) => {
     console.log("Lap added:", data); // Debugging log

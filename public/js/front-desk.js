@@ -257,6 +257,12 @@ document.getElementById("addSessionButton").addEventListener("click", () => {
     });
   }
 
+  // If there are no issues, emit the driver list to the lap tracker
+  if (!hasIncompleteData && !hasDuplicateName && !hasDuplicateCarNumber) {
+    console.log("Emitting updateDriverList event with drivers:", drivers); // Debugging log
+    socket.emit("updateDriverList", drivers);
+  }
+
   // Send car list to the server
   sendCarListToServer(drivers);
 
