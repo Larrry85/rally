@@ -3,7 +3,6 @@ const socket = io(); // Initialize Socket.IO client
 // Function to update the countdown display
 function updateCountdownDisplay(minutes, seconds) {
     const countdownElement = document.getElementById('countdown'); // Get the countdown element
-    // Format and set the countdown text
     countdownElement.textContent = `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
 }
 
@@ -48,5 +47,10 @@ function startCountdown(duration) {
 
 // Listen for the 'startRace' event from the server
 socket.on('startRace', ({ duration }) => {
-    startCountdown(duration / 1000); // Start the countdown, convert milliseconds to seconds
+    // Delay the countdown by 6 seconds
+    document.getElementById('countdown').textContent = "Race starting in 6 seconds...";
+    
+    setTimeout(() => {
+        startCountdown(duration / 1000); // Start the countdown after 6 seconds, convert milliseconds to seconds
+    }, 6000); // Delay of 6 seconds
 });
