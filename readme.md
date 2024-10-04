@@ -205,83 +205,83 @@ Socket.IO Events
 (Client files listen to events to get the current state of race from server, and update UI)
 (Clients emit events to server to perform actions)
 
-- race-flags.js
+- ***race-flags.js***   
 
-    updateAnimatedFlag(): updates flag
+    updateAnimatedFlag(): updates flag  
     startTrafficLightSequence(): starts trafficlights
 
-Socket.IO events:
-    raceFlags: updates flag
+Socket.IO events:   
+    raceFlags: updates flag 
     startRace: start traffic lights
 
-- race-countdown.js
-startCountdown(): starts timer
-    updateCountdownDisplay(): updates timer
+- ***race-countdown.js***   
+startCountdown(): starts timer  
+    updateCountdownDisplay(): updates timer 
     updateSVGProgress(): updates circle
 
-Socket.IO events:
+Socket.IO events:   
     startRace: starts timer
 
-next-race.js
+- ***next-race.js***    
 
-Socket.IO events:
+Socket.IO events:   
     raceSessions: updates driver list
 
-- leader-board.js
-    updateLeaderboard(): updates board
-    updateRaceInfo(): updates board, timer, flags
+- ***leader-board.js***     
+    updateLeaderboard(): updates board  
+    updateRaceInfo(): updates board, timer, flags   
     endRace(): ends race
 
-Socket.IO events:
-    raceUpdate: updates race data
-    raceStarted: initialize race data, start timer
-    raceFlags: updates flags
+Socket.IO events:   
+    raceUpdate: updates race data   
+    raceStarted: initialize race data, start timer  
+    raceFlags: updates flags    
     lapUpdate: updates laps
 
-- lap-line-tracker.js
+- ***lap-line-tracker.js***     
     addLap(): adds lap
 
-Socket.IO events:
-    authenticated: authentication
-    startSession: requests current race session
-    carID: store car ID???????????????????????????????
-    raceStarted: enables buttons
+Socket.IO events:   
+    authenticated: authentication   
+    startSession: requests current race session 
+    carID: store car ID???????????????????????????????  
+    raceStarted: enables buttons    
     raceFinished: removes buttons
 
-- race-control.js
-    switchLight(): switch race lights
-    turnOffAllLights(): turn off all lights
+- ***race-control.js***     
+    switchLight(): switch race lights   
+    turnOffAllLights(): turn off all lights 
     updateRaceSessionDisplay(): updates race session display
 
-Socket.IO events:
-    authenticated: authentications
-    startSession: shows race lights and control buttons
-    raceSessions: renders race session
-    raceStarted: notifies when race has startes
-    raceFinished: nofifies when race has finished
+Socket.IO events:   
+    authenticated: authentications  
+    startSession: shows race lights and control buttons 
+    raceSessions: renders race session  
+    raceStarted: notifies when race has startes 
+    raceFinished: nofifies when race has finished   
     nextRaceSession: updates next race session display
 
-- front-desk.js
-    createDriverEntry(): creates driver entry
+- ***front-desk.js***   
+    createDriverEntry(): creates driver entry   
     sendCarListToServer(): send car list to server
 
-Socket.IO events:
-    authenticated: authentications
+Socket.IO events:   
+    authenticated: authentications  
     raceSessions: displays race session
 
 ## EXAMPLES
 
-Starting the race:
+Starting the race:  
     Race control emits a startRace event
     Server handles startRace event, sets timer, emits racestarted event to clients
     Clients listen raceStarted event and update UI (timer, flags, lap buttons)
 
-Finishing a race:
+Finishing a race:   
     Race control emits finishRace event
     Server handles finishRace avent, clears timer, emits raceFinished event to clients
     Clients listen raceFinished event and update UI (flags, remove lap buttons)
 
-Updating Lap data:
+Updating Lap data:  
     Lap line tracker emits lapAdded event with lap data
     Server handles lapAdded event, updates lap data, emits lapAdded event to clients
     clinets listen lapAdded evetn and update leaderboard with new lap data
