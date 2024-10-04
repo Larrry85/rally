@@ -70,12 +70,20 @@ Access key: 0002
 
 ### Interfaces
 
+**Server**:
+   - **Express.js**: Serves static files and handles HTTP routes.
+   - **Socket.IO**: Manages real-time communication between clients and the server.
+   - **In-memory Storage**: Keeps track of race sessions, drivers, and race state.
+
 #### Receptionist
 
 Front Desk  
 /front-desk
 
 Receptionist can add a lists of drivers in races. They can edit and remove drivers.
+   - **Login**: Authenticates users and establishes a session.
+   - **Manage Sessions**: Interacts with the server to create, update, or delete race sessions.
+   - **Manage Drivers**: Communicates with the server to manage driver information.
 
 #### Safety Official
 
@@ -83,13 +91,19 @@ Race Control
 /race-control
 
 Safety official sees the next race list. They can start the session, start the race, change the flags, ens race and end session. Interace is designed for a mobilephone.
+   - **Login**: Authenticates users and establishes a session.
+   - **Start Session**: Sends a command to the server to initiate a race session.
+   - **Control Lights**: Uses Socket.IO to send real-time commands to control race lights.
+   - **Start Race**: Signals the server to begin the race.
 
-#### Lap-line Observer
+#### Lap-line Tracker
 
 Lap-line Tracker    
 /lap-line-tracker
 
 Lap-line Observer sees the buttons of each car in a current race. Each button repsesents the car id number. Buttons are available only during the race. Interface is designed for a tablet.
+   - **Login**: Authenticates users and establishes a session.
+   - **Track Laps**: Sends lap data to the server in real-time using Socket.IO.
 
 #### Guest
 
@@ -97,19 +111,26 @@ Leader Board
 leader-board
 
 Guest can see the leaderboard that shows the list af drivers in a current race. Drivers are shown first by car numbers, then by fastest driver. Driver's fastest lap in showing. fastest Leaderboard has a timer and current flag showing.
+   - **Display Leader Board**: Shows the current race standings.
+   - **Update in Real-Time**: Continuously updates the leader board based on data from the server.
 
 #### Race Driver
 
+Race Driver can see a list of drivers participating in the next race, the timer of currect race, and the current flags in big screens all over the race track.
+
 Next Race   
 next-race
+   - **Display Drivers for Next Race**: Shows the list of drivers for the upcoming race.
 
 Race Countdown  
 race-countdown
+   - **Countdown Timer**: Displays a countdown timer for the race start.
+   - **SVG Progress**: Shows graphical progress of the countdown.
 
 Race Flag   
 race-flags 
-
-Race Driver can see a list of drivers participating in the next race, the timer of currect race, and the current flags in big screens all over the race track.
+   - **Display Flags**: Receives commands from the server to display race flags.
+   - **Traffic Lights**: Updates traffic light status in real-time based on server commands.
 
 ```
 +-------------------+       +-------------------+       +-------------------+
@@ -165,6 +186,108 @@ Race Driver can see a list of drivers participating in the next race, the timer 
                             |                   |
                             +-------------------+
 ```
+
+## SERVER
+
+(Server manages the state of the race)
+
+Routes  
+    /front-desk, /lap-line-tracker, /leader-board etc...
+
+(Server listens events and performs actions)
+(Server emits events to clients to update interfaces in real time)
+
+Socket.IO Events    
+    startSession, startRace, finishRace, getRaceSessions, lapAdder etc...
+
+## CLIENT SIDE
+
+(Client files listen to events to get the current state of race from server, and update UI)
+(Clients emit events to server to perform actions)
+
+- race-flags.js
+
+    updateAnimatedFlag(): updates flag
+    startTrafficLightSequence(): starts trafficlights
+
+Socket.IO events:
+    raceFlags: updates flag
+    startRace: start traffic lights
+
+- race-countdown.js
+startCountdown(): starts timer
+    updateCountdownDisplay(): updates timer
+    updateSVGProgress(): updates circle
+
+Socket.IO events:
+    startRace: starts timer
+
+next-race.js
+
+Socket.IO events:
+    raceSessions: updates driver list
+
+- leader-board.js
+    updateLeaderboard(): updates board
+    updateRaceInfo(): updates board, timer, flags
+    endRace(): ends race
+
+Socket.IO events:
+    raceUpdate: updates race data
+    raceStarted: initialize race data, start timer
+    raceFlags: updates flags
+    lapUpdate: updates laps
+
+- lap-line-tracker.js
+    addLap(): adds lap
+
+Socket.IO events:
+    authenticated: authentication
+    startSession: requests current race session
+    carID: store car ID???????????????????????????????
+    raceStarted: enables buttons
+    raceFinished: removes buttons
+
+- race-control.js
+    switchLight(): switch race lights
+    turnOffAllLights(): turn off all lights
+    updateRaceSessionDisplay(): updates race session display
+
+Socket.IO events:
+    authenticated: authentications
+    startSession: shows race lights and control buttons
+    raceSessions: renders race session
+    raceStarted: notifies when race has startes
+    raceFinished: nofifies when race has finished
+    nextRaceSession: updates next race session display
+
+- front-desk.js
+    createDriverEntry(): creates driver entry
+    sendCarListToServer(): send car list to server
+
+Socket.IO events:
+    authenticated: authentications
+    raceSessions: displays race session
+
+## EXAMPLES
+
+Starting the race:
+    Race control emits a startRace event
+    Server handles startRace event, sets timer, emits racestarted event to clients
+    Clients listen raceStarted event and update UI (timer, flags, lap buttons)
+
+Finishing a race:
+    Race control emits finishRace event
+    Server handles finishRace avent, clears timer, emits raceFinished event to clients
+    Clients listen raceFinished event and update UI (flags, remove lap buttons)
+
+Updating Lap data:
+    Lap line tracker emits lapAdded event with lap data
+    Server handles lapAdded event, updates lap data, emits lapAdded event to clients
+    clinets listen lapAdded evetn and update leaderboard with new lap data
+
+
+
 ---------------------------------------------
 
 ## Coders
