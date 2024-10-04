@@ -70,7 +70,7 @@ Access key: 0002
 
 ### Interfaces
 
-. **Server**:
+**Server**:
    - **Express.js**: Serves static files and handles HTTP routes.
    - **Socket.IO**: Manages real-time communication between clients and the server.
    - **In-memory Storage**: Keeps track of race sessions, drivers, and race state.
