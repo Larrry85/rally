@@ -71,6 +71,7 @@ socket.on("raceStarted", () => {
 
     lapLinerApp.appendChild(button); // Add button to the lap tracker interface
   });
+  raceData.laps = {}; // Reset laps after the race finishes
 });
 
 // Remove buttons when the race finishes
