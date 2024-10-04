@@ -227,7 +227,7 @@ Socket.IO events:
 Socket.IO events:   
     raceSessions: updates driver list
 
-- ***leader-board.js*** 
+- ***leader-board.js***     
     updateLeaderboard(): updates board  
     updateRaceInfo(): updates board, timer, flags   
     endRace(): ends race
@@ -238,7 +238,7 @@ Socket.IO events:
     raceFlags: updates flags    
     lapUpdate: updates laps
 
-- ***lap-line-tracker.js*** 
+- ***lap-line-tracker.js***     
     addLap(): adds lap
 
 Socket.IO events:   
@@ -248,7 +248,7 @@ Socket.IO events:
     raceStarted: enables buttons    
     raceFinished: removes buttons
 
-- ***race-control.js*** 
+- ***race-control.js***     
     switchLight(): switch race lights   
     turnOffAllLights(): turn off all lights 
     updateRaceSessionDisplay(): updates race session display
