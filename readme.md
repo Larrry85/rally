@@ -232,7 +232,7 @@ Socket.IO events:
     updateRaceInfo(): updates board, timer, flags       
     endRace(): ends race    
 
-Socket.IO events:   
+    Socket.IO events:   
     raceUpdate: updates race data   
     raceStarted: initialize race data, start timer      
     raceFlags: updates flags    
