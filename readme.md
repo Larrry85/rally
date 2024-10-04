@@ -206,28 +206,30 @@ Socket.IO Events
 (Clients emit events to server to perform actions)
 
 - ***race-flags.js***       
-
+    
     updateAnimatedFlag(): updates flag      
     startTrafficLightSequence(): starts trafficlights   
 
-Socket.IO events:       
+    Socket.IO events:       
     raceFlags: updates flag         
     startRace: start traffic lights 
 
 - ***race-countdown.js***       
-startCountdown(): starts timer      
+    
+    startCountdown(): starts timer      
     updateCountdownDisplay(): updates timer     
     updateSVGProgress(): updates circle 
 
-Socket.IO events:       
+    Socket.IO events:       
     startRace: starts timer     
 
 - ***next-race.js***    
-
-Socket.IO events:   
+    
+    Socket.IO events:   
     raceSessions: updates driver list       
 
 - ***leader-board.js***     
+    
     updateLeaderboard(): updates board      
     updateRaceInfo(): updates board, timer, flags       
     endRace(): ends race    
@@ -239,9 +241,10 @@ Socket.IO events:
     lapUpdate: updates laps     
 
 - ***lap-line-tracker.js***     
+    
     addLap(): adds lap      
 
-Socket.IO events:   
+    Socket.IO events:   
     authenticated: authentication   
     startSession: requests current race session     
     carID: store car ID???????????????????????????????      
@@ -249,11 +252,12 @@ Socket.IO events:
     raceFinished: removes buttons       
 
 - ***race-control.js***     
+    
     switchLight(): switch race lights   
     turnOffAllLights(): turn off all lights         
     updateRaceSessionDisplay(): updates race session display     
 
-Socket.IO events:   
+    Socket.IO events:   
     authenticated: authentications      
     startSession: shows race lights and control buttons     
     raceSessions: renders race session      
@@ -262,10 +266,11 @@ Socket.IO events:
     nextRaceSession: updates next race session display      
 
 - ***front-desk.js***   
+    
     createDriverEntry(): creates driver entry   
     sendCarListToServer(): send car list to server      
 
-Socket.IO events:   
+    Socket.IO events:   
     authenticated: authentications      
     raceSessions: displays race session     
 
