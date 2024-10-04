@@ -205,7 +205,7 @@ Socket.IO Events
 (Client files listen to events to get the current state of race from server, and update UI)
 (Clients emit events to server to perform actions)
 
-- ***race-flags.js***
+- ***race-flags.js***   
 
     updateAnimatedFlag(): updates flag  
     startTrafficLightSequence(): starts trafficlights
@@ -214,7 +214,7 @@ Socket.IO events:
     raceFlags: updates flag 
     startRace: start traffic lights
 
-- ***race-countdown.js***
+- ***race-countdown.js***   
 startCountdown(): starts timer  
     updateCountdownDisplay(): updates timer 
     updateSVGProgress(): updates circle
@@ -222,12 +222,12 @@ startCountdown(): starts timer
 Socket.IO events:   
     startRace: starts timer
 
-- ***next-race.js***
+- ***next-race.js***    
 
 Socket.IO events:   
     raceSessions: updates driver list
 
-- ***leader-board.js***
+- ***leader-board.js*** 
     updateLeaderboard(): updates board  
     updateRaceInfo(): updates board, timer, flags   
     endRace(): ends race
@@ -238,7 +238,7 @@ Socket.IO events:
     raceFlags: updates flags    
     lapUpdate: updates laps
 
-- ***lap-line-tracker.js***
+- ***lap-line-tracker.js*** 
     addLap(): adds lap
 
 Socket.IO events:   
@@ -248,7 +248,7 @@ Socket.IO events:
     raceStarted: enables buttons    
     raceFinished: removes buttons
 
-- ***race-control.js***
+- ***race-control.js*** 
     switchLight(): switch race lights   
     turnOffAllLights(): turn off all lights 
     updateRaceSessionDisplay(): updates race session display
@@ -261,7 +261,7 @@ Socket.IO events:
     raceFinished: nofifies when race has finished   
     nextRaceSession: updates next race session display
 
-- ***front-desk.js***
+- ***front-desk.js***   
     createDriverEntry(): creates driver entry   
     sendCarListToServer(): send car list to server
 
