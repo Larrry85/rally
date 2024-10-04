@@ -70,12 +70,20 @@ Access key: 0002
 
 ### Interfaces
 
+. **Server**:
+   - **Express.js**: Serves static files and handles HTTP routes.
+   - **Socket.IO**: Manages real-time communication between clients and the server.
+   - **In-memory Storage**: Keeps track of race sessions, drivers, and race state.
+
 #### Receptionist
 
 Front Desk  
 /front-desk
 
 Receptionist can add a lists of drivers in races. They can edit and remove drivers.
+   - **Login**: Authenticates users and establishes a session.
+   - **Manage Sessions**: Interacts with the server to create, update, or delete race sessions.
+   - **Manage Drivers**: Communicates with the server to manage driver information.
 
 #### Safety Official
 
@@ -83,13 +91,19 @@ Race Control
 /race-control
 
 Safety official sees the next race list. They can start the session, start the race, change the flags, ens race and end session. Interace is designed for a mobilephone.
+   - **Login**: Authenticates users and establishes a session.
+   - **Start Session**: Sends a command to the server to initiate a race session.
+   - **Control Lights**: Uses Socket.IO to send real-time commands to control race lights.
+   - **Start Race**: Signals the server to begin the race.
 
-#### Lap-line Observer
+#### Lap-line Tracker
 
 Lap-line Tracker    
 /lap-line-tracker
 
 Lap-line Observer sees the buttons of each car in a current race. Each button repsesents the car id number. Buttons are available only during the race. Interface is designed for a tablet.
+   - **Login**: Authenticates users and establishes a session.
+   - **Track Laps**: Sends lap data to the server in real-time using Socket.IO.
 
 #### Guest
 
@@ -97,19 +111,26 @@ Leader Board
 leader-board
 
 Guest can see the leaderboard that shows the list af drivers in a current race. Drivers are shown first by car numbers, then by fastest driver. Driver's fastest lap in showing. fastest Leaderboard has a timer and current flag showing.
+   - **Display Leader Board**: Shows the current race standings.
+   - **Update in Real-Time**: Continuously updates the leader board based on data from the server.
 
 #### Race Driver
 
+Race Driver can see a list of drivers participating in the next race, the timer of currect race, and the current flags in big screens all over the race track.
+
 Next Race   
 next-race
+   - **Display Drivers for Next Race**: Shows the list of drivers for the upcoming race.
 
 Race Countdown  
 race-countdown
+   - **Countdown Timer**: Displays a countdown timer for the race start.
+   - **SVG Progress**: Shows graphical progress of the countdown.
 
 Race Flag   
 race-flags 
-
-Race Driver can see a list of drivers participating in the next race, the timer of currect race, and the current flags in big screens all over the race track.
+   - **Display Flags**: Receives commands from the server to display race flags.
+   - **Traffic Lights**: Updates traffic light status in real-time based on server commands.
 
 ```
 +-------------------+       +-------------------+       +-------------------+
