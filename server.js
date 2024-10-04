@@ -222,24 +222,37 @@ io.on("connection", (socket) => {
     }
   });
 
-  // Start the race and set the timer
-  socket.on("startRace", () => {
-    if (clientRole === "raceControl") {
-      currentRace = raceSessions.find((session) => session.isNext);
-      if (currentRace) {
-        raceStartTime = Date.now();
-        const raceDuration = 600000; // 10 minutes in milliseconds
 
-        io.emit("raceStarted", { race: currentRace, startTime: raceStartTime });
-        io.emit("startRace");
+// Check the environment to determine race duration
+let raceDuration;
+if (process.env.NODE_ENV === "development") {
+  raceDuration = 60000; // 1 minute in milliseconds
+} else {
+  raceDuration = 600000; // 10 minutes in milliseconds
+}
 
-        // Set a timer to automatically finish the race
-        raceTimer = setTimeout(() => {
-          finishRace();
-        }, raceDuration);
-      }
+// Adjust the countdown for the race based on environment (server-side)
+socket.on("startRace", () => {
+  if (clientRole === "raceControl") {
+    currentRace = raceSessions.find((session) => session.isNext);
+    if (currentRace) {
+      raceStartTime = Date.now();
+
+      // Set race duration based on environment
+      const raceDuration = process.env.NODE_ENV === "development" ? 60000 : 600000; // 1 minute for dev, 10 minutes for prod
+
+      io.emit("raceStarted", { race: currentRace, startTime: raceStartTime, duration: raceDuration });
+      io.emit("startRace", { duration: raceDuration }); // Send the duration to the client
+
+      // Set a timer to automatically finish the race
+      raceTimer = setTimeout(() => {
+        finishRace();
+      }, raceDuration);
     }
-  });
+  }
+});
+
+
 
   // Finish the race
   socket.on("finishRace", () => {
