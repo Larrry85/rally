@@ -191,100 +191,100 @@ race-flags
 
 (Server manages the state of the race)
 
-Routes  
+Routes      
     /front-desk, /lap-line-tracker, /leader-board etc...
 
-(Server listens events and performs actions)
-(Server emits events to clients to update interfaces in real time)
+(Server listens events and performs actions)    
+(Server emits events to clients to update interfaces in real time)  
 
 Socket.IO Events    
     startSession, startRace, finishRace, getRaceSessions, lapAdder etc...
 
 ## CLIENT SIDE
 
-(Client files listen to events to get the current state of race from server, and update UI)
+(Client files listen to events to get the current state of race from server, and update UI)     
 (Clients emit events to server to perform actions)
 
-- ***race-flags.js***   
+- ***race-flags.js***       
 
-    updateAnimatedFlag(): updates flag  
-    startTrafficLightSequence(): starts trafficlights
+    updateAnimatedFlag(): updates flag      
+    startTrafficLightSequence(): starts trafficlights   
 
-Socket.IO events:   
-    raceFlags: updates flag 
-    startRace: start traffic lights
+Socket.IO events:       
+    raceFlags: updates flag         
+    startRace: start traffic lights 
 
-- ***race-countdown.js***   
-startCountdown(): starts timer  
-    updateCountdownDisplay(): updates timer 
-    updateSVGProgress(): updates circle
+- ***race-countdown.js***       
+startCountdown(): starts timer      
+    updateCountdownDisplay(): updates timer     
+    updateSVGProgress(): updates circle 
 
-Socket.IO events:   
-    startRace: starts timer
+Socket.IO events:       
+    startRace: starts timer     
 
 - ***next-race.js***    
 
 Socket.IO events:   
-    raceSessions: updates driver list
+    raceSessions: updates driver list       
 
 - ***leader-board.js***     
-    updateLeaderboard(): updates board  
-    updateRaceInfo(): updates board, timer, flags   
-    endRace(): ends race
+    updateLeaderboard(): updates board      
+    updateRaceInfo(): updates board, timer, flags       
+    endRace(): ends race    
 
 Socket.IO events:   
     raceUpdate: updates race data   
-    raceStarted: initialize race data, start timer  
+    raceStarted: initialize race data, start timer      
     raceFlags: updates flags    
-    lapUpdate: updates laps
+    lapUpdate: updates laps     
 
 - ***lap-line-tracker.js***     
-    addLap(): adds lap
+    addLap(): adds lap      
 
 Socket.IO events:   
     authenticated: authentication   
-    startSession: requests current race session 
-    carID: store car ID???????????????????????????????  
+    startSession: requests current race session     
+    carID: store car ID???????????????????????????????      
     raceStarted: enables buttons    
-    raceFinished: removes buttons
+    raceFinished: removes buttons       
 
 - ***race-control.js***     
     switchLight(): switch race lights   
-    turnOffAllLights(): turn off all lights 
-    updateRaceSessionDisplay(): updates race session display
+    turnOffAllLights(): turn off all lights         
+    updateRaceSessionDisplay(): updates race session display     
 
 Socket.IO events:   
-    authenticated: authentications  
-    startSession: shows race lights and control buttons 
-    raceSessions: renders race session  
-    raceStarted: notifies when race has startes 
-    raceFinished: nofifies when race has finished   
-    nextRaceSession: updates next race session display
+    authenticated: authentications      
+    startSession: shows race lights and control buttons     
+    raceSessions: renders race session      
+    raceStarted: notifies when race has startes     
+    raceFinished: nofifies when race has finished       
+    nextRaceSession: updates next race session display      
 
 - ***front-desk.js***   
     createDriverEntry(): creates driver entry   
-    sendCarListToServer(): send car list to server
+    sendCarListToServer(): send car list to server      
 
 Socket.IO events:   
-    authenticated: authentications  
-    raceSessions: displays race session
+    authenticated: authentications      
+    raceSessions: displays race session     
 
 ## EXAMPLES
 
-Starting the race:  
-    Race control emits a startRace event
-    Server handles startRace event, sets timer, emits racestarted event to clients
-    Clients listen raceStarted event and update UI (timer, flags, lap buttons)
+Starting the race:      
+    Race control emits a startRace event     
+    Server handles startRace event, sets timer, emits racestarted event to clients      
+    Clients listen raceStarted event and update UI (timer, flags, lap buttons)      
 
-Finishing a race:   
-    Race control emits finishRace event
-    Server handles finishRace avent, clears timer, emits raceFinished event to clients
-    Clients listen raceFinished event and update UI (flags, remove lap buttons)
+Finishing a race:       
+    Race control emits finishRace event     
+    Server handles finishRace avent, clears timer, emits raceFinished event to clients      
+    Clients listen raceFinished event and update UI (flags, remove lap buttons)     
 
-Updating Lap data:  
-    Lap line tracker emits lapAdded event with lap data
-    Server handles lapAdded event, updates lap data, emits lapAdded event to clients
-    clinets listen lapAdded evetn and update leaderboard with new lap data
+Updating Lap data:      
+    Lap line tracker emits lapAdded event with lap data     
+    Server handles lapAdded event, updates lap data, emits lapAdded event to clients    
+    clinets listen lapAdded evetn and update leaderboard with new lap data      
 
 
 
