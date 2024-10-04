@@ -47,7 +47,7 @@ h2 {
 #driverList p {
   display: block; /* Make the <p> elements block */
   width: 100%; /* Set the width to 100% */
-  margin: 0 auto 10px auto; /* Center the <p> elements and add space between rows */
+  margin: 10 auto 10px auto; /* Center the <p> elements and add space between rows */
   padding: 10px; /* Add padding */
   background-color: rgba(
     255,
@@ -59,10 +59,10 @@ h2 {
   transition: background-color 0.3s ease; /* Smooth transition for background color */
 }
 
-/* Style paragraphs inside the driver list on hover */
+/* Style paragraphs inside the driver list on hover 
 #driverList p:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Lighter background on hover */
-}
+  background-color: rgba(255, 255, 255, 0.2); /* Lighter background on hover 
+}*/
 
 /* Style the fullscreen button */
 button.fullscreen-btn {
@@ -94,7 +94,7 @@ button.fullscreen-btn:hover {
 
 :fullscreen #driverList p {
   font-size: 1.5em; /* Increase font size in fullscreen mode */
-  margin: 0 auto 20px auto; /* Add more space between rows in fullscreen mode */
+  margin: 20 auto 20px auto; /* Add more space between rows in fullscreen mode */
 }
 
 /* Add a subtle animation to the driver list items */
@@ -108,7 +108,7 @@ button.fullscreen-btn:hover {
     transform: translateY(0);
   }
 }
-
+/*
 #driverList p {
   animation: fadeIn 0.5s ease-out forwards;
   opacity: 0;
