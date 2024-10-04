@@ -191,13 +191,13 @@ race-flags
 
 (Server manages the state of the race)
 
-Routes
+Routes  
     /front-desk, /lap-line-tracker, /leader-board etc...
 
 (Server listens events and performs actions)
 (Server emits events to clients to update interfaces in real time)
 
-Socket.IO Events
+Socket.IO Events    
     startSession, startRace, finishRace, getRaceSessions, lapAdder etc...
 
 ## CLIENT SIDE
