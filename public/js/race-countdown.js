@@ -48,7 +48,7 @@ function startCountdown(duration) {
 // Listen for the 'startRace' event from the server
 socket.on('startRace', ({ duration }) => {
     // Delay the countdown by 6 seconds
-    document.getElementById('countdown').textContent = "Race starting in 6 seconds...";
+    document.getElementById('countdown').textContent = "Race is starting.";
     
     setTimeout(() => {
         startCountdown(duration / 1000); // Start the countdown after 6 seconds, convert milliseconds to seconds

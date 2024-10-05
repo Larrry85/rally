@@ -107,11 +107,11 @@ socket.on("raceUpdate", (data) => {
   updateRaceInfo(); // Update race information
 });
 
-socket.on("raceStarted", ({ race }) => {
+socket.on("raceStarted", ({ race, duration }) => {
   raceData = {
     ...raceData,
     drivers: race.drivers, // Set drivers from received race data
-    remainingTime: 600, // Reset to 10 minutes
+    remainingTime: Math.floor(duration / 1000), // Convert duration to seconds
     raceMode: "Safe", // Set race mode to Safe
     isRaceActive: true, // Set race active flag to true
   };
@@ -133,11 +133,12 @@ socket.on("raceStarted", ({ race }) => {
         updateRaceInfo(); // Update race information
       }
     }, 1000); // Interval set to 1 second
-  }, 11000); // Delay set to 6 seconds
+  }, 7000); // Delay set to 7 seconds
 
   updateLeaderboard(); // Initial leaderboard update
   updateRaceInfo(); // Initial race information update
 });
+
 
 socket.on("raceFlags", (flag) => {
   raceData.raceMode = flag; // Update race mode

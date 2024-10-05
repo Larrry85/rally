@@ -222,14 +222,13 @@ io.on("connection", (socket) => {
     }
   });
 
-// Check the environment to determine race duration
-let raceDuration;
-if (process.env.NODE_ENV === "development") {
-  raceDuration = 60000; // 1 minute in milliseconds
-} else {
-  raceDuration = 600000; // 10 minutes in milliseconds
-}
-
+  let raceDuration;
+  if (process.env.NODE_ENV === "development") {
+    raceDuration = 60000; // 1 minute in milliseconds for development
+  } else {
+    raceDuration = 600000; // 10 minutes in milliseconds for production
+  }
+ 
 // Adjust the countdown for the race based on environment
 // Start the race and set the timer
 socket.on("startRace", () => {
@@ -237,9 +236,6 @@ socket.on("startRace", () => {
     currentRace = raceSessions.find((session) => session.isNext);
     if (currentRace) {
       raceStartTime = Date.now();
-
-      // Set race duration based on environment
-      const raceDuration = process.env.NODE_ENV === "development" ? 60000 : 600000; // 1 minute for dev, 10 minutes for prod
 
       // Delay the race start by 6 seconds
       setTimeout(() => {
