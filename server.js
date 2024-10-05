@@ -250,7 +250,7 @@ socket.on("startRace", () => {
         raceTimer = setTimeout(() => {
           finishRace();
         }, raceDuration);
-      }, 6000); // 6-second delay before starting the race
+      }, 3000); // 3-second delay before starting the race
     }
   }
 });
