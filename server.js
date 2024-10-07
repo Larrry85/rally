@@ -102,7 +102,11 @@ function finishRace() {
 
       // Set the next race
       if (raceSessions.length > 0) {
-        raceSessions[0].isNext = true;
+        const nextSession = raceSessions[0];
+        nextSession.isNext = true;
+        io.emit("nextRaceSession", nextSession);
+      } else {
+        io.emit("nextRaceSession", null);
       }
 
       io.emit("raceFinished");
@@ -114,6 +118,8 @@ function finishRace() {
 // Handle socket connections
 io.on("connection", (socket) => {
   console.log("New client connected");
+
+
 
   // Track client role based on authentication
   let clientRole = null;
@@ -165,9 +171,15 @@ io.on("connection", (socket) => {
 
   // Event to send race sessions after authentication
   socket.on("getRaceSessions", () => {
-    if (clientRole === "raceControl" || clientRole === "frontDesk") {
+    if (clientRole === "raceControl" || clientRole === "frontDesk" || clientRole === "lapLineTracker") {
       socket.emit("raceSessions", raceSessions);
     }
+  });
+
+  // Get current race session
+  socket.on("getCurrentRaceSession", () => {
+    const currentSession = raceSessions.find(session => session.isNext);
+    socket.emit("currentRaceSession", currentSession || null);
   });
 
   // Add a new race session for frontDesk
@@ -228,29 +240,30 @@ io.on("connection", (socket) => {
   } else {
     raceDuration = 600000; // 10 minutes in milliseconds for production
   }
- 
-// Adjust the countdown for the race based on environment
-// Start the race and set the timer
-socket.on("startRace", () => {
-  if (clientRole === "raceControl") {
-    currentRace = raceSessions.find((session) => session.isNext);
-    if (currentRace) {
-      raceStartTime = Date.now();
 
-      // Delay the race start by 6 seconds
-      setTimeout(() => {
-        io.emit("raceStarted", { race: currentRace, startTime: raceStartTime, duration: raceDuration });
-        io.emit("startRace", { duration: raceDuration });
+  // Adjust the countdown for the race based on environment
+  // Start the race and set the timer
+  socket.on("startRace", (sessionId) => {
+    if (clientRole === "raceControl") {
+      currentRace = raceSessions.find((session) => session.isNext);
+      if (currentRace) {
+        currentRace.isCurrent = true;
+        io.emit("raceStarted", currentRace);
+        raceStartTime = Date.now();
 
-        // Set a timer to automatically finish the race
-        raceTimer = setTimeout(() => {
-          finishRace();
-        }, raceDuration);
-      }, 3000); // 3-second delay before starting the race
+        // Delay the race start by 6 seconds
+        setTimeout(() => {
+          io.emit("raceStarted", { race: currentRace, startTime: raceStartTime, duration: raceDuration });
+          io.emit("startRace", { duration: raceDuration });
+
+          // Set a timer to automatically finish the race
+          raceTimer = setTimeout(() => {
+            finishRace();
+          }, raceDuration);
+        }, 3000); // 3-second delay before starting the race
+      }
     }
-  }
-});
-
+  });
 
 
   // Finish the race

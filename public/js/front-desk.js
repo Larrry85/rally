@@ -71,7 +71,7 @@ socket.on("raceSessions", (sessions) => {
 
         // Populate the form with existing drivers
         session.drivers.forEach((driver) => {
-          driversList.appendChild(createDriverEntry(driver.driver)); // Use function to create driver entry
+          driversList.appendChild(createDriverEntry(driver.driver, driver.carNumber)); // Use function to create driver entry
         });
 
         currentSessionId = session.sessionId; // Track which session is being edited

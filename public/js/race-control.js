@@ -133,6 +133,7 @@ socket.on("raceStarted", () => {
   setTimeout(() => {
     startMessage.innerHTML = ""; // Clear message after 10 seconds
   }, 10000);
+  updateRaceSessionDisplay(currentSession); // Update race session display
 });
 
 socket.on("raceFinished", () => {
