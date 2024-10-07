@@ -59,6 +59,14 @@ h2 {
   transition: background-color 0.3s ease; /* Smooth transition for background color */
 }
 
+#paddockMessage {
+  font-size: large;
+  color: red;
+  margin-top: 40px; /* Increase top margin to add more space */
+  margin-bottom: 20px; /* Optional: Adjust bottom margin if needed */
+  text-align: center; /* Center the text */
+}
+
 /* Style paragraphs inside the driver list on hover 
 #driverList p:hover {
   background-color: rgba(255, 255, 255, 0.2); /* Lighter background on hover 
@@ -96,6 +104,13 @@ button.fullscreen-btn:hover {
   font-size: 1.5em; /* Increase font size in fullscreen mode */
   margin: 20 auto 20px auto; /* Add more space between rows in fullscreen mode */
 }
+
+
+:fullscreen #paddockMessage {
+  background-color: none;
+  margin: 20 auto 20px auto; /* Add more space between rows in fullscreen mode */
+}
+
 
 /* Add a subtle animation to the driver list items */
 @keyframes fadeIn {

@@ -14,10 +14,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nextSession && nextSession.drivers.length > 0) { // Check if next session exists and has drivers
             driverListDiv.innerHTML = '<p class="listheader"><strong>Driver List</strong></p><br>' + nextSession.drivers.map(driver => `
                 <p>Car:  <strong>${driver.carNumber}</strong>   -    Driver:  <strong>${driver.driver}</strong></p>
-    `).join('') + '<br><br><p style="font-size: large; color: red;"><strong>Please proceed to the paddock.</strong></p>'; // Update driver list with driver details and add paddock message
+            `).join('') //+ '<br><br><p id="paddockMessage" style="font-size: large; color: red;"><strong>Please proceed to the paddock.</strong></p>'; // Update driver list with driver details and add paddock message
         } else {
             driverListDiv.innerHTML = '<p class="listheader"><strong>Driver List</strong></p><p style="font-size: small;"><small>Waiting for drivers data...</small></p>'; // Display waiting message if no drivers
         }
     });
 
+    // Show "proceed to paddock" message when session starts
+    socket.on('startSession', () => {
+        const paddockMessage = document.getElementById('paddockMessage');
+        if (paddockMessage) {
+            paddockMessage.style.display = 'block'; // Show the paddock message
+        } else {
+            driverListDiv.innerHTML += '<p id="paddockMessage" style="font-size: large; color: red;"><strong>Please proceed to the paddock.</strong></p>'; // Add paddock message if not already present
+        }
+    });
+
+    // Hide "proceed to paddock" message when race starts
+    socket.on('raceStarted', () => {
+        const paddockMessage = document.getElementById('paddockMessage');
+        if (paddockMessage) {
+            paddockMessage.style.display = 'none'; // Hide the paddock message
+        }
+    });
 });
