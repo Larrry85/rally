@@ -26,6 +26,11 @@ for (let i = 0; i < columns; i++) {
   }
 }
 
+// Listen for the 'startSession' event from the server
+socket.on('startSession', () => {
+  updateAnimatedFlag("Danger"); // Set flag to red (Danger)
+});
+
 // Request current race flags
 socket.emit("getRaceFlags"); // Emit event to request current race flags
 
@@ -45,6 +50,15 @@ socket.on("updateFlags", (flag) => {
 socket.on("startRace", () => {
   console.log("Start race event received"); // Log start race event
   startTrafficLightSequence(); // Start traffic light sequence
+});
+
+// Handle end race event
+socket.on("raceFinished", () => {
+  console.log("End race event received");
+  updateAnimatedFlag("Finish");
+  setTimeout(() => {
+    updateDisplay("flag");
+  }, 3000); // Show "race ended" message for 3 seconds
 });
 
 // Function to update the display based on state

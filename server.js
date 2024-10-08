@@ -115,6 +115,14 @@ function finishRace() {
   }
 }
 
+// Determine race duration based on environment
+let raceDuration;
+if (process.env.NODE_ENV === "development") {
+  raceDuration = 60000; // 1 minute in milliseconds for development
+} else {
+  raceDuration = 600000; // 10 minutes in milliseconds for production
+}
+
 // Handle socket connections
 io.on("connection", (socket) => {
   console.log("New client connected");
@@ -165,7 +173,9 @@ io.on("connection", (socket) => {
 
   // Start a new session
   socket.on("startSession", () => {
-    io.emit("startSession");
+    const fullMinutes = Math.floor(raceDuration / 60000); // Calculate full minutes
+    const fullSeconds = Math.floor((raceDuration % 60000) / 1000); // Calculate full seconds
+    io.emit("startSession", { fullMinutes, fullSeconds });
     console.log("session started");
   });
 
@@ -233,13 +243,6 @@ io.on("connection", (socket) => {
       }
     }
   });
-
-  let raceDuration;
-  if (process.env.NODE_ENV === "development") {
-    raceDuration = 60000; // 1 minute in milliseconds for development
-  } else {
-    raceDuration = 600000; // 10 minutes in milliseconds for production
-  }
 
   // Adjust the countdown for the race based on environment
   // Start the race and set the timer
