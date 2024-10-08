@@ -53,7 +53,7 @@ socket.on("raceStarted", (currentSession) => {
     lapLinerApp.innerHTML = ""; // Clear existing buttons
 
     const header = document.createElement("h2"); // Create a header element
-    header.textContent = "Lap Tracker"; // Set header text
+    header.textContent = "Lap Line Tracker"; // Set header text
     lapLinerApp.appendChild(header); // Add header to the lap tracker interface
 
     // Create buttons for each car ID and place them in the grid
@@ -83,7 +83,7 @@ socket.on("raceFinished", () => {
   lapLinerApp.innerHTML = ""; // Clear all buttons
 
   const header = document.createElement("h2"); // Create a header element
-  header.textContent = "Lap Tracker"; // Set header text
+  header.textContent = "Lap Line Tracker"; // Set header text
   lapLinerApp.appendChild(header); // Add header to the lap tracker interface
 });
 
@@ -108,7 +108,7 @@ socket.on("currentRaceSession", (currentSession) => {
     lapLinerApp.innerHTML = ""; // Clear existing buttons
 
     const header = document.createElement("h2");
-    header.textContent = "Lap Tracker";
+    header.textContent = "Lap Line Tracker";
     lapLinerApp.appendChild(header);
 
     currentSession.carIds.forEach((carId, index) => {
