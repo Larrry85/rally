@@ -30,6 +30,20 @@ socket.on("authenticated", (data) => {
   }
 });
 
+// Function to reset the panel
+function resetPanel(hasSession) {
+  document.getElementById("startSessionButton").style.display = hasSession
+    ? "block"
+    : "none";
+  document.getElementById("session").style.display = "none";
+  document.getElementById("raceLights").style.display = "none";
+  document.getElementById("buttons").style.display = "none";
+
+  if (!hasSession) {
+    document.getElementById("raceSessionContainer").innerHTML =
+      "<p>No upcoming race sessions.</p>";
+  }
+}
 
 // Handle start session button click event
 document.getElementById("startSessionButton").addEventListener("click", () => {
@@ -38,6 +52,7 @@ document.getElementById("startSessionButton").addEventListener("click", () => {
 
 // Handle start session event from the server
 socket.on("startSession", () => {
+  document.getElementById("startSessionButton").style.display = "none";
   document.getElementById("raceLights").style.display = "flex"; // Show race lights
   document.getElementById("buttons").style.display = "flex"; // Show control buttons
   document.getElementById("session").style.display = "flex"; // Show session information
@@ -52,6 +67,7 @@ socket.on("raceSessions", (sessions) => {
   const nextSession = sessions.find((session) => session.isNext);
 
   if (nextSession) {
+    resetPanel(true);
     const sessionElement = document.createElement("div");
     sessionElement.classList.add("race-session");
 
@@ -72,7 +88,8 @@ socket.on("raceSessions", (sessions) => {
       `;
     container.appendChild(sessionElement); // Add session element to the container
   } else {
-    container.innerHTML = "<p>No upcoming race sessions.</p>"; // Show message if no upcoming sessions
+    resetPanel(false);
+    // container.innerHTML = "<p>No upcoming race sessions.</p>"; // Show message if no upcoming sessions
   }
 });
 
@@ -149,11 +166,13 @@ socket.on("raceFinished", () => {
 socket.on("nextRaceSession", (session) => {
   if (session) {
     updateRaceSessionDisplay(session);
-    document.getElementById("startSessionButton").style.display = "flex";
-    document.getElementById("raceLights").style.display = "flex";
-    document.getElementById("buttons").style.display = "flex";
-    document.getElementById("session").style.display = "flex";
+    resetPanel(true);
+    // document.getElementById("startSessionButton").style.display = "flex";
+    // document.getElementById("raceLights").style.display = "flex";
+    // document.getElementById("buttons").style.display = "flex";
+    // document.getElementById("session").style.display = "flex";
   } else {
+    resetPanel(false);
     const noSessionMessage = document.getElementById("message");
     noSessionMessage.innerHTML = "No more race sessions available.";
   }
