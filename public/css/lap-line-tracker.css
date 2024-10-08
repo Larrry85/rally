@@ -71,9 +71,8 @@ input[type="password"] {
   color: #ffffff; /* Set text color to white */
 }
 
-/* Style the button element */
-button {
-  padding: 10px 20px; /* Add padding inside the button */
+#loginButton {
+  padding: 15px 30px; /* Add padding inside the button */
   background-color: rgba(0, 123, 255, 0.8); /* Set background color */
   color: white; /* Set text color to white */
   border: none; /* Remove border */
@@ -82,6 +81,35 @@ button {
   transition: all 0.3s ease; /* Smooth transition for all properties */
   font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
   font-size: 16px; /* Set font size */
+}
+
+/* Style the button on hover */
+#loginButton:hover {
+  background-color: rgba(0, 86, 179, 0.9); /* Change background color */
+  transform: translateY(-3px); /* Move button up */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+/* Style the button on active (click) */
+#loginButton:active {
+  background-color: rgba(0, 64, 141, 1); /* Change background color */
+  transform: translateY(1px); /* Move button down */
+}
+
+/* Style the button element */
+button {
+  padding: 20px 40px; /* Increase padding inside the button */
+  background-color: rgba(0, 123, 255, 0.8); /* Set background color */
+  color: white; /* Set text color to white */
+  border: none; /* Remove border */
+  border-radius: 25px; /* Round the corners */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  font-family: "Orbitron", sans-serif; /* Use the Orbitron font */
+  font-size: 20px; /* Increase font size */
+  position: relative; /* Set position to relative for pseudo-elements */
+  overflow: hidden; /* Hide overflow for pseudo-elements */
+  margin: 10px 0; /* Add margin to create space between buttons */
 }
 
 /* Style the button on hover */
@@ -95,4 +123,60 @@ button:hover {
 button:active {
   background-color: rgba(0, 64, 141, 1); /* Change background color */
   transform: translateY(1px); /* Move button down */
+}
+
+/* Add light effect on button click */
+button::after {
+  content: ""; /* Empty content */
+  position: absolute; /* Absolute positioning */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background: rgba(255, 255, 255, 0.3); /* Light effect color */
+  transform: translate(-50%, -50%) scale(0); /* Initial scale */
+  transition: transform 0.3s ease; /* Smooth transition */
+  border-radius: 50%; /* Round shape */
+  pointer-events: none; /* Ignore pointer events */
+}
+
+button:active::after {
+  transform: translate(-50%, -50%) scale(1); /* Scale up on click */
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+/* Media query for tablet screens */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    max-width: 100%; /* Set maximum width to 100% */
+    padding: 20px; /* Adjust padding */
+  }
+
+  .form-container {
+    padding: 20px; /* Adjust padding */
+  }
+
+  button {
+    padding: 30px 60px; /* Increase padding for larger buttons */
+    font-size: 24px; /* Increase font size */
+    margin: 15px 0; /* Increase margin for more space between buttons */
+  }
+}
+
+/* Media query for landscape mode */
+@media (orientation: landscape) {
+  .container {
+    max-width: 100%; /* Set maximum width to 100% */
+    padding: 20px; /* Adjust padding */
+  }
+
+  .form-container {
+    padding: 20px; /* Adjust padding */
+  }
+
+  button {
+    padding: 30px 60px; /* Increase padding for larger buttons */
+    font-size: 24px; /* Increase font size */
+    margin: 15px 15px; /* Increase margin for more space between buttons */
+  }
 }

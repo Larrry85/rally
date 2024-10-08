@@ -101,6 +101,10 @@ select {
   background-color: rgba(0, 123, 255, 0.8);
   color: white;
 }
+/* Change background color of select element on hover */
+select:hover {
+  background-color: rgba(0, 86, 179, 0.9); /* Change background color on hover */
+}
 
 /* Style the button on hover */
 button:hover {
@@ -205,3 +209,5 @@ select,
   color: #f44336; /* Set text color to red */
   margin-top: 10px; /* Add margin to the top */
 }
+
+
