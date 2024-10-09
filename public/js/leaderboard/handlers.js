@@ -9,7 +9,7 @@ export function updateLeaderboard(raceData) {
     return;
   }
 
-  if (raceData.drivers.length === 0) {
+  if (!Array.isArray(raceData.drivers) || raceData.drivers.length === 0) {
     DOM.leaderboardBody.innerHTML =
       '<tr><td colspan="6">Waiting for race data...</td></tr>';
     return;
