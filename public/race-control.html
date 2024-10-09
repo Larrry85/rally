@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <link rel="stylesheet" href="css/race-control.css"/>
+    <title>Race-Control</title>
+    <link rel="stylesheet" href="css/race-control.css" />
     <script src="/socket.io/socket.io.js"></script>
 </head>
+
 <body>
     <div class="container">
-        
+
         <!-- Login Section -->
         <div id="login" class="form-container">
             <h2>Login to race control interface</h2>
@@ -17,7 +19,7 @@
             <button id="loginButton">Login</button>
             <div id="loginMessage" style="color: red; margin-top: 10px;"></div>
         </div>
-        
+
         <!-- Race Control Section -->
         <div id="raceControlApp" class="form-container2" style="display: none;">
             <h1>Next race</h1>
@@ -31,19 +33,20 @@
         </div>
 
         <div id="raceLights" class="light-container" style="display: none;">
-                <div class="green"></div>
-                <div class="yellow"></div>
-                <div class="red"></div>
-                <img src="image/finish.png" alt="Finish Line" class="finish-image" />
-        </div> 
+            <div class="green"></div>
+            <div class="yellow"></div>
+            <div class="red"></div>
+            <img src="image/finish.png" alt="Finish Line" class="finish-image" />
+        </div>
         <div id="buttons" class="button-container" style="display: none;">
-            <button id="green">Safe</button> 
-            <button id="yellow">Hazard</button> 
-            <button id="red">Danger</button> 
-            <button id="finish">Finish</button>  
-        </div>     
+            <button id="green">Safe</button>
+            <button id="yellow">Hazard</button>
+            <button id="red">Danger</button>
+            <button id="finish">Finish</button>
+        </div>
     </div>
 
-    <script src="js/race-control.js"></script>
+    <script type="module" src="js/race-control/main.js"></script>
 </body>
+
 </html>

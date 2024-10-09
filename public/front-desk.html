@@ -7,7 +7,6 @@
     <title>Front Desk</title>
     <link rel="stylesheet" href="css/front-desk.css" />
     <script src="/socket.io/socket.io.js"></script>
-    <script src="js/front-desk.js" defer></script>
 </head>
 
 <body>
@@ -24,16 +23,17 @@
         <!-- Race Session Management -->
         <div id="frontDeskApp" class="form-container" style="display: none;">
             <h2>Manage Race Sessions</h2>
+            <div id="message" class="message"></div>
+            <div id="message1" class="message"></div>
             <div id="message2" class="message"></div>
-            <div>
+            <div id="message3" class="message"></div>
+            <div id="message4" class="message"></div>
+            <div class="session-name">
                 <input type="text" id="sessionName" placeholder="Session Name" required>
                 <button id="addSessionButton">Add/Update Session</button>
             </div>
             <div id="driversList">
                 <h4>Drivers</h4>
-                <div id="message3" class="message"></div>
-                <div id="message" class="message"></div>
-                <div id="message1" class="message"></div>
                 <div class="driver-entry">
                     <input type="text" class="driverName" placeholder="Driver Name" required>
                     <button class="removeDriverButton">Remove</button>
@@ -43,6 +43,7 @@
             <div id="sessions"></div>
         </div>
     </div>
+    <script type="module" src="js/front-desk/main.js" defer></script>
 </body>
 
 </html>
