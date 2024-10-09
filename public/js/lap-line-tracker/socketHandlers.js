@@ -22,6 +22,6 @@ export function handleCarIds(carIds) {
 
 export function handleCurrentRaceSession(currentSession, socket) {
   if (currentSession) {
-    handleRaceStarted(currentSession);
+    handleRaceStarted(currentSession, socket);
   }
 }

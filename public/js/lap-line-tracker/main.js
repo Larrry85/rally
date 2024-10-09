@@ -18,7 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
   socket.on("authenticated", (data) => handleAuthentication(data, socket));
   socket.on("startSession", () => socket.emit("getCurrentRaceSession"));
   socket.on("carIds", handleCarIds);
-  socket.on("raceStarted", handleRaceStarted);
+  socket.on("raceStarted", (currentSession) =>
+    handleRaceStarted(currentSession, socket)
+  );
   socket.on("raceFinished", handleRaceFinished);
   socket.on("currentRaceSession", (currentSession) =>
     handleCurrentRaceSession(currentSession, socket)

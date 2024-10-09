@@ -14,14 +14,22 @@ export function handleLogin(socket) {
   }
 }
 
-export function handleRaceStarted(currentSession) {
-  if (currentSession) {
-    raceData.carIds = currentSession.drivers.map((driver) => driver.carNumber);
-    DOM.lapLinerApp.innerHTML = "";
+export function handleRaceStarted(currentSession, socket) {
+  DOM.lapLinerApp.innerHTML = "";
 
-    const header = document.createElement("h2");
-    header.textContent = "Lap Tracker";
-    DOM.lapLinerApp.appendChild(header);
+  const header = document.createElement("h2");
+  header.textContent = "Lap Tracker";
+  DOM.lapLinerApp.appendChild(header);
+
+  if (
+    currentSession &&
+    currentSession.race &&
+    Array.isArray(currentSession.race.drivers) &&
+    currentSession.race.drivers.length > 0
+  ) {
+    raceData.carIds = currentSession.race.drivers.map(
+      (driver) => driver.carNumber
+    );
 
     raceData.carIds.forEach((carId, index) => {
       const button = document.createElement("button");
@@ -36,6 +44,12 @@ export function handleRaceStarted(currentSession) {
 
       DOM.lapLinerApp.appendChild(button);
     });
+    raceData.laps = {};
+    console.log("Race started with car list:", raceData.carIds);
+  } else {
+    // If there's no valid session or no drivers, just leave the area empty except for the header
+    console.log("No active race session or empty drivers list");
+    raceData.carIds = [];
     raceData.laps = {};
   }
 }
