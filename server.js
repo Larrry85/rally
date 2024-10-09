@@ -31,7 +31,15 @@ const INTERFACE_KEYS = {
 };
 
 // Serve static files from the "public" directory
-app.use(express.static("public"));
+app.use(
+  express.static("public", {
+    setHeaders: (res, path, stat) => {
+      if (path.endsWith(".js")) {
+        res.set("Content-Type", "application/javascript");
+      }
+    },
+  })
+);
 
 // Define route for the home page
 app.get("/", (req, res) => {
@@ -127,8 +135,6 @@ if (process.env.NODE_ENV === "development") {
 io.on("connection", (socket) => {
   console.log("New client connected");
 
-
-
   // Track client role based on authentication
   let clientRole = null;
 
@@ -169,8 +175,6 @@ io.on("connection", (socket) => {
     }
   });
 
-
-
   // Start a new session
   socket.on("startSession", () => {
     const fullMinutes = Math.floor(raceDuration / 60000); // Calculate full minutes
@@ -181,14 +185,18 @@ io.on("connection", (socket) => {
 
   // Event to send race sessions after authentication
   socket.on("getRaceSessions", () => {
-    if (clientRole === "raceControl" || clientRole === "frontDesk" || clientRole === "lapLineTracker") {
+    if (
+      clientRole === "raceControl" ||
+      clientRole === "frontDesk" ||
+      clientRole === "lapLineTracker"
+    ) {
       socket.emit("raceSessions", raceSessions);
     }
   });
 
   // Get current race session
   socket.on("getCurrentRaceSession", () => {
-    const currentSession = raceSessions.find(session => session.isNext);
+    const currentSession = raceSessions.find((session) => session.isNext);
     socket.emit("currentRaceSession", currentSession || null);
   });
 
@@ -256,7 +264,11 @@ io.on("connection", (socket) => {
 
         // Delay the race start by 6 seconds
         setTimeout(() => {
-          io.emit("raceStarted", { race: currentRace, startTime: raceStartTime, duration: raceDuration });
+          io.emit("raceStarted", {
+            race: currentRace,
+            startTime: raceStartTime,
+            duration: raceDuration,
+          });
           io.emit("startRace", { duration: raceDuration });
 
           // Set a timer to automatically finish the race
@@ -267,7 +279,6 @@ io.on("connection", (socket) => {
       }
     }
   });
-
 
   // Finish the race
   socket.on("finishRace", () => {

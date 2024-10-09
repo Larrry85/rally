@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Next Race List</title>
-    <link rel="stylesheet" href="css/next-race.css"/>
+    <link rel="stylesheet" href="css/next-race.css" />
+    <script src="/socket.io/socket.io.js"></script>
 </head>
+
 <body>
     <div class="container">
 
 
 
-            <div id="driverList"></div>
+        <div id="driverList"></div>
 
-            <button class="fullscreen-btn" onclick="toggleFullScreen('driverList')">Full Screen Driver List</button>
-            <script src="/socket.io/socket.io.js"></script>
-            <script src="js/next-race.js"></script>
-            <script src="js/fullscreen.js"></script>
+        <button class="fullscreen-btn" onclick="toggleFullScreen('driverList')">Full Screen Driver List</button>
+        <script type="module" src="js/next-race/main.js"></script>
+        <script src="js/fullscreen.js"></script>
 </body>
+
 </html>
