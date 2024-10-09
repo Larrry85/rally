@@ -22,8 +22,15 @@ export function turnOffAllLights() {
 
 export function switchLight(light, socket) {
   turnOffAllLights();
-  DOM.getLightElement(light).classList.add("on");
-  socket.emit("updateFlags", FLAGS[light.toUpperCase()]);
+  const lightElement = DOM.getLightElement(
+    light === "finish" ? "finish-image" : light
+  );
+  if (lightElement) {
+    lightElement.classList.add("on");
+    socket.emit("updateFlags", FLAGS[light.toUpperCase()]);
+  } else {
+    console.error(`Light element not found: ${light}`);
+  }
 }
 
 export function updateRaceSessionDisplay(session) {
