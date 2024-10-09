@@ -10,11 +10,11 @@ export function formatTime(ms) {
 
 export function sortDrivers(drivers) {
   return drivers.sort((a, b) => {
-    if (a.carNumber !== b.carNumber) {
-      return a.carNumber - b.carNumber;
+    if (a.currentLap !== b.currentLap) {
+      return b.currentLap - a.currentLap; // Sort by laps completed, descending
     }
     if (a.fastestLap && b.fastestLap) {
-      return a.fastestLap - b.fastestLap;
+      return a.fastestLap - b.fastestLap; // Then by fastest lap time, ascending
     }
     return 0;
   });

@@ -8,6 +8,8 @@ import {
 import { CONFIG } from "./config.js";
 
 export function setupSocketHandlers(socket) {
+  let currentSession = null;
+
   socket.on("authenticated", (data) => {
     if (data.success && data.role === "raceControl") {
       DOM.loginMessage.textContent = "";
@@ -25,7 +27,8 @@ export function setupSocketHandlers(socket) {
     const nextSession = sessions.find((session) => session.isNext);
     if (nextSession) {
       resetPanel(true);
-      updateRaceSessionDisplay(nextSession);
+      currentSession = nextSession;
+      updateRaceSessionDisplay(currentSession);
     } else {
       resetPanel(false);
     }
@@ -43,7 +46,11 @@ export function setupSocketHandlers(socket) {
     setTimeout(() => {
       DOM.message.innerHTML = "";
     }, CONFIG.MESSAGE_TIMEOUT);
-    updateRaceSessionDisplay(currentSession);
+    if (currentSession) {
+      updateRaceSessionDisplay(currentSession);
+    } else {
+      console.warn("Race started but no current session available");
+    }
   });
 
   socket.on("raceFinished", () => {
@@ -56,7 +63,8 @@ export function setupSocketHandlers(socket) {
 
   socket.on("nextRaceSession", (session) => {
     if (session) {
-      updateRaceSessionDisplay(session);
+      currentSession = session;
+      updateRaceSessionDisplay(currentSession);
       resetPanel(true);
     } else {
       resetPanel(false);

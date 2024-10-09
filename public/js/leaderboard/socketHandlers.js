@@ -1,7 +1,6 @@
 // socketHandlers.js
 import { updateLeaderboard, updateRaceInfo } from "./handlers.js";
 import { CONFIG } from "./config.js";
-import { endRace } from "./raceControl.js";
 
 export function setupSocketHandlers(socket, raceData) {
   socket.on("raceUpdate", (data) => {
@@ -26,9 +25,6 @@ export function setupSocketHandlers(socket, raceData) {
       raceData.countdownInterval = setInterval(() => {
         if (raceData.isRaceActive && raceData.remainingTime > 0) {
           raceData.remainingTime--;
-          if (raceData.remainingTime <= 0) {
-            endRace(socket, raceData);
-          }
           updateLeaderboard(raceData);
           updateRaceInfo(raceData);
         }
@@ -43,7 +39,8 @@ export function setupSocketHandlers(socket, raceData) {
     raceData.raceMode = flag;
     updateRaceInfo(raceData);
     if (flag === "Finish") {
-      endRace(socket, raceData);
+      clearInterval(raceData.countdownInterval);
+      raceData.isRaceActive = false;
     }
   });
 

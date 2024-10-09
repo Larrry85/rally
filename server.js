@@ -31,15 +31,7 @@ const INTERFACE_KEYS = {
 };
 
 // Serve static files from the "public" directory
-app.use(
-  express.static("public", {
-    setHeaders: (res, path, stat) => {
-      if (path.endsWith(".js")) {
-        res.set("Content-Type", "application/javascript");
-      }
-    },
-  })
-);
+app.use(express.static("public"));
 
 // Define route for the home page
 app.get("/", (req, res) => {
@@ -78,6 +70,11 @@ app.get("/race-countdown", (req, res) => {
 // New route to get the race list
 app.get("/api/race-list", (req, res) => {
   res.json(raceSessions);
+});
+
+// Handle favicon requests
+app.get("/favicon.ico", (req, res) => {
+  res.status(204).end();
 });
 
 // Create an HTTP server and attach Socket.IO to it

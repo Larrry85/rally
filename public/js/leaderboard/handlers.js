@@ -1,8 +1,7 @@
 // handlers.js
 import { DOM } from "./dom.js";
-import { CONFIG, RACE_MODE_COLORS } from "./config.js";
+import { RACE_MODE_COLORS } from "./config.js";
 import { formatTime, sortDrivers } from "./utils.js";
-import { endRace } from "./raceControl.js";
 
 export function updateLeaderboard(raceData) {
   if (!DOM.leaderboardBody) {

@@ -1,9 +1,7 @@
 // main.js
 import { CONFIG } from "./config.js";
-import { DOM } from "./dom.js";
 import { updateLeaderboard, updateRaceInfo } from "./handlers.js";
 import { setupSocketHandlers } from "./socketHandlers.js";
-import { endRace } from "./raceControl.js";
 
 const socket = io();
 
@@ -24,5 +22,3 @@ document.addEventListener("DOMContentLoaded", () => {
 setupSocketHandlers(socket, raceData);
 
 socket.emit("requestRaceData");
-
-DOM.finishButton.addEventListener("click", () => endRace(socket, raceData));
