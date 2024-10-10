@@ -11,6 +11,19 @@ export function setupSocketHandlers(socket, raceData) {
 
   let resetModeTimeout;
 
+  function finishRace() {
+    clearInterval(raceData.countdownInterval);
+    raceData.isRaceActive = false;
+    raceData.raceMode = "Finish";
+    updateRaceInfo(raceData);
+
+    // Set a new timeout to reset the race mode after 3 seconds
+    resetModeTimeout = setTimeout(() => {
+      raceData.raceMode = CONFIG.INITIAL_RACE_MODE;
+      updateRaceInfo(raceData);
+    }, 3000);
+  }
+
   socket.on("raceStarted", (data) => {
     console.log("Race started event received:", data);
 
@@ -44,6 +57,11 @@ export function setupSocketHandlers(socket, raceData) {
             updateLapTimes(raceData);
             updateLeaderboard(raceData);
             updateRaceInfo(raceData);
+
+            // Check if time has run out
+            if (raceData.remainingTime === 0) {
+              finishRace();
+            }
           }
         }, CONFIG.UPDATE_INTERVAL);
 
@@ -86,14 +104,7 @@ export function setupSocketHandlers(socket, raceData) {
     updateRaceInfo(raceData);
 
     if (flag === "Finish") {
-      clearInterval(raceData.countdownInterval);
-      raceData.isRaceActive = false;
-
-      // Set a new timeout to reset the race mode after 3 seconds
-      resetModeTimeout = setTimeout(() => {
-        raceData.raceMode = CONFIG.INITIAL_RACE_MODE;
-        updateRaceInfo(raceData);
-      }, 3000);
+      finishRace();
     }
   });
 
