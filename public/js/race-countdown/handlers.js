@@ -2,6 +2,9 @@
 import { DOM } from "./dom.js";
 import { CONFIG } from "./config.js";
 
+const ORIGINAL_CIRCLE_COLOR = "#00BFFF"; // Bright blue color
+const ORIGINAL_TEXT_COLOR = "#00BFFF";
+
 export function updateCountdownDisplay(minutes, seconds) {
   DOM.countdownElement.textContent = `${String(minutes).padStart(
     2,
@@ -17,11 +20,12 @@ export function updateSVGProgress(remainingTime, totalTime) {
 
 export function resetCountdownDisplay(fullMinutes, fullSeconds) {
   updateCountdownDisplay(fullMinutes, fullSeconds);
+  DOM.countdownElement.style.color = ORIGINAL_TEXT_COLOR;
 }
 
 export function resetSVGProgress() {
   DOM.svgCircle.style.strokeDasharray = `1 0`;
-  DOM.svgCircle.style.stroke = `hsl(120, 100%, 50%)`;
+  DOM.svgCircle.style.stroke = ORIGINAL_CIRCLE_COLOR;
 }
 
 export function startCountdown(duration, socket) {
@@ -31,10 +35,8 @@ export function startCountdown(duration, socket) {
     if (remainingTime <= 0) {
       clearInterval(countdownInterval);
       DOM.countdownElement.textContent = "End of race!";
+      DOM.countdownElement.style.color = "white"; // Set to white during "End of race!" display
       socket.emit("endRace");
-      setTimeout(() => {
-        DOM.countdownElement.textContent = CONFIG.DEFAULT_DISPLAY;
-      }, CONFIG.END_RACE_MESSAGE_DURATION);
     } else {
       const minutes = Math.floor((remainingTime % (60 * 60)) / 60);
       const seconds = Math.floor(remainingTime % 60);
