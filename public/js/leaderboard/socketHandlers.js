@@ -9,6 +9,8 @@ import { CONFIG } from "./config.js";
 export function setupSocketHandlers(socket, raceData) {
   console.log("Setting up socket handlers with initial raceData:", raceData);
 
+  let resetModeTimeout;
+
   socket.on("raceStarted", (data) => {
     console.log("Race started event received:", data);
 
@@ -62,6 +64,7 @@ export function setupSocketHandlers(socket, raceData) {
         isNext: data.isNext,
         isCurrent: data.isCurrent,
         isRaceActive: data.isCurrent,
+        raceMode: CONFIG.INITIAL_RACE_MODE,
       });
     } else {
       console.error("Invalid race data received:", data);
@@ -74,11 +77,23 @@ export function setupSocketHandlers(socket, raceData) {
   });
 
   socket.on("raceFlags", (flag) => {
+    // Clear any existing timeout
+    if (resetModeTimeout) {
+      clearTimeout(resetModeTimeout);
+    }
+
     raceData.raceMode = flag;
     updateRaceInfo(raceData);
+
     if (flag === "Finish") {
       clearInterval(raceData.countdownInterval);
       raceData.isRaceActive = false;
+
+      // Set a new timeout to reset the race mode after 3 seconds
+      resetModeTimeout = setTimeout(() => {
+        raceData.raceMode = CONFIG.INITIAL_RACE_MODE;
+        updateRaceInfo(raceData);
+      }, 3000);
     }
   });
 
