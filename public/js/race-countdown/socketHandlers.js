@@ -9,8 +9,12 @@ import {
 
 export function setupSocketHandlers(socket) {
   let countdownInterval;
+  let originalFullMinutes = 10;
+  let originalFullSeconds = 0;
 
   socket.on("startSession", ({ fullMinutes, fullSeconds }) => {
+    originalFullMinutes = fullMinutes;
+    originalFullSeconds = fullSeconds;
     resetCountdownDisplay(fullMinutes, fullSeconds);
     resetSVGProgress();
   });
@@ -26,8 +30,10 @@ export function setupSocketHandlers(socket) {
   socket.on("raceFinished", () => {
     clearInterval(countdownInterval);
     DOM.countdownElement.textContent = "End of race!";
+    DOM.countdownElement.style.color = "white";
     setTimeout(() => {
-      DOM.countdownElement.textContent = CONFIG.DEFAULT_DISPLAY;
+      resetCountdownDisplay(originalFullMinutes, originalFullSeconds);
+      resetSVGProgress();
     }, CONFIG.END_RACE_MESSAGE_DURATION);
   });
 }
