@@ -26,7 +26,7 @@ export function updateLeaderboard(raceData) {
         <td>${driver.carNumber}</td>
         <td>${driver.driver}</td>
         <td>${driver.fastestLap ? formatTime(driver.fastestLap) : "N/A"}</td>
-        <td>${driver.lastLapTime ? formatTime(driver.lastLapTime) : "N/A"}</td>
+        <td>${formatTime(driver.currentLapTime || 0)}</td>
         <td>${driver.currentLap || 0}</td>
       </tr>
     `;
@@ -49,4 +49,13 @@ export function updateRaceInfo(raceData) {
   DOM.raceModeElement.textContent = `Race Mode: ${raceData.raceMode}`;
   DOM.raceModeElement.style.backgroundColor =
     RACE_MODE_COLORS[raceData.raceMode] || RACE_MODE_COLORS.Danger;
+}
+
+export function updateLapTimes(raceData) {
+  const currentTime = Date.now();
+  raceData.drivers.forEach((driver) => {
+    if (driver.lapStartTime) {
+      driver.currentLapTime = currentTime - driver.lapStartTime;
+    }
+  });
 }

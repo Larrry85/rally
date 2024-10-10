@@ -1,5 +1,9 @@
 // socketHandlers.js
-import { updateLeaderboard, updateRaceInfo } from "./handlers.js";
+import {
+  updateLapTimes,
+  updateLeaderboard,
+  updateRaceInfo,
+} from "./handlers.js";
 import { CONFIG } from "./config.js";
 
 export function setupSocketHandlers(socket, raceData) {
@@ -22,19 +26,37 @@ export function setupSocketHandlers(socket, raceData) {
         clearInterval(raceData.countdownInterval);
       }
 
+      // Use setTimeout to sync the start of the countdown with lap timers
       setTimeout(() => {
+        // Reset lap start times for all drivers
+        const raceStartTime = Date.now();
+        raceData.drivers.forEach((driver) => {
+          driver.lapStartTime = raceStartTime;
+          driver.currentLapTime = 0;
+          driver.fastestLap = null;
+        });
+
         raceData.countdownInterval = setInterval(() => {
           if (raceData.isRaceActive && raceData.remainingTime > 0) {
             raceData.remainingTime--;
+            updateLapTimes(raceData);
             updateLeaderboard(raceData);
             updateRaceInfo(raceData);
           }
         }, CONFIG.UPDATE_INTERVAL);
+
+        // Initial update to set correct initial state
+        updateLapTimes(raceData);
+        updateLeaderboard(raceData);
+        updateRaceInfo(raceData);
       }, CONFIG.COUNTDOWN_DELAY);
     } else if (data.drivers) {
       // Handle the first emission
       Object.assign(raceData, {
-        drivers: data.drivers,
+        drivers: data.drivers.map((driver) => ({
+          ...driver,
+          fastestLap: null,
+        })),
         sessionId: data.sessionId,
         sessionName: data.sessionName,
         isNext: data.isNext,
@@ -76,17 +98,29 @@ export function setupSocketHandlers(socket, raceData) {
         carNumber: carId,
         driver: `Driver ${carId}`,
         currentLap: 0,
-        lastLapTime: null,
         fastestLap: null,
+        lapStartTime: Date.now(),
+        currentLapTime: 0,
       };
       raceData.drivers.push(driver);
     }
 
+    // Update lap count
     driver.currentLap = laps;
-    driver.lastLapTime = lapTime;
 
-    if (!driver.fastestLap || lapTime < driver.fastestLap) {
-      driver.fastestLap = lapTime;
+    // Check if this is a completed lap
+    if (laps > 0) {
+      // Use the current lap time as the lap time for this completed lap
+      const completedLapTime = driver.currentLapTime;
+
+      // Update fastest lap if this lap was faster
+      if (driver.fastestLap === null || completedLapTime < driver.fastestLap) {
+        driver.fastestLap = completedLapTime;
+      }
+
+      // Reset current lap time for the new lap
+      driver.currentLapTime = 0;
+      driver.lapStartTime = Date.now();
     }
 
     updateLeaderboard(raceData);
