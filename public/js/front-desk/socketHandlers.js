@@ -1,7 +1,9 @@
 // socketHandlers.js
 import { DOM } from "./dom.js";
 import { createDriverEntry } from "./utils.js";
-import { currentSessionId } from "./handlers.js";
+import { currentSessionId as currentSessionID } from "./handlers.js";
+
+let currentSessionId = currentSessionID;
 
 export function handleAuthentication(data, socket) {
   if (data.success && data.role === "frontDesk") {
@@ -54,6 +56,7 @@ export function handleRaceSessions(sessions, socket) {
           );
         });
         currentSessionId = session.sessionId;
+        console.log("Current session ID set to:", currentSessionId);
       });
   });
 }
