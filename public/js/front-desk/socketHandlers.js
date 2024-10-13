@@ -1,9 +1,12 @@
 // socketHandlers.js
 import { DOM } from "./dom.js";
 import { createDriverEntry } from "./utils.js";
-import { currentSessionId as currentSessionID } from "./handlers.js";
 
-let currentSessionId = currentSessionID;
+export let currentSessionId = null; // Now exported correctly
+
+export function setCurrentSessionId(id) {
+  currentSessionId = id; // Allow the ID to be updated
+}
 
 export function handleAuthentication(data, socket) {
   if (data.success && data.role === "frontDesk") {
@@ -45,18 +48,24 @@ export function handleRaceSessions(sessions, socket) {
         socket.emit("removeRaceSession", session.sessionId);
       });
 
+    // Handle session editing
     sessionElement
       .querySelector(".editSessionButton")
       .addEventListener("click", () => {
+        // Populate form with session data for editing
         DOM.sessionNameInput.value = session.sessionName;
-        DOM.driversListContainer.innerHTML = "";
+        DOM.driversListContainer.innerHTML = ""; // Clear current drivers list
+
+        // Populate driver fields with session data
         session.drivers.forEach((driver) => {
           DOM.driversListContainer.appendChild(
             createDriverEntry(driver.driver, driver.carNumber)
           );
         });
-        currentSessionId = session.sessionId;
-        console.log("Current session ID set to:", currentSessionId);
+
+        // Set the current session ID to enable updating
+        currentSessionId = session.sessionId; // Set the session ID to be updated
+        console.log("Editing session ID:", currentSessionId); // Debugging to confirm it's set
       });
   });
 }
