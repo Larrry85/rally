@@ -37,9 +37,9 @@ function createCarNumberDropdown(selectedCarNumber = null) {
 
   CONFIG.AVAILABLE_CAR_NUMBERS.forEach((num) => {
     const option = document.createElement("option");
-    option.value = num;
+    option.value = num.toString();
     option.textContent = `Car ${num}`;
-    if (num === selectedCarNumber) {
+    if (num.toString() === selectedCarNumber) {
       option.selected = true;
     }
     carNumberDropdown.appendChild(option);
