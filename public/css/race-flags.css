@@ -237,31 +237,35 @@ footer a:hover {
   width: 100vw; /* Set width to 100% of the viewport width */
   height: 100vh; /* Set height to 100% of the viewport height */
   display: flex; /* Use flexbox for layout */
+  align-items: center;
   flex-direction: column; /* Arrange items in a column */
   justify-content: center; /* Center items vertically */
   border-radius: 0; /* Remove border radius in fullscreen */
 }
 
 :fullscreen #animated-flags {
-  width: 80vw; /* Set width to 80% of the viewport width */
-  height: 80vh; /* Set height to 80% of the viewport height */
-  max-width: none; /* Remove maximum width */
+  width: 80vw; /* Full viewport width */
+  height: 80vh; /* Full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 :fullscreen .flag-unit {
   width: calc(13px * 3); /* Triple the width of flag units */
   height: calc(10px * 3); /* Triple the height of flag units */
 }
 
-:fullscreen #flag-container {
-  width: 80vw; /* Set width to 80% of the viewport width */
-  height: 80vh; /* Set height to 80% of the viewport height */
+:fullscreen #traffic-light {
+  width: 90vw;
+  height: 40vh;
+  
 }
 
-:fullscreen #traffic-light {
-  transform: scale(2); /* Double the size of the traffic light */
+:fullscreen .light {
+  width: 80vw;
+  height: 37vh;
 }
 
 :fullscreen #go-message {
-  font-size: 15vw; /* Increase font size relative to viewport width */
+  font-size: 500px; /* Optional: Adjust size for better visibility */
 }
