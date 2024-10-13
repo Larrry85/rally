@@ -237,6 +237,7 @@ footer a:hover {
   width: 100vw; /* Set width to 100% of the viewport width */
   height: 100vh; /* Set height to 100% of the viewport height */
   display: flex; /* Use flexbox for layout */
+  align-items: center;
   flex-direction: column; /* Arrange items in a column */
   justify-content: center; /* Center items vertically */
   border-radius: 0; /* Remove border radius in fullscreen */
@@ -256,12 +257,15 @@ footer a:hover {
 
 :fullscreen #traffic-light {
   transform: scale(7); /* Adjust the scale as needed */
-  padding-right: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
 }
 
 :fullscreen #go-message {
   transform: scale(7); /* Match scaling of the go message */
   font-size: 100px; /* Optional: Adjust size for better visibility */
   text-shadow: 0 0 50px rgba(0, 255, 0, 1); /* Maintain glow effect */
-  padding-right: 100px;
+  
 }
