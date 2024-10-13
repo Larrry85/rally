@@ -243,25 +243,25 @@ footer a:hover {
 }
 
 :fullscreen #animated-flags {
-  width: 80vw; /* Set width to 80% of the viewport width */
-  height: 80vh; /* Set height to 80% of the viewport height */
-  max-width: none; /* Remove maximum width */
+  width: 80vw; /* Full viewport width */
+  height: 80vh; /* Full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 :fullscreen .flag-unit {
   width: calc(13px * 3); /* Triple the width of flag units */
   height: calc(10px * 3); /* Triple the height of flag units */
 }
 
-:fullscreen #flag-container {
-  width: 80vw; /* Set width to 80% of the viewport width */
-  height: 80vh; /* Set height to 80% of the viewport height */
-}
-
 :fullscreen #traffic-light {
-  transform: scale(2); /* Double the size of the traffic light */
+  transform: scale(7); /* Adjust the scale as needed */
+  padding-right: 100px;
 }
 
 :fullscreen #go-message {
-  font-size: 15vw; /* Increase font size relative to viewport width */
+  transform: scale(7); /* Match scaling of the go message */
+  font-size: 100px; /* Optional: Adjust size for better visibility */
+  text-shadow: 0 0 50px rgba(0, 255, 0, 1); /* Maintain glow effect */
+  padding-right: 100px;
 }
