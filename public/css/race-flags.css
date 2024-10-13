@@ -256,16 +256,16 @@ footer a:hover {
 }
 
 :fullscreen #traffic-light {
-  transform: scale(7); /* Adjust the scale as needed */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 90vw;
+  height: 40vh;
   
 }
 
+:fullscreen .light {
+  width: 80vw;
+  height: 37vh;
+}
+
 :fullscreen #go-message {
-  transform: scale(7); /* Match scaling of the go message */
-  font-size: 100px; /* Optional: Adjust size for better visibility */
-  text-shadow: 0 0 50px rgba(0, 255, 0, 1); /* Maintain glow effect */
-  
+  font-size: 500px; /* Optional: Adjust size for better visibility */
 }
