@@ -242,7 +242,7 @@ footer a:hover {
   border-radius: 0; /* Remove border radius in fullscreen */
 }
 
-:fullscreen #animated-flags {
+:fullscreen #animated-flags #traffic-light {
   width: 80vw; /* Set width to 80% of the viewport width */
   height: 80vh; /* Set height to 80% of the viewport height */
   max-width: none; /* Remove maximum width */
@@ -262,11 +262,7 @@ footer a:hover {
   max-width: none;
 }
 
-:fullscreen #traffic-light {
-  width: 900px; /* Set a fixed width for fullscreen */
-  height: 300px; /* Set a fixed height for fullscreen */
-}
-
 :fullscreen #go-message {
-  font-size: 15vw; /* Increase font size relative to viewport width */
+  width: 500px; /* Set width to 80% of the viewport width */
+  height: 500px; /* Set height to 80% of the viewport height */
 }
