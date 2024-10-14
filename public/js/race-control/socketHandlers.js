@@ -1,4 +1,4 @@
-// socketHandlers.js
+// race-control/socketHandlers.js
 import { DOM } from "./dom.js";
 import {
   resetPanel,

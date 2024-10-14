@@ -1,4 +1,4 @@
-// handlers.js
+// race-control/handlers.js
 import { DOM } from "./dom.js";
 import { FLAGS } from "./config.js";
 

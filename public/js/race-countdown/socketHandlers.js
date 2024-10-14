@@ -1,4 +1,4 @@
-// socketHandlers.js
+// race-countdown/socketHandlers.js
 import { DOM } from "./dom.js";
 import { CONFIG } from "./config.js";
 import {

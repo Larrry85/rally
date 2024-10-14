@@ -1,4 +1,4 @@
-// handlers.js
+// front-desk/handlers.js
 import { CONFIG } from "./config.js";
 import { DOM } from "./dom.js";
 import {

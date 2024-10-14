@@ -1,4 +1,4 @@
-// handlers.js
+// leaderboard/handlers.js
 import { DOM } from "./dom.js";
 import { RACE_MODE_COLORS } from "./config.js";
 import { formatTime, sortDrivers } from "./utils.js";

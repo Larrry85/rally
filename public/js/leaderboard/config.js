@@ -1,4 +1,4 @@
-// config.js
+// leaderboard/config.js
 export const CONFIG = {
   INITIAL_RACE_MODE: "Danger",
   INITIAL_REMAINING_TIME: 600, // 10 minutes in seconds

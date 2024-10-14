@@ -1,4 +1,4 @@
-// socketHandlers.js
+// front-desk/socketHandlers.js
 import { DOM } from "./dom.js";
 import { createDriverEntry } from "./utils.js";
 

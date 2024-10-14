@@ -1,4 +1,4 @@
-// config.js
+// race-flags/config.js
 export const CONFIG = {
   ROWS: 25,
   COLUMNS: 38,

@@ -1,4 +1,4 @@
-// handlers.js
+// next-race/handlers.js
 import { DOM } from "./dom.js";
 import { CONFIG } from "./config.js";
 

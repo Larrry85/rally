@@ -1,4 +1,4 @@
-// main.js
+// lap-line-tracker/main.js
 import {
   handleLogin,
   handleRaceStarted,

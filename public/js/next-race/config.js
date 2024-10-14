@@ -1,4 +1,4 @@
-// config.js
+// next-race/config.js
 export const CONFIG = {
   DEFAULT_MESSAGE:
     '<p class="listheader"><strong>Driver List</strong></p><p>Waiting for drivers data...</p>',

@@ -1,4 +1,4 @@
-// dom.js
+// lap-line-tracker/dom.js
 export const DOM = {
   loginScreen: document.getElementById("login"),
   lapLinerApp: document.getElementById("lapLinerApp"),

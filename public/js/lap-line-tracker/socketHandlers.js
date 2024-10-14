@@ -1,4 +1,4 @@
-// socketHandlers.js
+// lap-line-tracker/socketHandlers.js
 import { DOM } from "./dom.js";
 import { raceData } from "./utils.js";
 import { handleRaceStarted, handleRaceFinished } from "./handlers.js";

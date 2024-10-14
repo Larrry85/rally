@@ -1,4 +1,4 @@
-// config.js
+// race-countdown/config.js
 export const CONFIG = {
   COUNTDOWN_INTERVAL: 1000, // 1 second
   RACE_START_DELAY: 6000, // 6 seconds

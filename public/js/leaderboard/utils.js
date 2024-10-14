@@ -1,4 +1,4 @@
-// utils.js
+// leaderboard/utils.js
 export function formatTime(ms) {
   if (ms === null || isNaN(ms)) {
     return "N/A";

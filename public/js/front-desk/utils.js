@@ -1,4 +1,4 @@
-// utils.js
+// front-desk/utils.js
 import { CONFIG } from "./config.js";
 import { DOM } from "./dom.js";
 

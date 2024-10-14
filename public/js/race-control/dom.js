@@ -1,4 +1,4 @@
-// dom.js
+// race-control/dom.js
 export const DOM = {
   loginScreen: document.getElementById("login"),
   raceControlApp: document.getElementById("raceControlApp"),

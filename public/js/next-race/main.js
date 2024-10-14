@@ -1,4 +1,4 @@
-// main.js
+// next-race/main.js
 import { DOM } from "./dom.js";
 import { CONFIG } from "./config.js";
 import { setupSocketHandlers } from "./socketHandlers.js";

@@ -1,4 +1,4 @@
-// handlers.js
+// lap-line-tracker/handlers.js
 import { DOM } from "./dom.js";
 import { CONFIG } from "./config.js";
 import { raceData, addLap } from "./utils.js";
