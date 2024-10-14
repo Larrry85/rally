@@ -6,8 +6,7 @@ import {
   showMessage,
   sendCarListToServer,
 } from "./utils.js";
-
-export let currentSessionId = null;
+import { currentSessionId, setCurrentSessionId } from "./socketHandlers.js";
 
 export function handleLogin(socket) {
   if (CONFIG.SKIP_LOGIN) {
@@ -47,14 +46,25 @@ export function handleAddSession(socket) {
     return;
   }
 
+  // Double-check if we're in "edit mode" based on the currentSessionId
+  console.log("Current Session ID before saving:", currentSessionId); // Debugging
+
   if (currentSessionId) {
+    // If currentSessionId is set, we are updating the session
+    console.log("Updating session with ID:", currentSessionId);
+
     socket.emit("updateRaceSession", {
-      sessionId: currentSessionId,
+      sessionId: currentSessionId, // Use current session ID for updating
       sessionName: sessionName,
       drivers: drivers,
     });
-    currentSessionId = null;
+
+    // Reset the session ID after update
+    setCurrentSessionId(null); // Call the function to reset
   } else {
+    // No currentSessionId means this is a new session
+    console.log("Adding new session");
+
     socket.emit("addRaceSession", {
       sessionName: sessionName,
       drivers: drivers,
@@ -64,7 +74,7 @@ export function handleAddSession(socket) {
   socket.emit("updateDriverList", drivers);
   sendCarListToServer(socket, drivers);
 
-  resetForm();
+  resetForm(); // Reset the form after adding/updating session
 }
 
 function collectDriversData() {
@@ -115,7 +125,9 @@ function collectDriversData() {
 }
 
 function resetForm() {
+  // Reset form fields after adding/updating session
   DOM.sessionNameInput.value = "";
-  DOM.driversListContainer.innerHTML = "";
-  DOM.driversListContainer.appendChild(createDriverEntry());
+  DOM.driversListContainer.innerHTML = ""; // Clear all driver fields
+  DOM.driversListContainer.appendChild(createDriverEntry()); // Add one empty driver field for convenience
+  setCurrentSessionId(null); // Use the setter function instead of direct assignment
 }
