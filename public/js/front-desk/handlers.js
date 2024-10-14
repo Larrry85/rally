@@ -130,4 +130,5 @@ function resetForm() {
   DOM.driversListContainer.innerHTML = ""; // Clear all driver fields
   DOM.driversListContainer.appendChild(createDriverEntry()); // Add one empty driver field for convenience
   setCurrentSessionId(null); // Use the setter function instead of direct assignment
+  DOM.addSessionButton.textContent = "Add Session";
 }

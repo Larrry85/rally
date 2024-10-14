@@ -66,6 +66,7 @@ export function handleRaceSessions(sessions, socket) {
         // Set the current session ID to enable updating
         currentSessionId = session.sessionId; // Set the session ID to be updated
         console.log("Editing session ID:", currentSessionId); // Debugging to confirm it's set
+        DOM.addSessionButton.textContent = "Update Session";
       });
   });
 }
