@@ -1,5 +1,6 @@
 // server/socketHandlers.js
-const { INTERFACE_KEYS, RACE_DURATION, SKIP_LOGIN } = require("./config");
+const RaceTimer = require("./raceTimer");
+const { RACE_DURATION, INTERFACE_KEYS } = require("./config");
 const {
   finishRace,
   addRaceSession,
@@ -11,7 +12,7 @@ let raceSessions = [];
 let currentRace = null;
 let raceStartTime = null;
 let raceFlags = "";
-let raceTimer = null;
+let raceTimer = new RaceTimer(RACE_DURATION);
 
 function setupSocketHandlers(io, socket) {
   console.log("New client connected");
@@ -19,33 +20,18 @@ function setupSocketHandlers(io, socket) {
   let clientRole = null;
 
   socket.on("authenticate", (key) => {
-    if (SKIP_LOGIN) {
-      // Automatic login logic
-      if (key === INTERFACE_KEYS.frontDesk) {
-        clientRole = "frontDesk";
-        socket.emit("authenticated", { success: true, role: "frontDesk" });
-      } else if (key === INTERFACE_KEYS.raceControl) {
-        clientRole = "raceControl";
-        socket.emit("authenticated", { success: true, role: "raceControl" });
-      } else if (key === INTERFACE_KEYS.lapLineTracker) {
-        clientRole = "lapLineTracker";
-        socket.emit("authenticated", { success: true, role: "lapLineTracker" });
-      }
+    if (INTERFACE_KEYS.frontDesk === key) {
+      clientRole = "frontDesk";
+      socket.emit("authenticated", { success: true, role: "frontDesk" });
+    } else if (INTERFACE_KEYS.raceControl === key) {
+      clientRole = "raceControl";
+      socket.emit("authenticated", { success: true, role: "raceControl" });
+    } else if (INTERFACE_KEYS.lapLineTracker === key) {
+      clientRole = "lapLineTracker";
+      socket.emit("authenticated", { success: true, role: "lapLineTracker" });
     } else {
-      // Manual login logic
-      if (key === INTERFACE_KEYS.frontDesk) {
-        clientRole = "frontDesk";
-        socket.emit("authenticated", { success: true, role: "frontDesk" });
-      } else if (key === INTERFACE_KEYS.raceControl) {
-        clientRole = "raceControl";
-        socket.emit("authenticated", { success: true, role: "raceControl" });
-      } else if (key === INTERFACE_KEYS.lapLineTracker) {
-        clientRole = "lapLineTracker";
-        socket.emit("authenticated", { success: true, role: "lapLineTracker" });
-      } else {
-        socket.emit("authenticated", { success: false });
-        console.log("Wrong access key");
-      }
+      socket.emit("authenticated", { success: false });
+      console.log("Wrong access key");
     }
   });
 
@@ -53,7 +39,7 @@ function setupSocketHandlers(io, socket) {
     const fullMinutes = Math.floor(RACE_DURATION / 60000);
     const fullSeconds = Math.floor((RACE_DURATION % 60000) / 1000);
     io.emit("startSession", { fullMinutes, fullSeconds });
-    console.log("session started");
+    console.log(`Session started with duration: ${fullMinutes}:${fullSeconds}`);
   });
 
   socket.on("getRaceSessions", () => {
@@ -102,13 +88,24 @@ function setupSocketHandlers(io, socket) {
             startTime: raceStartTime,
             duration: RACE_DURATION,
           });
-          io.emit("startRace", { duration: RACE_DURATION });
 
-          raceTimer = setTimeout(() => {
-            finishRace(io, raceSessions, currentRace, raceTimer);
-            currentRace = null;
-            raceStartTime = null;
-          }, RACE_DURATION);
+          if (raceTimer) {
+            raceTimer.reset(RACE_DURATION);
+            raceTimer.start();
+
+            raceTimer.on("tick", (remainingTime) => {
+              io.emit("raceTimerUpdate", remainingTime);
+            });
+
+            raceTimer.on("finish", () => {
+              finishRace(io, raceSessions, currentRace);
+              currentRace = null;
+              raceStartTime = null;
+            });
+          } else {
+            console.error("raceTimer is null, unable to start race timer");
+            io.emit("raceError", { message: "Unable to start race timer" });
+          }
         }, 3000);
       }
     }
@@ -116,7 +113,8 @@ function setupSocketHandlers(io, socket) {
 
   socket.on("finishRace", () => {
     if (clientRole === "raceControl") {
-      finishRace(io, raceSessions, currentRace, raceTimer);
+      raceTimer.stop();
+      finishRace(io, raceSessions, currentRace);
       currentRace = null;
       raceStartTime = null;
     }
@@ -143,13 +141,12 @@ function setupSocketHandlers(io, socket) {
 
   socket.on("updateFlags", (flag) => {
     if (clientRole === "raceControl") {
-      raceFlags = flag;
-      io.emit("raceFlags", raceFlags);
+      io.emit("raceFlags", flag);
     }
   });
 
   socket.on("getRaceFlags", () => {
-    socket.emit("raceFlags", raceFlags);
+    socket.emit("raceFlags", currentRace ? currentRace.raceMode : "Safe");
   });
 
   socket.on("disconnect", () => {

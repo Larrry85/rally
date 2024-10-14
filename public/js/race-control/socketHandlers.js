@@ -53,6 +53,14 @@ export function setupSocketHandlers(socket) {
     }
   });
 
+  // socket.on("raceTimerUpdate", (remainingTime) => {
+  //   const minutes = Math.floor(remainingTime / 60000);
+  //   const seconds = Math.floor((remainingTime % 60000) / 1000);
+  //   DOM.remainingTimeElement.textContent = `${minutes}:${seconds
+  //     .toString()
+  //     .padStart(2, "0")}`;
+  // });
+
   socket.on("raceFinished", () => {
     DOM.message.innerHTML = "Race finished! Transitioning to next session...";
     setTimeout(() => {

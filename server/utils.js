@@ -1,15 +1,11 @@
 // server/utils.js
-function finishRace(io, raceSessions, currentRace, raceTimer) {
+function finishRace(io, raceSessions, currentRace) {
   if (currentRace) {
     const finishedRaceIndex = raceSessions.findIndex(
       (s) => s.sessionId === currentRace.sessionId
     );
     if (finishedRaceIndex !== -1) {
       raceSessions.splice(finishedRaceIndex, 1);
-
-      if (raceTimer) {
-        clearTimeout(raceTimer);
-      }
 
       if (raceSessions.length > 0) {
         const nextSession = raceSessions[0];
