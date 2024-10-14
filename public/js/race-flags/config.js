@@ -13,7 +13,7 @@ export const CONFIG = {
   TRAFFIC_LIGHT_SEQUENCE: [
     { duration: 4000, light: 0 }, // Red
     { duration: 3000, light: 1 }, // Yellow
-    { duration: 3000, light: 2 }, // Green
+    { duration: 500, light: 2 }, // Green
     { duration: 3000, display: "go" }, // GO! message
   ],
   RACE_END_MESSAGE_DURATION: 3000,
