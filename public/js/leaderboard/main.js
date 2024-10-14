@@ -1,4 +1,4 @@
-// main.js
+// leaderboar/dmain.js
 import { CONFIG } from "./config.js";
 import { updateLeaderboard, updateRaceInfo } from "./handlers.js";
 import { setupSocketHandlers } from "./socketHandlers.js";

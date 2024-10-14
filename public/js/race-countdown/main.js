@@ -1,4 +1,4 @@
-// main.js
+// race-countdown/main.js
 import { setupSocketHandlers } from "./socketHandlers.js";
 
 const socket = io();

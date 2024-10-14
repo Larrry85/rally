@@ -1,4 +1,4 @@
-// dom.js
+// race-flags/dom.js
 export const DOM = {
   animatedFlagEl: document.getElementById("animated-flags"),
   trafficLightEl: document.getElementById("traffic-light"),

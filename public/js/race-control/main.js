@@ -1,4 +1,4 @@
-// main.js
+// race-control/main.js
 import { CONFIG } from "./config.js";
 import { DOM } from "./dom.js";
 import { switchLight } from "./handlers.js";

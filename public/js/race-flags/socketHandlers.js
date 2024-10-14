@@ -1,4 +1,4 @@
-// socketHandlers.js
+// race-flags/socketHandlers.js
 import {
   updateAnimatedFlag,
   startTrafficLightSequence,

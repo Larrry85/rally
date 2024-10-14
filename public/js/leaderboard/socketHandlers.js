@@ -1,4 +1,4 @@
-// socketHandlers.js
+// leaderboard/socketHandlers.js
 import {
   updateLapTimes,
   updateLeaderboard,

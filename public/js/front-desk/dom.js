@@ -1,4 +1,4 @@
-// dom.js
+// front-desk/dom.js
 export const DOM = {
   loginScreen: document.getElementById("login"),
   frontDeskApp: document.getElementById("frontDeskApp"),
