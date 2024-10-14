@@ -4,23 +4,13 @@ import { RACE_MODE_COLORS } from "./config.js";
 import { formatTime, sortDrivers } from "./utils.js";
 
 export function updateLeaderboard(raceData) {
-  if (!DOM.leaderboardBody) {
-    console.error("Leaderboard body element not found");
-    return;
-  }
+  if (!DOM.leaderboardBody) return;
 
-  if (!Array.isArray(raceData.drivers) || raceData.drivers.length === 0) {
-    DOM.leaderboardBody.innerHTML =
-      '<tr><td colspan="6">Waiting for race data...</td></tr>';
-    return;
-  }
-
-  DOM.leaderboardBody.innerHTML = "";
-
-  const sortedDrivers = sortDrivers(raceData.drivers);
-
-  sortedDrivers.forEach((driver, index) => {
-    const row = `
+  DOM.leaderboardBody.innerHTML =
+    Array.isArray(raceData.drivers) && raceData.drivers.length
+      ? sortDrivers(raceData.drivers)
+          .map(
+            (driver, index) => `
       <tr>
         <td>${index + 1}</td>
         <td>${driver.carNumber}</td>
@@ -29,23 +19,18 @@ export function updateLeaderboard(raceData) {
         <td>${formatTime(driver.currentLapTime || 0)}</td>
         <td>${driver.currentLap || 0}</td>
       </tr>
-    `;
-    DOM.leaderboardBody.innerHTML += row;
-  });
+    `
+          )
+          .join("")
+      : '<tr><td colspan="6">Waiting for race data...</td></tr>';
 }
 
 export function updateRaceInfo(raceData) {
-  if (!DOM.remainingTimeElement || !DOM.raceModeElement) {
-    console.error("Race info elements not found");
-    return;
-  }
+  if (!DOM.remainingTimeElement || !DOM.raceModeElement) return;
 
-  const minutes = Math.floor(raceData.remainingTime / 60);
-  const seconds = raceData.remainingTime % 60;
-  DOM.remainingTimeElement.textContent = `Time: ${minutes}:${seconds
-    .toString()
-    .padStart(2, "0")}`;
-
+  DOM.remainingTimeElement.textContent = `Time: ${Math.floor(
+    raceData.remainingTime / 60
+  )}:${(raceData.remainingTime % 60).toString().padStart(2, "0")}`;
   DOM.raceModeElement.textContent = `Race Mode: ${raceData.raceMode}`;
   DOM.raceModeElement.style.backgroundColor =
     RACE_MODE_COLORS[raceData.raceMode] || RACE_MODE_COLORS.Danger;
