@@ -10,8 +10,6 @@ const {
 
 let raceSessions = [];
 let currentRace = null;
-let raceStartTime = null;
-let raceFlags = "";
 let raceTimer = new RaceTimer(RACE_DURATION);
 
 function setupSocketHandlers(io, socket) {
@@ -20,15 +18,11 @@ function setupSocketHandlers(io, socket) {
   let clientRole = null;
 
   socket.on("authenticate", (key) => {
-    if (INTERFACE_KEYS.frontDesk === key) {
-      clientRole = "frontDesk";
-      socket.emit("authenticated", { success: true, role: "frontDesk" });
-    } else if (INTERFACE_KEYS.raceControl === key) {
-      clientRole = "raceControl";
-      socket.emit("authenticated", { success: true, role: "raceControl" });
-    } else if (INTERFACE_KEYS.lapLineTracker === key) {
-      clientRole = "lapLineTracker";
-      socket.emit("authenticated", { success: true, role: "lapLineTracker" });
+    clientRole = Object.keys(INTERFACE_KEYS).find(
+      (role) => INTERFACE_KEYS[role] === key
+    );
+    if (clientRole) {
+      socket.emit("authenticated", { success: true, role: clientRole });
     } else {
       socket.emit("authenticated", { success: false });
       console.log("Wrong access key");
@@ -80,32 +74,24 @@ function setupSocketHandlers(io, socket) {
       if (currentRace) {
         currentRace.isCurrent = true;
         io.emit("raceStarted", currentRace);
-        raceStartTime = Date.now();
 
         setTimeout(() => {
           io.emit("raceStarted", {
             race: currentRace,
-            startTime: raceStartTime,
             duration: RACE_DURATION,
           });
 
-          if (raceTimer) {
-            raceTimer.reset(RACE_DURATION);
-            raceTimer.start();
+          raceTimer.reset(RACE_DURATION);
+          raceTimer.start();
 
-            raceTimer.on("tick", (remainingTime) => {
-              io.emit("raceTimerUpdate", remainingTime);
-            });
+          raceTimer.on("tick", (remainingTime) => {
+            io.emit("raceTimerUpdate", remainingTime);
+          });
 
-            raceTimer.on("finish", () => {
-              finishRace(io, raceSessions, currentRace);
-              currentRace = null;
-              raceStartTime = null;
-            });
-          } else {
-            console.error("raceTimer is null, unable to start race timer");
-            io.emit("raceError", { message: "Unable to start race timer" });
-          }
+          raceTimer.on("finish", () => {
+            finishRace(io, raceSessions, currentRace);
+            currentRace = null;
+          });
         }, 3000);
       }
     }
@@ -116,7 +102,6 @@ function setupSocketHandlers(io, socket) {
       raceTimer.stop();
       finishRace(io, raceSessions, currentRace);
       currentRace = null;
-      raceStartTime = null;
     }
   });
 

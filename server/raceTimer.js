@@ -33,10 +33,6 @@ class RaceTimer extends EventEmitter {
     this.duration = newDuration;
     this.remainingTime = newDuration;
   }
-
-  getRemainingTime() {
-    return this.remainingTime;
-  }
 }
 
 module.exports = RaceTimer;

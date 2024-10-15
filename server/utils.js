@@ -7,14 +7,10 @@ function finishRace(io, raceSessions, currentRace) {
     if (finishedRaceIndex !== -1) {
       raceSessions.splice(finishedRaceIndex, 1);
 
-      if (raceSessions.length > 0) {
-        const nextSession = raceSessions[0];
-        nextSession.isNext = true;
-        io.emit("nextRaceSession", nextSession);
-      } else {
-        io.emit("nextRaceSession", null);
-      }
+      const nextSession = raceSessions[0] || null;
+      if (nextSession) nextSession.isNext = true;
 
+      io.emit("nextRaceSession", nextSession);
       io.emit("raceFinished");
       io.emit("raceSessions", raceSessions);
     }
