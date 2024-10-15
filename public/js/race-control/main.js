@@ -11,14 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
     socket.emit("authenticate", CONFIG.DEFAULT_AUTH_KEY);
   } else {
     DOM.loginButton.addEventListener("click", () => {
-      const key = DOM.accessKeyInput.value;
-      socket.emit("authenticate", key);
+      socket.emit("authenticate", DOM.accessKeyInput.value);
     });
   }
 
-  DOM.startSessionButton.addEventListener("click", () => {
-    socket.emit("startSession");
-  });
+  DOM.startSessionButton.addEventListener("click", () =>
+    socket.emit("startSession")
+  );
 
   DOM.startRaceButton.addEventListener("click", () => {
     socket.emit("startRace");
@@ -28,20 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
   ["green", "yellow", "red", "finish"].forEach((color) => {
     document.getElementById(color).addEventListener("click", () => {
       switchLight(color, socket);
-      if (color === "finish") {
-        socket.emit("finishRace");
-      }
+      if (color === "finish") socket.emit("finishRace");
     });
   });
 
   DOM.getAllFlagButtons().forEach((flagButton) => {
     flagButton.addEventListener("click", () => {
-      const flag = flagButton.getAttribute("data-flag");
-      socket.emit("updateFlags", flag);
+      socket.emit("updateFlags", flagButton.getAttribute("data-flag"));
     });
   });
 
   setupSocketHandlers(socket);
-
   socket.emit("getRaceSessions");
 });

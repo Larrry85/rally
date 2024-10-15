@@ -43,23 +43,13 @@ export function setupSocketHandlers(socket) {
 
   socket.on("raceStarted", () => {
     DOM.message.innerHTML = "Race is starting!";
-    setTimeout(() => {
-      DOM.message.innerHTML = "";
-    }, CONFIG.MESSAGE_TIMEOUT);
+    setTimeout(() => (DOM.message.innerHTML = ""), CONFIG.MESSAGE_TIMEOUT);
     if (currentSession) {
       updateRaceSessionDisplay(currentSession);
     } else {
       console.warn("Race started but no current session available");
     }
   });
-
-  // socket.on("raceTimerUpdate", (remainingTime) => {
-  //   const minutes = Math.floor(remainingTime / 60000);
-  //   const seconds = Math.floor((remainingTime % 60000) / 1000);
-  //   DOM.remainingTimeElement.textContent = `${minutes}:${seconds
-  //     .toString()
-  //     .padStart(2, "0")}`;
-  // });
 
   socket.on("raceFinished", () => {
     DOM.message.innerHTML = "Race finished! Transitioning to next session...";
