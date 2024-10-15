@@ -1,4 +1,3 @@
-// race-flags/handlers.js
 import { DOM } from "./dom.js";
 import { CONFIG } from "./config.js";
 
@@ -34,6 +33,8 @@ export function updateAnimatedFlag(flag) {
 }
 
 export function startTrafficLightSequence() {
+  if (isTrafficLightSequence) return; // Prevent starting a new sequence if one is already in progress
+
   isTrafficLightSequence = true;
   updateDisplay("traffic-light");
   const lights = DOM.getLights();
