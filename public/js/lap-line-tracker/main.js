@@ -6,7 +6,6 @@ import {
 } from "./handlers.js";
 import {
   handleAuthentication,
-  handleCarIds,
   handleCurrentRaceSession,
 } from "./socketHandlers.js";
 
@@ -17,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   socket.on("authenticated", (data) => handleAuthentication(data, socket));
   socket.on("startSession", () => socket.emit("getCurrentRaceSession"));
-  socket.on("carIds", handleCarIds);
   socket.on("raceStarted", (currentSession) =>
     handleRaceStarted(currentSession, socket)
   );
