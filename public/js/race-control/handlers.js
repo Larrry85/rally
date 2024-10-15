@@ -14,10 +14,9 @@ export function resetPanel(hasSession) {
 }
 
 export function turnOffAllLights() {
-  DOM.getLightElement("green").classList.remove("on");
-  DOM.getLightElement("yellow").classList.remove("on");
-  DOM.getLightElement("red").classList.remove("on");
-  DOM.getLightElement("finish-image").classList.remove("on");
+  ["green", "yellow", "red", "finish-image"].forEach((color) =>
+    DOM.getLightElement(color).classList.remove("on")
+  );
 }
 
 export function switchLight(light, socket) {

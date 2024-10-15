@@ -1,10 +1,8 @@
 // race-flags/main.js
 import { CONFIG } from "./config.js";
-import { DOM, createFlagStructure } from "./dom.js";
+import { createFlagStructure } from "./dom.js";
 import { updateDisplay } from "./handlers.js";
 import { setupSocketHandlers } from "./socketHandlers.js";
-
-const socket = io();
 
 document.addEventListener("DOMContentLoaded", () => {
   createFlagStructure(
@@ -14,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     CONFIG.DISPLACEMENT_FACTOR
   );
   updateDisplay("flag");
+  const socket = io();
   setupSocketHandlers(socket);
   socket.emit("getRaceFlags");
 });

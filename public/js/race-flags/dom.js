@@ -13,15 +13,13 @@ export function createFlagStructure(
   animationDelayFactor,
   displacementFactor
 ) {
+  const fragment = document.createDocumentFragment();
   for (let i = 0; i < columns; i++) {
     const column = document.createElement("div");
-    column.classList.add("column");
-    column.id = `column-${i}`;
-    DOM.animatedFlagEl.appendChild(column);
-
+    column.className = "column";
     for (let j = 0; j < rows; j++) {
       const flagUnit = document.createElement("div");
-      flagUnit.classList.add("flag-unit");
+      flagUnit.className = "flag-unit";
       flagUnit.style.setProperty(
         "animation-delay",
         `${i * animationDelayFactor}ms`
@@ -32,5 +30,7 @@ export function createFlagStructure(
       );
       column.appendChild(flagUnit);
     }
+    fragment.appendChild(column);
   }
+  DOM.animatedFlagEl.appendChild(fragment);
 }

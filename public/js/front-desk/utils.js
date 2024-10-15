@@ -1,6 +1,5 @@
 // front-desk/utils.js
 import { CONFIG } from "./config.js";
-import { DOM } from "./dom.js";
 
 export function createDriverEntry(name = "", selectedCarNumber = null) {
   const driverEntry = document.createElement("div");
@@ -60,6 +59,5 @@ export function showMessage(type, message) {
 
 export function sendCarListToServer(socket, drivers) {
   const carIds = drivers.map((driver) => driver.carNumber);
-  console.log("Sending car list to server:", carIds);
   socket.emit("sendCarList", carIds);
 }

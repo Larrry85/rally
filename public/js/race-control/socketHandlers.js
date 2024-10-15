@@ -43,9 +43,7 @@ export function setupSocketHandlers(socket) {
 
   socket.on("raceStarted", () => {
     DOM.message.innerHTML = "Race is starting!";
-    setTimeout(() => {
-      DOM.message.innerHTML = "";
-    }, CONFIG.MESSAGE_TIMEOUT);
+    setTimeout(() => (DOM.message.innerHTML = ""), CONFIG.MESSAGE_TIMEOUT);
     if (currentSession) {
       updateRaceSessionDisplay(currentSession);
     } else {

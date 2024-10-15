@@ -8,46 +8,29 @@ export function handleLogin(socket) {
     socket.emit("authenticate", CONFIG.DEFAULT_AUTH_KEY);
   } else {
     DOM.loginButton.addEventListener("click", () => {
-      const key = DOM.accessKeyInput.value;
-      socket.emit("authenticate", key);
+      socket.emit("authenticate", DOM.accessKeyInput.value);
     });
   }
 }
 
 export function handleRaceStarted(currentSession, socket) {
-  DOM.lapLinerApp.innerHTML = "";
+  DOM.lapLinerApp.innerHTML = "<h2>Lap Tracker</h2>";
 
-  const header = document.createElement("h2");
-  header.textContent = "Lap Tracker";
-  DOM.lapLinerApp.appendChild(header);
-
-  if (
-    currentSession &&
-    currentSession.race &&
-    Array.isArray(currentSession.race.drivers) &&
-    currentSession.race.drivers.length > 0
-  ) {
+  if (currentSession?.race?.drivers?.length > 0) {
     raceData.carIds = currentSession.race.drivers.map(
       (driver) => driver.carNumber
     );
-
     raceData.carIds.forEach((carId, index) => {
       const button = document.createElement("button");
-      button.textContent = `${carId}`;
-      button.disabled = false;
+      button.textContent = carId;
       button.addEventListener("click", () => addLap(carId, socket));
-
-      const row = 8 - index;
-      const col = index + 1;
-      button.style.gridRow = `${row}`;
-      button.style.gridColumn = `${col}`;
-
+      button.style.gridRow = `${8 - index}`;
+      button.style.gridColumn = `${index + 1}`;
       DOM.lapLinerApp.appendChild(button);
     });
     raceData.laps = {};
     console.log("Race started with car list:", raceData.carIds);
   } else {
-    // If there's no valid session or no drivers, just leave the area empty except for the header
     console.log("No active race session or empty drivers list");
     raceData.carIds = [];
     raceData.laps = {};
@@ -55,9 +38,5 @@ export function handleRaceStarted(currentSession, socket) {
 }
 
 export function handleRaceFinished() {
-  DOM.lapLinerApp.innerHTML = "";
-
-  const header = document.createElement("h2");
-  header.textContent = "Lap Tracker";
-  DOM.lapLinerApp.appendChild(header);
+  DOM.lapLinerApp.innerHTML = "<h2>Lap Tracker</h2>";
 }

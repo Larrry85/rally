@@ -5,10 +5,7 @@ import { setupSocketHandlers } from "./socketHandlers.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const socket = io();
-
-  DOM.driverListDiv.innerHTML = CONFIG.DEFAULT_MESSAGE;
-
+  DOM.driverListDiv.innerHTML = CONFIG.WAITING_MESSAGE;
   socket.emit("getRaceSessions");
-
   setupSocketHandlers(socket);
 });

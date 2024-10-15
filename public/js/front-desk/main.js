@@ -1,5 +1,4 @@
 // front-desk/main.js
-import { CONFIG } from "./config.js";
 import { DOM } from "./dom.js";
 import { handleLogin, handleAddDriver, handleAddSession } from "./handlers.js";
 import { handleAuthentication, handleRaceSessions } from "./socketHandlers.js";

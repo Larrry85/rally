@@ -1,5 +1,6 @@
 // server/socketHandlers.js
-const { INTERFACE_KEYS, RACE_DURATION, SKIP_LOGIN } = require("./config");
+const RaceTimer = require("./raceTimer");
+const { RACE_DURATION, INTERFACE_KEYS } = require("./config");
 const {
   finishRace,
   addRaceSession,
@@ -9,9 +10,7 @@ const {
 
 let raceSessions = [];
 let currentRace = null;
-let raceStartTime = null;
-let raceFlags = "";
-let raceTimer = null;
+let raceTimer = new RaceTimer(RACE_DURATION);
 
 function setupSocketHandlers(io, socket) {
   console.log("New client connected");
@@ -19,33 +18,14 @@ function setupSocketHandlers(io, socket) {
   let clientRole = null;
 
   socket.on("authenticate", (key) => {
-    if (SKIP_LOGIN) {
-      // Automatic login logic
-      if (key === INTERFACE_KEYS.frontDesk) {
-        clientRole = "frontDesk";
-        socket.emit("authenticated", { success: true, role: "frontDesk" });
-      } else if (key === INTERFACE_KEYS.raceControl) {
-        clientRole = "raceControl";
-        socket.emit("authenticated", { success: true, role: "raceControl" });
-      } else if (key === INTERFACE_KEYS.lapLineTracker) {
-        clientRole = "lapLineTracker";
-        socket.emit("authenticated", { success: true, role: "lapLineTracker" });
-      }
+    clientRole = Object.keys(INTERFACE_KEYS).find(
+      (role) => INTERFACE_KEYS[role] === key
+    );
+    if (clientRole) {
+      socket.emit("authenticated", { success: true, role: clientRole });
     } else {
-      // Manual login logic
-      if (key === INTERFACE_KEYS.frontDesk) {
-        clientRole = "frontDesk";
-        socket.emit("authenticated", { success: true, role: "frontDesk" });
-      } else if (key === INTERFACE_KEYS.raceControl) {
-        clientRole = "raceControl";
-        socket.emit("authenticated", { success: true, role: "raceControl" });
-      } else if (key === INTERFACE_KEYS.lapLineTracker) {
-        clientRole = "lapLineTracker";
-        socket.emit("authenticated", { success: true, role: "lapLineTracker" });
-      } else {
-        socket.emit("authenticated", { success: false });
-        console.log("Wrong access key");
-      }
+      socket.emit("authenticated", { success: false });
+      console.log("Wrong access key");
     }
   });
 
@@ -53,7 +33,7 @@ function setupSocketHandlers(io, socket) {
     const fullMinutes = Math.floor(RACE_DURATION / 60000);
     const fullSeconds = Math.floor((RACE_DURATION % 60000) / 1000);
     io.emit("startSession", { fullMinutes, fullSeconds });
-    console.log("session started");
+    console.log(`Session started with duration: ${fullMinutes}:${fullSeconds}`);
   });
 
   socket.on("getRaceSessions", () => {
@@ -94,21 +74,24 @@ function setupSocketHandlers(io, socket) {
       if (currentRace) {
         currentRace.isCurrent = true;
         io.emit("raceStarted", currentRace);
-        raceStartTime = Date.now();
 
         setTimeout(() => {
           io.emit("raceStarted", {
             race: currentRace,
-            startTime: raceStartTime,
             duration: RACE_DURATION,
           });
-          io.emit("startRace", { duration: RACE_DURATION });
 
-          raceTimer = setTimeout(() => {
-            finishRace(io, raceSessions, currentRace, raceTimer);
+          raceTimer.reset(RACE_DURATION);
+          raceTimer.start();
+
+          raceTimer.on("tick", (remainingTime) => {
+            io.emit("raceTimerUpdate", remainingTime);
+          });
+
+          raceTimer.on("finish", () => {
+            finishRace(io, raceSessions, currentRace);
             currentRace = null;
-            raceStartTime = null;
-          }, RACE_DURATION);
+          });
         }, 3000);
       }
     }
@@ -116,9 +99,9 @@ function setupSocketHandlers(io, socket) {
 
   socket.on("finishRace", () => {
     if (clientRole === "raceControl") {
-      finishRace(io, raceSessions, currentRace, raceTimer);
+      raceTimer.stop();
+      finishRace(io, raceSessions, currentRace);
       currentRace = null;
-      raceStartTime = null;
     }
   });
 
@@ -143,13 +126,12 @@ function setupSocketHandlers(io, socket) {
 
   socket.on("updateFlags", (flag) => {
     if (clientRole === "raceControl") {
-      raceFlags = flag;
-      io.emit("raceFlags", raceFlags);
+      io.emit("raceFlags", flag);
     }
   });
 
   socket.on("getRaceFlags", () => {
-    socket.emit("raceFlags", raceFlags);
+    socket.emit("raceFlags", currentRace ? currentRace.raceMode : "Safe");
   });
 
   socket.on("disconnect", () => {

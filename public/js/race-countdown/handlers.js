@@ -27,24 +27,3 @@ export function resetSVGProgress() {
   DOM.svgCircle.style.strokeDasharray = `1 0`;
   DOM.svgCircle.style.stroke = ORIGINAL_CIRCLE_COLOR;
 }
-
-export function startCountdown(duration, socket) {
-  let remainingTime = duration;
-
-  return setInterval(() => {
-    if (remainingTime <= 0) {
-      clearInterval(countdownInterval);
-      DOM.countdownElement.textContent = "End of race!";
-      DOM.countdownElement.style.color = "white"; // Set to white during "End of race!" display
-      socket.emit("endRace");
-    } else {
-      const minutes = Math.floor((remainingTime % (60 * 60)) / 60);
-      const seconds = Math.floor(remainingTime % 60);
-
-      updateCountdownDisplay(minutes, seconds);
-      updateSVGProgress(remainingTime, duration);
-
-      remainingTime--;
-    }
-  }, CONFIG.COUNTDOWN_INTERVAL);
-}

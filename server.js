@@ -29,14 +29,6 @@ routes.forEach((route) => {
   });
 });
 
-app.get("/api/race-list", (req, res) => {
-  res.json(raceSessions);
-});
-
-app.get("/favicon.ico", (req, res) => {
-  res.status(204).end();
-});
-
 const server = http.createServer(app);
 const io = socketIo(server);
 

@@ -1,6 +1,5 @@
 // lap-line-tracker/utils.js
 export let raceData = {
-  drivers: [],
   laps: {},
   carIds: [],
 };
