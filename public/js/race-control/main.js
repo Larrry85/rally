@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  DOM.startSessionButton.addEventListener("click", () =>
-    socket.emit("startSession")
-  );
+  DOM.startSessionButton.addEventListener("click", () => {
+    socket.emit("startSession");
+  });
 
   DOM.startRaceButton.addEventListener("click", () => {
     socket.emit("startRace");
@@ -39,4 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setupSocketHandlers(socket);
   socket.emit("getRaceSessions");
+});
+
+// Add a listener for the custom event that will be dispatched when a new race is added
+window.addEventListener("newRaceAdded", () => {
+  socket.emit("raceSessionsUpdated");
 });

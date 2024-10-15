@@ -4,11 +4,13 @@ import {
   resetPanel,
   switchLight,
   updateRaceSessionDisplay,
+  turnOffAllLights,
 } from "./handlers.js";
 import { CONFIG } from "./config.js";
 
 export function setupSocketHandlers(socket) {
   let currentSession = null;
+  let isRaceOngoing = false;
 
   socket.on("authenticated", (data) => {
     if (data.success && data.role === "raceControl") {
@@ -24,13 +26,19 @@ export function setupSocketHandlers(socket) {
   });
 
   socket.on("raceSessions", (sessions) => {
-    const nextSession = sessions.find((session) => session.isNext);
-    if (nextSession) {
-      resetPanel(true);
-      currentSession = nextSession;
-      updateRaceSessionDisplay(currentSession);
+    if (!isRaceOngoing) {
+      const nextSession = sessions.find((session) => session.isNext);
+      if (nextSession) {
+        resetPanel(true);
+        currentSession = nextSession;
+        updateRaceSessionDisplay(currentSession);
+      } else {
+        resetPanel(false);
+      }
     } else {
-      resetPanel(false);
+      console.log(
+        "Race is ongoing. New sessions will be available after the current race finishes."
+      );
     }
   });
 
@@ -42,6 +50,7 @@ export function setupSocketHandlers(socket) {
   });
 
   socket.on("raceStarted", () => {
+    isRaceOngoing = true;
     DOM.message.innerHTML = "Race is starting!";
     setTimeout(() => (DOM.message.innerHTML = ""), CONFIG.MESSAGE_TIMEOUT);
     if (currentSession) {
@@ -52,7 +61,14 @@ export function setupSocketHandlers(socket) {
   });
 
   socket.on("raceFinished", () => {
+    isRaceOngoing = false;
     DOM.message.innerHTML = "Race finished! Transitioning to next session...";
+    turnOffAllLights();
+
+    setTimeout(() => {
+      switchLight("red", socket);
+    }, 3000);
+
     setTimeout(() => {
       DOM.message.innerHTML = "";
       socket.emit("getNextRaceSession");
@@ -67,6 +83,13 @@ export function setupSocketHandlers(socket) {
     } else {
       resetPanel(false);
       DOM.message.innerHTML = "No more race sessions available.";
+    }
+  });
+
+  // New event to handle updates to the race session list
+  socket.on("raceSessionsUpdated", () => {
+    if (!isRaceOngoing) {
+      socket.emit("getRaceSessions");
     }
   });
 }
