@@ -256,14 +256,14 @@ footer a:hover {
 }
 
 :fullscreen #traffic-light {
-  width: 90vw;
-  height: 40vh;
+  width: 80vw;
+  height: 50vh;
   
 }
 
 :fullscreen .light {
-  width: 80vw;
-  height: 37vh;
+  width: 70vw;
+  height: 45vh;
 }
 
 :fullscreen #go-message {
