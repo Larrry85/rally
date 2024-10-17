@@ -66,5 +66,7 @@ window.addEventListener("newRaceAdded", () => {
 
 // Enable flag buttons when the race starts
 socket.on("raceStarted", () => {
-  enableFlagButtons();
+  setTimeout(() => {
+    enableFlagButtons(); // Enable the buttons after 2 seconds
+  }, 4500); // Adjust the duration as needed
 });
