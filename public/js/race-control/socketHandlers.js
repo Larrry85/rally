@@ -20,8 +20,10 @@ export function setupSocketHandlers(socket) {
       socket.emit("getRaceSessions");
       switchLight("red", socket);
     } else {
-      DOM.loginMessage.textContent = "Invalid access key";
-      DOM.accessKeyInput.value = "";
+      setTimeout(() => {
+        DOM.loginMessage.textContent = "Invalid access key";
+        DOM.accessKeyInput.value = "";
+      }, 500); //500ms delay
     }
   });
 

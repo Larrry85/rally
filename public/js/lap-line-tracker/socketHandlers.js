@@ -9,8 +9,10 @@ export function handleAuthentication(data, socket) {
     DOM.lapLinerApp.style.display = "block";
     socket.emit("getCurrentRaceSession");
   } else {
-    DOM.loginMessage.textContent = "Invalid access key";
-    DOM.accessKeyInput.value = "";
+    setTimeout(() => {
+      DOM.loginMessage.textContent = "Invalid access key";
+      DOM.accessKeyInput.value = "";
+    }, 500); //500ms delay
   }
 }
 
