@@ -6,6 +6,20 @@ import { setupSocketHandlers } from "./socketHandlers.js";
 
 const socket = io();
 
+// Function to disable all flag buttons
+function disableFlagButtons() {
+  DOM.getAllFlagButtons().forEach((button) => {
+    button.disabled = true;
+  });
+}
+
+// Function to enable all flag buttons
+function enableFlagButtons() {
+  DOM.getAllFlagButtons().forEach((button) => {
+    button.disabled = false;
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   if (CONFIG.SKIP_LOGIN) {
     socket.emit("authenticate", CONFIG.DEFAULT_AUTH_KEY);
@@ -24,6 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
     switchLight("green", socket);
   });
 
+  // Disable flag buttons initially
+  disableFlagButtons();
+
   ["green", "yellow", "red", "finish"].forEach((color) => {
     document.getElementById(color).addEventListener("click", () => {
       switchLight(color, socket);
@@ -31,17 +48,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  DOM.getAllFlagButtons().forEach((flagButton) => {
-    flagButton.addEventListener("click", () => {
-      socket.emit("updateFlags", flagButton.getAttribute("data-flag"));
-    });
-  });
-
   setupSocketHandlers(socket);
   socket.emit("getRaceSessions");
 });
 
-// Add a listener for the custom event that will be dispatched when a new race is added
 window.addEventListener("newRaceAdded", () => {
   socket.emit("raceSessionsUpdated");
+});
+
+// Enable flag buttons when the race starts
+socket.on("raceStarted", () => {
+  enableFlagButtons();
 });

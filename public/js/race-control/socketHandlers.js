@@ -21,9 +21,9 @@ export function setupSocketHandlers(socket) {
       switchLight("red", socket);
     } else {
       setTimeout(() => {
-        DOM.loginMessage.textContent = "Invalid access key";
-        DOM.accessKeyInput.value = "";
-      }, 500); //500ms delay
+      DOM.loginMessage.textContent = "Invalid access key";
+      DOM.accessKeyInput.value = "";
+    }, 500); //500ms delay
     }
   });
 
@@ -66,6 +66,7 @@ export function setupSocketHandlers(socket) {
     isRaceOngoing = false;
     DOM.message.innerHTML = "Race finished! Transitioning to next session...";
     turnOffAllLights();
+    disableFlagButtons(); // Disable the buttons after the race finishes
 
     setTimeout(() => {
       switchLight("red", socket);
@@ -93,5 +94,12 @@ export function setupSocketHandlers(socket) {
     if (!isRaceOngoing) {
       socket.emit("getRaceSessions");
     }
+  });
+}
+
+
+function disableFlagButtons() {
+  DOM.getAllFlagButtons().forEach((button) => {
+    button.disabled = true;
   });
 }
