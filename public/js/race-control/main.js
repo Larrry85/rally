@@ -10,8 +10,16 @@ document.addEventListener("DOMContentLoaded", () => {
   if (CONFIG.SKIP_LOGIN) {
     socket.emit("authenticate", CONFIG.DEFAULT_AUTH_KEY);
   } else {
-    DOM.loginButton.addEventListener("click", () => {
+    const attemptLogin = () => {
       socket.emit("authenticate", DOM.accessKeyInput.value);
+    };
+
+    DOM.loginButton.addEventListener("click", attemptLogin);
+
+    DOM.accessKeyInput.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        attemptLogin();
+      }
     });
   }
 

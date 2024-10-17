@@ -4,13 +4,23 @@ import { CONFIG } from "./config.js";
 import { raceData, addLap } from "./utils.js";
 
 export function handleLogin(socket) {
-  if (CONFIG.SKIP_LOGIN) { // if true, send authentication request with default key
+  if (CONFIG.SKIP_LOGIN) {
+    // if true, send authentication request with default key
     socket.emit("authenticate", CONFIG.DEFAULT_AUTH_KEY);
-  } else { // otherwise user must click login button
-    DOM.loginButton.addEventListener("click", () => {
+  } else {
+    // otherwise user must click login button or press Enter
+    const attemptLogin = () => {
       const accessKey = DOM.accessKeyInput.value;
-      console.log("Login button clicked, access key:", accessKey);
+      console.log("Login attempted, access key:", accessKey);
       socket.emit("authenticate", accessKey);
+    };
+
+    DOM.loginButton.addEventListener("click", attemptLogin);
+
+    DOM.accessKeyInput.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        attemptLogin();
+      }
     });
   }
 }
@@ -41,7 +51,7 @@ export function handleRaceStarted(currentSession, socket) {
 }
 
 export function handleRaceFinished() {
-  DOM.lapLinerButtons.innerHTML = "";   // Clear the buttons container
+  DOM.lapLinerButtons.innerHTML = ""; // Clear the buttons container
   DOM.lapLinerButtons.style.display = "none";
   DOM.lapLinerMessage.style.display = "block"; // Show waiting message
 }
