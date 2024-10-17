@@ -73,6 +73,7 @@ function setupSocketHandlers(io, socket) {
       currentRace = raceSessions.find((session) => session.isNext);
       if (currentRace) {
         currentRace.isCurrent = true;
+        currentRace.isNext = false;
         io.emit("raceStarted", currentRace);
 
         setTimeout(() => {

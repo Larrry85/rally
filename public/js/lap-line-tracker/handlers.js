@@ -5,16 +5,29 @@ import { raceData, addLap } from "./utils.js";
 
 export function handleLogin(socket) {
   if (CONFIG.SKIP_LOGIN) {
+    // if true, send authentication request with default key
     socket.emit("authenticate", CONFIG.DEFAULT_AUTH_KEY);
   } else {
-    DOM.loginButton.addEventListener("click", () => {
-      socket.emit("authenticate", DOM.accessKeyInput.value);
+    // otherwise user must click login button or press Enter
+    const attemptLogin = () => {
+      const accessKey = DOM.accessKeyInput.value;
+      console.log("Login attempted, access key:", accessKey);
+      socket.emit("authenticate", accessKey);
+    };
+
+    DOM.loginButton.addEventListener("click", attemptLogin);
+
+    DOM.accessKeyInput.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        attemptLogin();
+      }
     });
   }
 }
 
 export function handleRaceStarted(currentSession, socket) {
-  DOM.lapLinerApp.innerHTML = "<h2>Lap Tracker</h2>";
+  DOM.lapLinerMessage.style.display = "none"; // Hide waiting message
+  DOM.lapLinerButtons.style.display = "block"; // Ensure buttons container is displayed
 
   if (currentSession?.race?.drivers?.length > 0) {
     raceData.carIds = currentSession.race.drivers.map(
@@ -26,17 +39,19 @@ export function handleRaceStarted(currentSession, socket) {
       button.addEventListener("click", () => addLap(carId, socket));
       button.style.gridRow = `${8 - index}`;
       button.style.gridColumn = `${index + 1}`;
-      DOM.lapLinerApp.appendChild(button);
+      DOM.lapLinerButtons.appendChild(button);
     });
     raceData.laps = {};
-    console.log("Race started with car list:", raceData.carIds);
+    console.log("Race started with car list:", raceData.carIds); // shows when start race
   } else {
-    console.log("No active race session or empty drivers list");
+    console.log("Waiting for driver data"); // shows if you log in too late
     raceData.carIds = [];
     raceData.laps = {};
   }
 }
 
 export function handleRaceFinished() {
-  DOM.lapLinerApp.innerHTML = "<h2>Lap Tracker</h2>";
+  DOM.lapLinerButtons.innerHTML = ""; // Clear the buttons container
+  DOM.lapLinerButtons.style.display = "none";
+  DOM.lapLinerMessage.style.display = "block"; // Show waiting message
 }

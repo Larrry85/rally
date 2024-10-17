@@ -10,11 +10,19 @@ import { currentSessionId, setCurrentSessionId } from "./socketHandlers.js";
 
 export function handleLogin(socket) {
   if (CONFIG.SKIP_LOGIN) {
-    socket.emit("authenticate", "0000");
+    socket.emit("authenticate", CONFIG.DEFAULT_AUTH_KEY);
   } else {
-    DOM.loginButton.addEventListener("click", () => {
+    const attemptLogin = () => {
       const key = DOM.accessKeyInput.value;
       socket.emit("authenticate", key);
+    };
+
+    DOM.loginButton.addEventListener("click", attemptLogin);
+
+    DOM.accessKeyInput.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        attemptLogin();
+      }
     });
   }
 }

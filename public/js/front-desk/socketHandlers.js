@@ -41,15 +41,19 @@ export function handleRaceSessions(sessions, socket) {
           .join("")}
       </ul>
       <button class="editSessionButton">Edit</button>
-      <button class="removeSessionButton">Remove</button>
+      <button class="removeSessionButton" ${
+        session.isCurrent ? 'style="display: none;"' : ""
+      }>Remove</button>
     `;
+    sessionElement.setAttribute("data-session-id", session.sessionId);
     DOM.sessionsContainer.appendChild(sessionElement);
 
-    sessionElement
-      .querySelector(".removeSessionButton")
-      .addEventListener("click", () => {
+    const removeButton = sessionElement.querySelector(".removeSessionButton");
+    removeButton.addEventListener("click", () => {
+      if (!session.isCurrent) {
         socket.emit("removeRaceSession", session.sessionId);
-      });
+      }
+    });
 
     sessionElement
       .querySelector(".editSessionButton")
@@ -66,5 +70,23 @@ export function handleRaceSessions(sessions, socket) {
         currentSessionId = session.sessionId;
         DOM.addSessionButton.textContent = "Update Session";
       });
+  });
+}
+
+export function handleRaceStart(currentRace) {
+  console.log("Race started:", currentRace);
+  const sessionElements = DOM.sessionsContainer.querySelectorAll(
+    "div[data-session-id]"
+  );
+  sessionElements.forEach((element) => {
+    const sessionId = element.getAttribute("data-session-id");
+    const removeButton = element.querySelector(".removeSessionButton");
+    if (sessionId === currentRace.sessionId.toString()) {
+      removeButton.style.display = "none";
+      element.classList.add("current-race");
+    } else {
+      removeButton.style.display = "";
+      element.classList.remove("current-race");
+    }
   });
 }
