@@ -11,6 +11,8 @@ const {
 let raceSessions = [];
 let currentRace = null;
 let raceTimer = new RaceTimer(RACE_DURATION);
+let isStartSessionClicked = false; // Add this line to store the state
+let isRaceStarted = false; // Add this line to store the state
 
 function setupSocketHandlers(io, socket) {
   console.log("New client connected");
@@ -23,6 +25,15 @@ function setupSocketHandlers(io, socket) {
     );
     if (clientRole) {
       socket.emit("authenticated", { success: true, role: clientRole });
+      if (isStartSessionClicked) {
+        socket.emit("startSession"); // Inform the client if the session has started
+      }
+      if (isRaceStarted) {
+        socket.emit("raceStarted", {
+          race: currentRace,
+          duration: raceTimer.remainingTime,
+        });
+      }
     } else {
       socket.emit("authenticated", { success: false });
       console.log("Wrong access key");
@@ -30,6 +41,7 @@ function setupSocketHandlers(io, socket) {
   });
 
   socket.on("startSession", () => {
+    isStartSessionClicked = true; // Update the state
     const fullMinutes = Math.floor(RACE_DURATION / 60000);
     const fullSeconds = Math.floor((RACE_DURATION % 60000) / 1000);
     io.emit("startSession", { fullMinutes, fullSeconds });
@@ -37,7 +49,7 @@ function setupSocketHandlers(io, socket) {
   });
 
   socket.on("getRaceSessions", () => {
-    if (["raceControl", "frontDesk", "lapLineTracker"].includes(clientRole)) {
+    if (["raceControl", "frontDesk", "lapLineTracker", "nextRace"].includes(clientRole)) {
       socket.emit("raceSessions", raceSessions);
     }
   });
@@ -51,6 +63,7 @@ function setupSocketHandlers(io, socket) {
     if (clientRole === "frontDesk") {
       addRaceSession(raceSessions, session);
       io.emit("raceSessions", raceSessions);
+      io.emit("sendCarList", session.drivers.map(driver => ({ carNumber: driver.carNumber, driver: driver.driver })));
     }
   });
 
@@ -58,6 +71,7 @@ function setupSocketHandlers(io, socket) {
     if (clientRole === "frontDesk") {
       updateRaceSession(raceSessions, updatedSession);
       io.emit("raceSessions", raceSessions);
+      io.emit("sendCarList", updatedSession.drivers.map(driver => ({ carNumber: driver.carNumber, driver: driver.driver })));
     }
   });
 
@@ -69,6 +83,8 @@ function setupSocketHandlers(io, socket) {
   });
 
   socket.on("startRace", () => {
+    isRaceStarted = true; // Update the state
+    isStartSessionClicked = false;
     if (clientRole === "raceControl") {
       currentRace = raceSessions.find((session) => session.isNext);
       if (currentRace) {
@@ -94,11 +110,14 @@ function setupSocketHandlers(io, socket) {
             currentRace = null;
           });
         }, 3000);
+
+        io.emit("sendCarList", currentRace.drivers.map(driver => ({ carNumber: driver.carNumber, driver: driver.driver })));
       }
     }
   });
 
   socket.on("finishRace", () => {
+    isRaceStarted = false; // Update the state
     if (clientRole === "raceControl") {
       raceTimer.stop();
       finishRace(io, raceSessions, currentRace);
@@ -110,6 +129,13 @@ function setupSocketHandlers(io, socket) {
     if (clientRole === "raceControl") {
       const nextSession = raceSessions.find((s) => s.isNext);
       socket.emit("nextRaceSession", nextSession || null);
+    }
+    if (clientRole === "nextRace") {
+      const nextSessionIndex = raceSessions.findIndex((s) => s.isNext);
+      const nextNextSession = nextSessionIndex !== -1 && nextSessionIndex + 1 < raceSessions.length
+        ? raceSessions[nextSessionIndex + 1]
+        : null;
+      socket.emit("nextRaceSession", nextNextSession);
     }
   });
 
@@ -133,6 +159,14 @@ function setupSocketHandlers(io, socket) {
 
   socket.on("getRaceFlags", () => {
     socket.emit("raceFlags", currentRace ? currentRace.raceMode : "Safe");
+  });
+
+  socket.on("getStartSessionState", () => {
+    socket.emit("startSessionState", isStartSessionClicked); // Emit the start session state
+  });
+
+  socket.on("getRaceStartedState", () => {
+    socket.emit("raceStartedState", isRaceStarted); // Emit the race started state
   });
 
   socket.on("disconnect", () => {

@@ -1,0 +1,56 @@
+Order
+----------------------------------------------------------------------------------------
+
+Leaderboard- empty
+Timer- Full time & circle
+NextRace- empty
+Flags- red
+
+Desk - add races (whenever)
+
+NextRace- driver list
+LapTracker- nexr race buttons appear
+
+Control- driver list, "start session"
+
+The Next Race display switches to the subsequent race, once the current race is safe to start.
+
+race is starting. The following also happens:
+
+    The race mode is changed to "Safe"
+    The leader board changes to the current race.
+    The Next Race screen switches to the subsequent race session.
+    The Safety Official sees race mode controls.
+
+The Safety Official has four buttons an their interface once the race starts.
+
+Timer- Starting message, timer starts
+NextRace- paddock message disappears
+Flags- traffic lights, green
+LapTracker- buttons enabled
+
+Once the timer counts down to zero, or the Safety Official finishes the race, the race mode is changed to "Finished".
+When the race mode changes to "Finish", the race controls disappear, and a button appears to end the race session.
+
+Leaderboard- order by fastest driver, fastest lap showing, timer full time, finish flag
+Timer- end of race message, timer & circle full
+NextRace- next driver list
+Flags- finisg flag
+LapTracker- buttons disabled, next race buttons appear
+
+The drivers see the chequered flag screen, and return to the pit lane.
+
+Once the race mode changes to "Finished", it cannot be changed to any other mode.
+
+Once the race is in Finish mode, and the cars have returned to the pit lane, the Safety Official can end the Session.
+When the Safety Official ends the race session, the next session appears on their interface.
+
+This queues up the next session on the Safety Official's interface, so that they can see which drivers to brief, and which cars the drivers are assigned to.
+
+The race mode changes to "Danger".
+
+The Next Race screen now displays the current session's drivers, and displays an extra message to tell them to proceed to the paddock.
+
+Cars can still cross the lap line when the race is in finish mode. The observer's display should show a message to indicate that the race session is ended once that has been declared by the Safety Official.
+
+----------------------------------------------------------------------------------------

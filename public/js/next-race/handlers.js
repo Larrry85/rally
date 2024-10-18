@@ -2,10 +2,10 @@
 import { DOM } from "./dom.js";
 import { CONFIG } from "./config.js";
 
-export function updateDriverList(nextSession) {
+export function updateDriverList(session) {
   DOM.driverListDiv.innerHTML =
-    nextSession && nextSession.drivers.length > 0
-      ? `<p class="listheader"><strong>Driver List</strong></p><br>${nextSession.drivers
+    session && session.drivers.length > 0
+      ? `<p class="listheader"><strong>Driver List</strong></p><br>${session.drivers
           .map(
             (driver) =>
               `<p>Car: <strong>${driver.carNumber}</strong> - Driver: <strong>${driver.driver}</strong></p>`
