@@ -1,5 +1,7 @@
 // front-desk/utils.js
+import { DOM } from "./dom.js";
 import { CONFIG } from "./config.js";
+
 
 export function createDriverEntry(name = "", selectedCarNumber = null) {
   const driverEntry = document.createElement("div");

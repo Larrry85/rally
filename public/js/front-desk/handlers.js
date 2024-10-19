@@ -74,8 +74,7 @@ export function handleAddSession(socket) {
 }
 
 function collectDriversData() {
-  const driverElements =
-    DOM.driversListContainer.querySelectorAll(".driver-entry");
+  const driverElements = DOM.driversListContainer.querySelectorAll(".driver-entry");
   const drivers = [];
   const driverNamesSet = new Set();
   const carNumbersSet = new Set();
@@ -88,24 +87,18 @@ function collectDriversData() {
     if (!driverName || !carNumber) {
       showMessage("minDrivers", "Each driver must have a name and car number.");
       isValid = false;
-      return;
+      return; // Exit the current iteration if validation fails
     }
 
     if (driverNamesSet.has(driverName)) {
-      showMessage(
-        "duplicateName",
-        `The driver name "${driverName}" has already been added. Please use a unique name.`
-      );
+      showMessage("duplicateName", `The driver name "${driverName}" has already been added. Please use a unique name.`);
       isValid = false;
       return;
     }
     driverNamesSet.add(driverName);
 
     if (carNumbersSet.has(carNumber)) {
-      showMessage(
-        "duplicateCarNumber",
-        `The car number "${carNumber}" has already been selected. Please choose a different car number.`
-      );
+      showMessage("duplicateCarNumber", `The car number "${carNumber}" has already been selected. Please choose a different car number.`);
       isValid = false;
       return;
     }
@@ -114,8 +107,15 @@ function collectDriversData() {
     drivers.push({ driver: driverName, carNumber: carNumber });
   });
 
+  // If there are no valid drivers after the check, notify the user
+  if (drivers.length === 0 && isValid) {
+    showMessage("minDrivers", "You need to add at least 1 driver with both name and car number.");
+    isValid = false;
+  }
+
   return { drivers, isValid };
 }
+
 
 function resetForm() {
   DOM.sessionNameInput.value = "";
