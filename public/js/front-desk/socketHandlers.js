@@ -73,20 +73,19 @@ export function handleRaceSessions(sessions, socket) {
   });
 }
 
-export function handleRaceStart(currentRace) {
+export function handleRaceStart(currentRace, socket) {
   console.log("Race started:", currentRace);
-  const sessionElements = DOM.sessionsContainer.querySelectorAll(
-    "div[data-session-id]"
-  );
+  
+  // Remove the current session from the front desk
+  const sessionElements = DOM.sessionsContainer.querySelectorAll("div[data-session-id]");
   sessionElements.forEach((element) => {
     const sessionId = element.getAttribute("data-session-id");
-    const removeButton = element.querySelector(".removeSessionButton");
     if (sessionId === currentRace.sessionId.toString()) {
-      removeButton.style.display = "none";
-      element.classList.add("current-race");
-    } else {
-      removeButton.style.display = "";
-      element.classList.remove("current-race");
+      element.remove(); // Remove the current race session
     }
   });
+
+  // Emit request to fetch and display the next race session
+  socket.emit("getNextRaceSession");
 }
+

@@ -22,23 +22,25 @@ export function setupSocketHandlers(socket) {
     togglePaddockMessage(true); // Show the paddock message
   });
 
-  // Handle the raceStarted event
-  socket.on("raceStarted", () => {
-    isRaceStarted = true; // Set the flag to true
-    togglePaddockMessage(false); // Hide the paddock message
-    // Request the next race session upon race start
-    socket.emit("getNextRaceSession");
-  });
+ // Handle the raceStarted event
+socket.on("raceStarted", () => {
+  isRaceStarted = true; // Set the flag to true
+  togglePaddockMessage(false); // Hide the paddock message
+  socket.emit("getNextRaceSession"); // Request the next race session after the current one starts
+});
 
-  // Handle the nextRaceSession event
-  socket.on("nextRaceSession", (nextSession) => {
-    console.log("nextRaceSession:", nextSession); // Debug line 
-    if (nextSession) {
-      updateDriverList(nextSession); // Update the driver list with the next session
-    } else {
-      DOM.driverListDiv.innerHTML = CONFIG.WAITING_MESSAGE; // Show the waiting message if no more sessions are available
-    }
-  });
+
+ // Handle the nextRaceSession event
+socket.on("nextRaceSession", (nextSession) => {
+  console.log("nextRaceSession:", nextSession); // Debug log to check the next session details
+  if (nextSession) {
+    updateDriverList(nextSession); // Update the driver list with the next session details
+  } else {
+    DOM.driverListDiv.innerHTML = CONFIG.WAITING_MESSAGE; // Show a waiting message if no next session
+  }
+});
+
+  
 
   // Handle the finishRace event
   socket.on("finishRace", () => {
