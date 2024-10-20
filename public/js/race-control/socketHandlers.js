@@ -1,4 +1,3 @@
-// race-control/socketHandlers.js
 import { DOM } from "./dom.js";
 import {
   resetPanel,
@@ -21,28 +20,36 @@ export function setupSocketHandlers(socket) {
       switchLight("red", socket);
     } else {
       setTimeout(() => {
-      DOM.loginMessage.textContent = "Invalid access key";
-      DOM.accessKeyInput.value = "";
-    }, 500); //500ms delay
+        DOM.loginMessage.textContent = "Invalid access key";
+        DOM.accessKeyInput.value = "";
+      }, 500); //500ms delay
     }
   });
 
   socket.on("raceSessions", (sessions) => {
     if (!isRaceOngoing) {
+      // Check if the current session still exists
+      if (currentSession && !sessions.some(session => session.sessionId === currentSession.sessionId)) {
+        // If the current session was removed, reset it
+        console.log("Current session was removed. Updating to the next session.");
+        currentSession = null; // Clear current session
+      }
+  
+      // Find the new next session
       const nextSession = sessions.find((session) => session.isNext);
+  
       if (nextSession) {
         resetPanel(true);
         currentSession = nextSession;
-        updateRaceSessionDisplay(currentSession);
+        updateRaceSessionDisplay(currentSession); // Update the UI with the next session
       } else {
-        resetPanel(false);
+        resetPanel(false); // No sessions available
       }
     } else {
-      console.log(
-        "Race is ongoing. New sessions will be available after the current race finishes."
-      );
+      console.log("Race is ongoing. New sessions will be available after the current race finishes.");
     }
   });
+  
 
   socket.on("startSession", () => {
     DOM.startSessionButton.style.display = "none";
@@ -89,14 +96,13 @@ export function setupSocketHandlers(socket) {
     }
   });
 
-  // New event to handle updates to the race session list
+  // Listen for updated session lists
   socket.on("raceSessionsUpdated", () => {
     if (!isRaceOngoing) {
-      socket.emit("getRaceSessions");
+      socket.emit("getRaceSessions"); // Re-fetch sessions when notified
     }
   });
 }
-
 
 function disableFlagButtons() {
   DOM.getAllFlagButtons().forEach((button) => {

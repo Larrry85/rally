@@ -77,10 +77,44 @@ function setupSocketHandlers(io, socket) {
 
   socket.on("removeRaceSession", (sessionId) => {
     if (clientRole === "frontDesk") {
-      removeRaceSession(raceSessions, sessionId);
-      io.emit("raceSessions", raceSessions);
+        console.log(`Attempting to remove race session with ID: ${sessionId}`);
+        console.log("Current race sessions before removal:", raceSessions);
+
+        const previousLength = raceSessions.length; // Store previous length for comparison
+        removeRaceSession(raceSessions, sessionId);
+        console.log(`Race session removed. Previous count: ${previousLength}, New count: ${raceSessions.length}`);
+
+        // Find the next session index
+        let nextSessionIndex = raceSessions.findIndex(session => session.isNext);
+        console.log(`Current next session index: ${nextSessionIndex}`);
+
+        // If the next session was removed, find the new next session
+        if (nextSessionIndex === -1 || raceSessions[nextSessionIndex].sessionId === sessionId) {
+            console.log(`Next session with ID: ${sessionId} was removed. Finding new next session...`);
+            
+            // Loop to find the first non-current session and set it as next
+            for (let i = 0; i < raceSessions.length; i++) {
+                if (!raceSessions[i].isCurrent) {
+                    raceSessions[i].isNext = true;
+                    console.log(`New next session set with ID: ${raceSessions[i].sessionId}`);
+                    break;
+                }
+            }
+        } else {
+            console.log("No change to next session; it wasn't removed or it wasn't the current next session.");
+        }
+
+        // Emit the updated session list
+        io.emit("raceSessions", raceSessions);
+        console.log("Updated race sessions emitted to clients:", raceSessions);
+    } else {
+        console.log(`Unauthorized attempt to remove race session by client with role: ${clientRole}`);
     }
-  });
+});
+
+  
+  
+  
 
   socket.on("startRace", () => {
     isRaceStarted = true; // Update the state

@@ -39,13 +39,21 @@ function updateRaceSession(raceSessions, updatedSession) {
   }
 }
 
+
 function removeRaceSession(raceSessions, sessionId) {
-  const index = raceSessions.findIndex(
-    (session) => session.sessionId === sessionId
-  );
-  if (index !== -1) {
-    raceSessions.splice(index, 1);
+  console.log("Current race sessions before removal:", JSON.stringify(raceSessions, null, 2));
+
+  const initialLength = raceSessions.length;
+  const indexToRemove = raceSessions.findIndex(session => session.sessionId === sessionId);
+
+  if (indexToRemove !== -1) {
+    const removedSession = raceSessions.splice(indexToRemove, 1)[0];
+    console.log(`Session with ID ${sessionId} removed. Previous count: ${initialLength}, New count: ${raceSessions.length}`);
+    return removedSession;
   }
+
+  console.log(`No session found with ID ${sessionId}.`);
+  return null; // or any indication that removal failed
 }
 
 module.exports = {
