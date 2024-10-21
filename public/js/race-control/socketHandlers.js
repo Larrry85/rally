@@ -99,7 +99,7 @@ export function setupSocketHandlers(socket) {
   // Listen for updated session lists
   socket.on("raceSessionsUpdated", () => {
     if (!isRaceOngoing) {
-      socket.emit("getRaceSessions"); // Re-fetch sessions when notified
+      socket.emit("getRaceSessions");
     }
   });
 }
