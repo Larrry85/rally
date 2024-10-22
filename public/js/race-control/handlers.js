@@ -32,7 +32,12 @@ export function switchLight(light, socket) {
   }
 }
 
-export function updateRaceSessionDisplay(session) {
+export function endSession(socket) {
+  turnOffAllLights();
+  socket.emit("endSession");
+}
+
+export function updateRaceSessionDisplay(session, state = "default") {
   DOM.raceSessionContainer.innerHTML = "";
   const sessionElement = document.createElement("div");
   sessionElement.classList.add("race-session");
@@ -48,9 +53,16 @@ export function updateRaceSessionDisplay(session) {
     })
     .join("<br>");
 
+  let statusMessage = "";
+  if (state === "finished") {
+    statusMessage =
+      '<p class="session-message">Drivers: Please proceed to the paddock</p>';
+  }
+
   sessionElement.innerHTML = `
     <h3>${session.sessionName}</h3>
     <pre style="font-family: inherit;">${formattedDrivers}</pre>
+    ${statusMessage}
   `;
   DOM.raceSessionContainer.appendChild(sessionElement);
 }
