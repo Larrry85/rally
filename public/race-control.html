@@ -11,7 +11,6 @@
 
 <body>
     <div class="container">
-
         <!-- Login Section -->
         <div id="login" class="form-container">
             <h2>Login to race control interface</h2>
@@ -38,13 +37,20 @@
             <div class="red"></div>
             <img src="image/finish.png" alt="Finish Line" class="finish-image" />
         </div>
+
         <div id="buttons" class="button-container" style="display: none;">
             <button id="green" class="flag" disabled>Safe</button>
             <button id="yellow" class="flag" disabled>Hazard</button>
             <button id="red" class="flag" disabled>Danger</button>
             <button id="finish" class="flag" disabled>Finish</button>
         </div>
-        
+
+        <!-- New End Session Button Section -->
+        <div id="endSessionContainer" class="button-container" style="display: none;">
+            <button id="endSessionButton" class="flag end-session" style="display: none;">
+                End Session (All Cars in Pit Lane)
+            </button>
+        </div>
     </div>
 
     <script type="module" src="js/race-control/main.js"></script>

@@ -61,7 +61,12 @@ input[type="password"] {
   margin-bottom: 10px; /* Add margin to the bottom */
   border: 1px solid #2c3238; /* Add border */
   border-radius: 5px; /* Round the corners */
-  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Semi-transparent white background */
   color: #ffffff; /* Set text color to white */
 }
 
@@ -205,4 +210,36 @@ button:active {
 /* Apply pulse animation to elements with the .on class */
 .on {
   animation: pulse 1s infinite; /* Infinite pulse animation */
+}
+
+.end-session {
+  background-color: #f44336 !important; /* Red background */
+  color: white !important;
+  margin-top: 1rem;
+  width: auto !important;
+  padding: 12px 24px !important;
+}
+
+.end-session:disabled {
+  background-color: #cccccc !important;
+  cursor: not-allowed;
+}
+
+.end-session:hover:not(:disabled) {
+  background-color: #d32f2f !important;
+}
+
+.session-message {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: #ffeb3b;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#endSessionContainer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
 }

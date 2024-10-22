@@ -41,6 +41,14 @@ document.addEventListener("DOMContentLoaded", () => {
     socket.emit("startSession");
   });
 
+  DOM.endSessionButton.addEventListener("click", () => {
+    DOM.endSessionContainer.style.display = "none";
+    DOM.endSessionButton.style.display = "none";
+    DOM.endSessionButton.disabled = true;
+
+    socket.emit("endSession");
+  });
+
   DOM.startRaceButton.addEventListener("click", () => {
     socket.emit("startRace");
     switchLight("green", socket);

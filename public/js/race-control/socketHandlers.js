@@ -1,3 +1,4 @@
+// race-control/socketHandlers.js
 import { DOM } from "./dom.js";
 import {
   resetPanel,
@@ -10,6 +11,7 @@ import { CONFIG } from "./config.js";
 export function setupSocketHandlers(socket) {
   let currentSession = null;
   let isRaceOngoing = false;
+  let isInFinishState = false;
 
   socket.on("authenticated", (data) => {
     if (data.success && data.role === "raceControl") {
@@ -29,15 +31,22 @@ export function setupSocketHandlers(socket) {
   socket.on("raceSessions", (sessions) => {
     if (!isRaceOngoing) {
       // Check if the current session still exists
-      if (currentSession && !sessions.some(session => session.sessionId === currentSession.sessionId)) {
+      if (
+        currentSession &&
+        !sessions.some(
+          (session) => session.sessionId === currentSession.sessionId
+        )
+      ) {
         // If the current session was removed, reset it
-        console.log("Current session was removed. Updating to the next session.");
+        console.log(
+          "Current session was removed. Updating to the next session."
+        );
         currentSession = null; // Clear current session
       }
-  
+
       // Find the new next session
       const nextSession = sessions.find((session) => session.isNext);
-  
+
       if (nextSession) {
         resetPanel(true);
         currentSession = nextSession;
@@ -46,10 +55,11 @@ export function setupSocketHandlers(socket) {
         resetPanel(false); // No sessions available
       }
     } else {
-      console.log("Race is ongoing. New sessions will be available after the current race finishes.");
+      console.log(
+        "Race is ongoing. New sessions will be available after the current race finishes."
+      );
     }
   });
-  
 
   socket.on("startSession", () => {
     DOM.startSessionButton.style.display = "none";
@@ -71,13 +81,44 @@ export function setupSocketHandlers(socket) {
 
   socket.on("raceFinished", () => {
     isRaceOngoing = false;
-    DOM.message.innerHTML = "Race finished! Transitioning to next session...";
+    isInFinishState = true;
+    DOM.message.innerHTML =
+      "Race finished! Waiting for all cars to return to pit lane...";
     turnOffAllLights();
-    disableFlagButtons(); // Disable the buttons after the race finishes
+    disableFlagButtons(); // Disable the flag buttons
+
+    // Show and enable the end session button
+    if (DOM.endSessionContainer) {
+      DOM.endSessionContainer.style.display = "block";
+    }
+    if (DOM.endSessionButton) {
+      DOM.endSessionButton.style.display = "block";
+      DOM.endSessionButton.disabled = false;
+    }
+
+    if (currentSession) {
+      updateRaceSessionDisplay(currentSession, "finished");
+    }
 
     setTimeout(() => {
       switchLight("red", socket);
     }, 3000);
+  });
+
+  socket.on("sessionEnded", () => {
+    isInFinishState = false;
+    DOM.message.innerHTML = "Session ended. Preparing for next session...";
+
+    // Hide both container and button
+    if (DOM.endSessionContainer) {
+      DOM.endSessionContainer.style.display = "none";
+    }
+    if (DOM.endSessionButton) {
+      DOM.endSessionButton.style.display = "none";
+      DOM.endSessionButton.disabled = true;
+    }
+
+    disableFlagButtons(); // Ensure flags remain disabled
 
     setTimeout(() => {
       DOM.message.innerHTML = "";
@@ -99,7 +140,7 @@ export function setupSocketHandlers(socket) {
   // Listen for updated session lists
   socket.on("raceSessionsUpdated", () => {
     if (!isRaceOngoing) {
-      socket.emit("getRaceSessions"); // Re-fetch sessions when notified
+      socket.emit("getRaceSessions");
     }
   });
 }

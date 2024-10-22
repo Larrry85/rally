@@ -12,6 +12,9 @@ export const DOM = {
   raceSessionContainer: document.getElementById("raceSessionContainer"),
   startRaceButton: document.getElementById("startRaceButton"),
   message: document.getElementById("message"),
+  endSessionContainer: document.getElementById("endSessionContainer"),
+  endSessionButton: document.getElementById("endSessionButton"),
+
   getLightElement: (color) => document.querySelector(`.${color}`),
   getAllFlagButtons: () => document.querySelectorAll(".flag"),
 };
