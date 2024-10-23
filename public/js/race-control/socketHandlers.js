@@ -1,4 +1,3 @@
-// race-control/socketHandlers.js
 import { DOM } from "./dom.js";
 import {
   resetPanel,
@@ -24,7 +23,7 @@ export function setupSocketHandlers(socket) {
       setTimeout(() => {
         DOM.loginMessage.textContent = "Invalid access key";
         DOM.accessKeyInput.value = "";
-      }, 500); //500ms delay
+      }, 500); // 500ms delay
     }
   });
 
@@ -33,14 +32,9 @@ export function setupSocketHandlers(socket) {
       // Check if the current session still exists
       if (
         currentSession &&
-        !sessions.some(
-          (session) => session.sessionId === currentSession.sessionId
-        )
+        !sessions.some((session) => session.sessionId === currentSession.sessionId)
       ) {
-        // If the current session was removed, reset it
-        console.log(
-          "Current session was removed. Updating to the next session."
-        );
+        console.log("Current session was removed. Updating to the next session.");
         currentSession = null; // Clear current session
       }
 
@@ -55,17 +49,21 @@ export function setupSocketHandlers(socket) {
         resetPanel(false); // No sessions available
       }
     } else {
-      console.log(
-        "Race is ongoing. New sessions will be available after the current race finishes."
-      );
+      console.log("Race is ongoing. New sessions will be available after the current race finishes.");
     }
   });
 
   socket.on("startSession", () => {
-    DOM.startSessionButton.style.display = "none";
-    DOM.raceLights.style.display = "flex";
-    DOM.buttons.style.display = "flex";
-    DOM.session.style.display = "flex";
+    // Hide everything if the end session button is visible
+    if (DOM.endSessionButton.style.display === "block") {
+      hideEverything();
+    } else {
+      // Start the session by hiding the start session button and showing race elements
+      DOM.startSessionButton.style.display = "none";
+      DOM.raceLights.style.display = "flex";
+      DOM.buttons.style.display = "flex";
+      DOM.session.style.display = "flex";
+    }
   });
 
   socket.on("raceStarted", () => {
@@ -82,34 +80,33 @@ export function setupSocketHandlers(socket) {
   socket.on("raceFinished", () => {
     isRaceOngoing = false;
     isInFinishState = true;
-    DOM.message.innerHTML =
-      "Race finished! Waiting for all cars to return to pit lane...";
+    DOM.message.innerHTML = "Race finished! Waiting for all cars to return to pit lane...";
     turnOffAllLights();
-    disableFlagButtons(); // Disable the flag buttons
+    disableFlagButtons();
+    hideEverything(); // Hide all UI except for the End Session button
 
-    // Show and enable the end session button
-    if (DOM.endSessionContainer) {
-      DOM.endSessionContainer.style.display = "block";
-    }
-    if (DOM.endSessionButton) {
-      DOM.endSessionButton.style.display = "block";
-      DOM.endSessionButton.disabled = false;
-    }
+    // Show the End Session button
+    DOM.endSessionContainer.style.display = "block";
+    DOM.endSessionButton.style.display = "block";
+    DOM.endSessionButton.disabled = false;
+  });
 
-    if (currentSession) {
-      updateRaceSessionDisplay(currentSession, "finished");
-    }
+  DOM.endSessionButton.addEventListener("click", () => {
+    // Hide End Session button and show everything else
+    hideEndSessionButton();
 
-    setTimeout(() => {
-      switchLight("red", socket);
-    }, 3000);
+    // Show all session-related elements
+    showEverything();
+
+    // Emit to get the next race session
+    socket.emit("getNextRaceSession");
   });
 
   socket.on("sessionEnded", () => {
     isInFinishState = false;
     DOM.message.innerHTML = "Session ended. Preparing for next session...";
 
-    // Hide both container and button
+    // Hide end session button
     if (DOM.endSessionContainer) {
       DOM.endSessionContainer.style.display = "none";
     }
@@ -118,8 +115,7 @@ export function setupSocketHandlers(socket) {
       DOM.endSessionButton.disabled = true;
     }
 
-    disableFlagButtons(); // Ensure flags remain disabled
-
+    disableFlagButtons();
     setTimeout(() => {
       DOM.message.innerHTML = "";
       socket.emit("getNextRaceSession");
@@ -149,4 +145,34 @@ function disableFlagButtons() {
   DOM.getAllFlagButtons().forEach((button) => {
     button.disabled = true;
   });
+}
+
+function hideEverything() {
+  // Hide all UI elements except for the End Session button
+  DOM.startSessionButton.style.display = "none";
+  DOM.startSessionButton.disabled = true;
+  DOM.raceLights.style.display = "none"; // Hide race lights if present
+  DOM.buttons.style.display = "none"; // Hide other buttons if present
+  DOM.session.style.display = "none"; // Hide session info if present
+  // Add any additional UI elements you want to hide here
+}
+
+function showEverything() {
+  // Show all UI elements related to the session
+  DOM.startSessionButton.style.display = "inline-block"; 
+  DOM.startSessionButton.disabled = false; // Enable the button
+  DOM.raceLights.style.display = "flex"; // Show race lights if applicable
+  DOM.buttons.style.display = "flex"; // Show other buttons if applicable
+  DOM.session.style.display = "flex"; // Show session info if applicable
+  // Add any additional UI elements you want to show here
+}
+
+function hideEndSessionButton() {
+  if (DOM.endSessionContainer) {
+    DOM.endSessionContainer.style.display = "none";
+  }
+  if (DOM.endSessionButton) {
+    DOM.endSessionButton.style.display = "none";
+    DOM.endSessionButton.disabled = true;
+  }
 }
