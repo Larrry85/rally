@@ -3,7 +3,7 @@ import { DOM } from "./dom.js";
 import { FLAGS } from "./config.js";
 
 export function resetPanel(hasSession) {
-  DOM.startSessionButton.style.display = hasSession ? "block" : "none";
+  DOM.startSessionButton.style.display = "none";
   DOM.session.style.display = "none";
   DOM.raceLights.style.display = "none";
   DOM.buttons.style.display = "none";
