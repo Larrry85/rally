@@ -300,13 +300,3 @@ Updating Lap data:
 Jonathan Dahl - Raigo Hoim - Laura Levistö
 
 10/2024
-
-
-
-
-
-
----------------------------------------------
-ngrok  opetus video
-
-https://www.youtube.com/watch?v=aFwrNSfthxU
