@@ -187,6 +187,8 @@ race-flags
                             +-------------------+
 ```
 
+![Screenshot](rally.png)
+
 ## SERVER
 
 (Server manages the state of the race)
